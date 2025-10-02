@@ -20,6 +20,7 @@ import { NgIf } from "@angular/common";
   styleUrls: ['./employeedashboard.component.scss']
 })
 export class EmployeedashboardComponent implements OnInit {
+  userId:string|null=localStorage.getItem('userId')
   private tasks$!: Observable<Task[]>;
   todo: Task[] = [];
   inProgress: Task[] = [];
@@ -54,7 +55,7 @@ export class EmployeedashboardComponent implements OnInit {
   onStatusChange(event: { taskId: string; taskStatus: TaskStatus }) {
     const { taskId, taskStatus } = event;
     const tasks = taskStatus === TaskStatus.Done ? 'done' : taskStatus == TaskStatus.InProgress ? 'in progress' : 'pending';
-    this.taskservice.UpdateStatus(`projects/c00fdfa3-0ad2-4cd8-bf78-932cc679f73c/tasks/${taskId}`, tasks).subscribe({
+    this.taskservice.UpdateStatus(`projects/${this.userId}/tasks/${taskId}`, tasks).subscribe({
       next: () => {
         console.log("task updated success");
       },

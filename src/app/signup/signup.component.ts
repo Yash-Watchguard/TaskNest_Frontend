@@ -76,7 +76,6 @@ export class SignupComponent {
   callLogin() {
     const loginsub = this.authservice
       .Login('login', {
-        name: this.name,
         email: this.email,
         password: this.password,
       })

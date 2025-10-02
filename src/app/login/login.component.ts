@@ -32,7 +32,6 @@ export class LoginComponent {
     onSubmit(){
       this.loading.set(true)
        const login=this.authservice.Login('login',{
-        name:this.username,
         email:this.email,
         password:this.password
        }

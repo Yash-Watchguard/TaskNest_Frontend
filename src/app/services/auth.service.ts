@@ -23,15 +23,16 @@ export class AuthService {
 
   Login(url:string,userDetails:LoginRequest){
       return this.HttpClient.post<LoginResponse>(url,{
-         name:userDetails.name,
          email:userDetails.email,
          password:userDetails.password
       }).pipe(tap(response=>{
           try{
-            const user =this.jwtDecoder(response.data.token,response.data.userId,userDetails)
+         const user =this.jwtDecoder(response.token,userDetails,response.name)
          this.newUser.set(user)
          localStorage.setItem('user',JSON.stringify(user))
-         localStorage.setItem('token',response.data.token)
+         localStorage.setItem('userId',response.UserId)
+         localStorage.setItem('token',response.token)
+
           }catch(e){
              console.log(e)
           }
@@ -39,11 +40,11 @@ export class AuthService {
       ))
   }
 
-  private jwtDecoder(token:string,id:string,userDetails:LoginRequest):user{
+  private jwtDecoder(token:string,userDetails:LoginRequest,name:string):user{
      const decode=jwtDecode<jwt>(token)
      return {
       Id:decode.userId,
-      Name:userDetails.name,
+      Name:name,
       Email:userDetails.email,
       Role:decode.role == 0?Role.ADMIN:decode.role==1?Role.MANAGER:Role.EMPLOYEE
      }
