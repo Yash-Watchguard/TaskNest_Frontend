@@ -11,11 +11,12 @@ import { AppComponent } from '../../app.component';
 import { CommentComponent } from '../../comment/comment.component';
 import { ActivatedRoute, Route, Router, RouterOutlet } from '@angular/router';
 import { NgIf } from "@angular/common";
+import { SummaryCardComponent } from "../../shared/summary-card/summary-card.component";
 
 
 @Component({
   selector: 'app-employeedashboard',
-  imports: [HeaderComponent, TaskboxComponent, NgForOf, CommentComponent, NgIf],
+  imports: [HeaderComponent, TaskboxComponent, NgForOf, CommentComponent, NgIf, SummaryCardComponent],
   templateUrl: './employeedashboard.component.html',
   styleUrls: ['./employeedashboard.component.scss']
 })

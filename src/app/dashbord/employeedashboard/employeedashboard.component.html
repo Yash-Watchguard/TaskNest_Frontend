@@ -8,32 +8,36 @@
   </div>
   <div class="summary-cards">
     <div class="summary-card">
-      <div class="icon"><span>📅</span></div>
+      <!-- <div class="icon"><span>📅</span></div>
       <div class="summary-info">
         <span>Total Tasks</span>
         <h3>{{todo.length + inProgress.length + done.length}}</h3>
-      </div>
+      </div> -->
+    <app-summary-card [totallength]="todo.length + inProgress.length + done.length" titel="Total Task" iconLink="sjjsjs"></app-summary-card>
     </div>
     <div class="summary-card">
-      <div class="icon"><span>&#9200;</span></div>
+      <!-- <div class="icon"><span>&#9200;</span></div>
       <div class="summary-info">
         <span>To Do</span>
         <h3>{{todo.length}}</h3>
-      </div>
+      </div> -->
+      <app-summary-card [totallength]="todo.length" titel="To Do" iconLink="shsh"></app-summary-card>
     </div>
     <div class="summary-card">
-      <div class="icon"><span>&#8986;</span></div>
+      <!-- <div class="icon"><span>&#8986;</span></div>
       <div class="summary-info">
         <span>In Progress</span>
         <h3>{{inProgress.length}}</h3>
-      </div>
+      </div> -->
+      <app-summary-card  [totallength]="inProgress.length" titel="In Progress" iconLink="shsh"></app-summary-card>
     </div>
     <div class="summary-card">
-      <div class="icon"><span>&#10003;</span></div>
+      <!-- <div class="icon"><span>&#10003;</span></div>
       <div class="summary-info">
         <span>Completed</span>
         <h3>{{done.length}}</h3>
-      </div>
+      </div> -->
+      <app-summary-card  [totallength]="done.length" titel="Completed" iconLink="shsh"></app-summary-card>
     </div>
   </div>
 

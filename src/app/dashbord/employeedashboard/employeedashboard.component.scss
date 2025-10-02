@@ -32,24 +32,24 @@
       display: flex;
       align-items: center;
       min-width: 165px;
-      .icon {
-        font-size: 32px;
-        margin-right: 12px;
-      }
-      .summary-info {
-        span{
-        font-size: 24px;
+      // .icon {
+      //   font-size: 32px;
+      //   margin-right: 12px;
+      // }
+      // .summary-info {
+      //   span{
+      //   font-size: 24px;
        
-        display: block;
-        margin-bottom: 2px;
-        color: var(--gray-text);
-      }
-      }
-      .summary-info h3 {
-        margin: 0;
-        font-size: 26px;
-        color: var(--dark-purple-text);
-      }
+      //   display: block;
+      //   margin-bottom: 2px;
+      //   color: var(--gray-text);
+      // }
+      // }
+      // .summary-info h3 {
+      //   margin: 0;
+      //   font-size: 26px;
+      //   color: var(--dark-purple-text);
+      // }
     }
   }
   .tasks-main-section {
