@@ -1,0 +1,28 @@
+
+
+<div class="login">
+    <div class="login-img">
+        <img src="im2.png" alt="">
+    </div>
+    <div class="login-page">
+  <div class="login-card">
+    <header>
+        <img src="favicon.ico" alt="">
+         <h3>Welcome to TaskNest</h3>
+         <p class="font-h2">Sign Up to your account to continue</p>
+    </header>
+   
+    <form class="login-form" (ngSubmit)="onSubmit()">
+      <p-toast></p-toast>
+      <input type="name" placeholder="UserName" [(ngModel)]="name" name="username">
+      <input type="email" placeholder="Email" [(ngModel)]="email" name="email"/>
+      <input type="phonenumber" placeholder="PhoneNumber" [(ngModel)]="phonenumber" name="phonenumber"/>
+      <input type="password" placeholder="Password" [(ngModel)]="password" name="password" />
+      <p-button type="submit" Class="button" fluid [disabled]='loading()' >{{loading()?'Hang on...':'Login'}}</p-button>
+    </form>
+    <div class="signupChange">
+        <p>already registered? <a routerLink="/login">Login</a></p>
+    </div>
+  </div>
+</div>
+</div>

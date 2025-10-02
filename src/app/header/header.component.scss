@@ -1,0 +1,54 @@
+@use "../shared/_variables.scss";
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding: 10px 20px;
+  background-color: var(--color-card);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: medium solid var(--color-border);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  .logo {
+    height: 30px;
+    margin-right: 10px;
+  }
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  span.font-h2 {
+    margin-right: 10px;
+    font-size: 0.9em;
+  }
+  i {
+    margin-right: 25px;
+    font-size: 50px;
+    color: var(--dark-purple-text);
+    cursor: pointer;
+  }
+  .user-button {
+    background-color: var(--p-purple-400);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.9em;
+
+    &:hover {
+      background-color: var(--mdark-purple-text);
+    }
+  }
+}

@@ -1,0 +1,86 @@
+<div class="welcome">
+  <app-header></app-header>
+</div>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>Employee Dashboard</h2>
+    <p>Manage your assigned tasks and track progress</p>
+  </div>
+  <div class="summary-cards">
+    <div class="summary-card">
+      <div class="icon"><span>📅</span></div>
+      <div class="summary-info">
+        <span>Total Tasks</span>
+        <h3>{{todo.length + inProgress.length + done.length}}</h3>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="icon"><span>&#9200;</span></div>
+      <div class="summary-info">
+        <span>To Do</span>
+        <h3>{{todo.length}}</h3>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="icon"><span>&#8986;</span></div>
+      <div class="summary-info">
+        <span>In Progress</span>
+        <h3>{{inProgress.length}}</h3>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="icon"><span>&#10003;</span></div>
+      <div class="summary-info">
+        <span>Completed</span>
+        <h3>{{done.length}}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="tasks-main-section">
+    <div class="tasks-block to-do">
+      <div class="block-title">To Do Tasks</div>
+      <p>Tasks that need to be started</p>
+      <div class="task-box">
+        <ul>
+          <li *ngFor="let task of todo">
+            <app-taskbox [task]="task" (statusChange)="onStatusChange($event)" (openComments)="onopencomment($event)"></app-taskbox>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="tasks-block in-progress">
+      <div class="block-title">In Progress</div>
+      <p>Tasks you're currently working on</p>
+     <div class="task-box">
+        <ul>
+          <li *ngFor="let task of inProgress">
+            <app-taskbox [task]="task" (statusChange)="onStatusChange($event)" (openComments)="onopencomment($event)"></app-taskbox>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="tasks-block completed">
+      <div class="block-title completed-title">Completed</div>
+      <p>Tasks you've finished</p>
+      <div class="completed-task">
+        <div class="task-box">
+        <ul>
+          <li *ngFor="let task of done">
+            <app-taskbox [task]="task" (openComments)="onopencomment($event)"></app-taskbox>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </div>
+   
+  <app-comment *ngIf="showComments" [isOpen]="showComments" [task]="selectedTask" (close)="closecommentbox()"></app-comment>
+
+</div>
+
+  
+  

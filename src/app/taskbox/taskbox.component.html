@@ -1,0 +1,22 @@
+<div class="task-card" [ngClass]="{'in-pending':task.TaskStatus===TaskStatus.Pending,'in-done':task.TaskStatus===TaskStatus.Done ,'in-progress':task.TaskStatus===TaskStatus.InProgress}">
+        <div class="header">
+            <h2 class="title">{{task.Title}}</h2>
+        </div>
+        <p class="description">{{task.Description}}</p>
+        <div class="details">
+            <span class="status" [ngClass]="{'progress': task.TaskStatus === TaskStatus.InProgress, 'pending': task.TaskStatus === TaskStatus.Pending, 'done': task.TaskStatus === TaskStatus.Done}">{{task.TaskStatus}}</span>
+            <span class="project">Project: {{task.ProjectId}}</span>
+        </div>
+        <p  *ngIf="task.TaskStatus==TaskStatus.Pending || task.TaskStatus==TaskStatus.InProgress" class="due-date" [ngClass]="{'overdue': isOverdue(task.Deadline)}">Due: {{task.Deadline | date:'dd/MM/yyyy'}} </p>
+        <div class="actions" >
+            <button *ngIf="task.TaskStatus === TaskStatus.Pending" class="start-button" (click)="onStart()">
+                Start
+            </button>
+            <button *ngIf="task.TaskStatus === TaskStatus.InProgress" class="complete-button" (click)="onComplete()">
+             Complete
+            </button>
+
+            <i (click)="opencomment()"class="material-icons">chat-bubble</i>
+           
+        </div>
+    </div>
