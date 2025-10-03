@@ -16,7 +16,7 @@ import { SummaryCardComponent } from "../../shared/summary-card/summary-card.com
 
 @Component({
   selector: 'app-employeedashboard',
-  imports: [HeaderComponent, TaskboxComponent, NgForOf, CommentComponent, NgIf, SummaryCardComponent],
+  imports: [HeaderComponent, TaskboxComponent, NgForOf, CommentComponent, NgIf, SummaryCardComponent, RouterOutlet],
   templateUrl: './employeedashboard.component.html',
   styleUrls: ['./employeedashboard.component.scss']
 })

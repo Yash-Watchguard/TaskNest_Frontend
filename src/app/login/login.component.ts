@@ -37,14 +37,15 @@ export class LoginComponent {
        }
       ).subscribe({
         next:(response)=>{
-           const user=this.authservice.newUser()
-           if(user?.Role===Role.ADMIN){
-            this.authservice.router.navigate(['admindashboard'])
-           }else if(user?.Role===Role.MANAGER){
-            this.authservice.router.navigate(['managerdashboard'])
-           }else{
-            this.authservice.router.navigate(['employeeDashboard'])
-           }
+          //  const user=this.authservice.newUser()
+          //  if(user?.Role===Role.ADMIN){
+          //   this.authservice.router.navigate(['admindashboard'])
+          //  }else if(user?.Role===Role.MANAGER){
+          //   this.authservice.router.navigate(['managerdashboard'])
+          //  }else{
+          //   this.authservice.router.navigate(['employeeDashboard'])
+          //  }
+          this.authservice.router.navigate(['dashboard'])
         },
         error:(err:HttpErrorResponse)=>{
           this.loading.set(false)

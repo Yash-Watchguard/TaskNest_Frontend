@@ -1,6 +1,6 @@
-<div class="welcome">
+<!-- <div class="welcome">
   <app-header></app-header>
-</div>
+</div> -->
 <div class="dashboard-container">
   <div class="dashboard-header">
     <h2>Employee Dashboard</h2>
@@ -85,6 +85,9 @@
   <app-comment *ngIf="showComments" [isOpen]="showComments" [task]="selectedTask" (close)="closecommentbox()"></app-comment>
 
 </div>
+
+<router-outlet></router-outlet>
+
 
   
   

@@ -10,6 +10,7 @@ import { ManagerDashboardComponent } from './dashbord/manager-dashboard/manager-
 import { managerguardGuard } from './routeguard/managerguard.guard';
 import { adminguardGuard } from './routeguard/adminguard.guard';
 import { AdminDashboardComponent } from './dashbord/admin-dashboard/admin-dashboard.component';
+import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 
 export const routes: Routes = [
   {
@@ -25,40 +26,62 @@ export const routes: Routes = [
     path: 'signup',
     loadComponent:()=>import('../app/signup/signup.component').then((m)=>m.SignupComponent)
   },
-  {
-    path: 'employeeDashboard',
-    loadComponent:()=>import('../app/dashbord/employeedashboard/employeedashboard.component').then((m)=>m.EmployeedashboardComponent),
-    canActivate: [employeeguardGuard],
+  // {
+  //   path: 'employeeDashboard',
+  //   loadComponent:()=>import('../app/dashbord/employeedashboard/employeedashboard.component').then((m)=>m.EmployeedashboardComponent),
+  //   canActivate: [employeeguardGuard],
 
-    children:[
-      {
-        path:'comment',
-        loadComponent:()=>import('../app/comment/comment.component').then((m)=>m.CommentComponent)
-      }
-    ]
+  //   children:[
+  //     {
+  //       path:'comment',
+  //       loadComponent:()=>import('../app/comment/comment.component').then((m)=>m.CommentComponent)
+  //     }
+  //   ]
 
-  },
+  // },
   {
     path: 'accessdenied',
     component: AccessDeniedComponent,
   },
+  // {
+  //   path: 'managerdashboard',
+  //   loadComponent:()=>import('../app/dashbord/manager-dashboard/manager-dashboard.component').then(
+  //       (m)=>m.ManagerDashboardComponent
+  //   ),
+  //   canActivate: [managerguardGuard],
+  // },
+  // {
+  //   path: 'admindashboard',
+  //   loadComponent: () =>
+  //     import('../app/dashbord/admin-dashboard/admin-dashboard.component').then(
+  //       (m) => m.AdminDashboardComponent
+  //     ),
+  //   canActivate: [adminguardGuard],
+  // },
   {
-    path: 'managerdashboard',
-    loadComponent:()=>import('../app/dashbord/manager-dashboard/manager-dashboard.component').then(
-        (m)=>m.ManagerDashboardComponent
-    ),
-    canActivate: [managerguardGuard],
-  },
-  {
-    path: 'admindashboard',
-    loadComponent: () =>
-      import('../app/dashbord/admin-dashboard/admin-dashboard.component').then(
-        (m) => m.AdminDashboardComponent
-      ),
-    canActivate: [adminguardGuard],
+    path:'dashboard',
+    component:DashboardLayoutComponent,
+    children:[
+      {
+        path:'manager',
+        loadComponent:()=>import('../app/dashbord/manager-dashboard/manager-dashboard.component').then((m)=>m.ManagerDashboardComponent),
+      },
+      {
+        path:'employee',
+        loadComponent:()=>import('../app/dashbord/employeedashboard/employeedashboard.component').then((m)=>m.EmployeedashboardComponent),
+      },
+      {
+        path:'task/details',
+        loadComponent:()=>import('../app/task-details/task-details.component').then((m)=>m.TaskDetailsComponent)
+      },
+      {
+        path:'admin',
+        loadComponent:()=>import('../app/dashbord/admin-dashboard/admin-dashboard.component').then((m)=>m.AdminDashboardComponent)
+      }
+    ]
   },
   {
     path: '**',
     component: PageNotfoundComponent,
-  },
+  }
 ];
