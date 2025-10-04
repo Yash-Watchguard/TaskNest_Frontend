@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-task-details',
   standalone:true,
-  imports: [NgClass,DatePipe,FormsModule,CommonModule],
+  imports: [DatePipe,FormsModule,CommonModule],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.scss'
 })

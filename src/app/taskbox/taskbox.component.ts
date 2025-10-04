@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-taskbox',
-  imports: [NgClass, NgIf, DatePipe, RouterLink],
+  imports: [NgClass, NgIf, DatePipe],
   templateUrl: './taskbox.component.html',
   styleUrl: './taskbox.component.scss'
 })
@@ -37,10 +37,10 @@ export class TaskboxComponent {
    
     this.openComments.emit(this.task)
   }
-  // onclick(event:MouseEvent){
-  //     if(event.target==event.currentTarget){
-  //       // localStorage.setItem('selectedTask', JSON.stringify(this.task));
-  //       this.router.navigate(['../task', 'details'], { relativeTo: this.route, state:{task:this.task} });
-  //     }
-  // }
+  onclick(event:MouseEvent){
+      if(event.target==event.currentTarget){
+        // localStorage.setItem('selectedTask', JSON.stringify(this.task));
+        this.router.navigate(['../task', 'details'], { relativeTo: this.route, state:{task:this.task} });
+      }
+  }
 }

@@ -1,0 +1,11 @@
+import { inject } from '@angular/core';
+import { CanActivateFn } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
+export const loginguardGuard: CanActivateFn = (route, state) => {
+  const userservice=inject(AuthService)
+  if(userservice.newUser()){
+    return false
+  }
+  return true
+};

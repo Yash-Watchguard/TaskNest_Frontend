@@ -12,11 +12,12 @@ import { CommentComponent } from '../../comment/comment.component';
 import { ActivatedRoute, Route, Router, RouterOutlet } from '@angular/router';
 import { NgIf } from "@angular/common";
 import { SummaryCardComponent } from "../../shared/summary-card/summary-card.component";
+import { TooltipModule } from 'primeng/tooltip'
 
 
 @Component({
   selector: 'app-employeedashboard',
-  imports: [HeaderComponent, TaskboxComponent, NgForOf, CommentComponent, NgIf, SummaryCardComponent, RouterOutlet],
+  imports: [ TaskboxComponent, NgForOf, CommentComponent, NgIf, SummaryCardComponent, RouterOutlet],
   templateUrl: './employeedashboard.component.html',
   styleUrls: ['./employeedashboard.component.scss']
 })

@@ -11,6 +11,7 @@ import { managerguardGuard } from './routeguard/managerguard.guard';
 import { adminguardGuard } from './routeguard/adminguard.guard';
 import { AdminDashboardComponent } from './dashbord/admin-dashboard/admin-dashboard.component';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
+import { loginguardGuard } from './routeguard/loginguard.guard';
 
 export const routes: Routes = [
   {
@@ -20,11 +21,13 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent:()=>import('../app/login/login.component').then((m)=>m.LoginComponent)
+    loadComponent:()=>import('../app/login/login.component').then((m)=>m.LoginComponent),
+    canActivate:[loginguardGuard]
   },
   {
     path: 'signup',
-    loadComponent:()=>import('../app/signup/signup.component').then((m)=>m.SignupComponent)
+    loadComponent:()=>import('../app/signup/signup.component').then((m)=>m.SignupComponent),
+    canActivate:[loginguardGuard]
   },
   // {
   //   path: 'employeeDashboard',

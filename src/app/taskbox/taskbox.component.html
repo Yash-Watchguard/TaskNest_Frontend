@@ -5,7 +5,7 @@
     'in-done': task.TaskStatus === TaskStatus.Done,
     'in-progress': task.TaskStatus === TaskStatus.InProgress
   }"
-  [routerLink]="['../task', 'details']" [state]="{task}"
+  (click)="onclick($event)"
  
 >
   <div class="header">
@@ -50,6 +50,6 @@
       Complete
     </button>
 
-    <i (click)="opencomment()" class="material-icons">chat-bubble</i>
+    <!-- <i (click)="opencomment()" class="material-icons">chat-bubble</i> -->
   </div>
 </div>
