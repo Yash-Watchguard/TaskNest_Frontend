@@ -1,0 +1,41 @@
+<div class="profile-container">
+  <div class="header">
+    <div class="profilebox">
+
+    </div>
+    <h2>Profile Settings</h2>
+    <p>Manage your account information</p>
+  </div>
+  <div class="user-details-container">
+ <form [formGroup]="userForm" (ngSubmit)="saveChanges()">
+
+    <div class="p-field mb-4">
+      <label for="name">Name</label>
+      <input id="name" type="text" pInputText formControlName="name" />
+    </div>
+
+    <div class="p-field mb-4">
+      <label for="email">Email</label>
+      <input id="email" type="email" pInputText formControlName="email" />
+    </div>
+
+    <div class="p-field mb-4">
+      <label for="phoneNumber">Phone Number</label>
+      <input id="phoneNumber" type="tel" pInputText formControlName="phoneNumber" />
+    </div>
+
+    <div class="p-mt-4">
+      <!-- Show "Update" button when not in edit mode -->
+      <p-button *ngIf="!isEditMode" label="Update" (click)="toggleEditMode()" fluid><i class=" pi pi-user-edit" style="color:white ;size: 20px;"></i></p-button>
+      
+      <!-- Show "Save" and "Cancel" buttons when in edit mode -->
+      <ng-container *ngIf="isEditMode">
+        <p-button label="Save" type="submit" [disabled]="userForm.invalid" fluid ></p-button>
+        <p-button label="Cancel" (click)="cancelEdit()" styleClass="p-button-secondary ml-2" fluid=""></p-button>
+      </ng-container>
+    </div>
+    <p-button label="Delete Profile" severity="danger" fluid><i class=" pi pi-trash" style="color:white ;size: 20px;"></i></p-button>
+
+  </form>
+</div>
+</div>

@@ -6,11 +6,17 @@
     'in-progress': task.TaskStatus === TaskStatus.InProgress
   }"
   (click)="onclick($event)"
- 
->
+>  
+<div class="top">
   <div class="header">
     <h2 class="title">{{ task.Title }}</h2>
   </div>
+  <div class="action" style="display: flex;gap: 20px;">
+    <button class="delete" style="border-radius: 6px; background-color:purple;"><i class="pi pi-trash" style="color: red !important;width: 30px;border-radius:6px;"></i></button>
+    <button class="comment"><i class="pi pi-comment" style="color: purple !important;width: 30px;"></i></button>
+  </div>
+</div>
+  
   <p class="description">{{ task.Description }}</p>
   <div class="details">
     <span
@@ -34,7 +40,7 @@
   >
     Due: {{ task.Deadline | date : "dd/MM/yyyy" }}
   </p>
-  <div class="actions">
+  <div class="actions" *ngIf="user?.Role===2">
     <button
       *ngIf="task.TaskStatus === TaskStatus.Pending"
       class="start-button"
@@ -53,3 +59,4 @@
     <!-- <i (click)="opencomment()" class="material-icons">chat-bubble</i> -->
   </div>
 </div>
+<router-outlet></router-outlet>

@@ -2,6 +2,7 @@
 .dashboard-container {
   // background: var(--color-background);
   padding: 24px 32px 0px 32px;
+  overflow-x: auto;
 
   .dashboard-header {
     margin-bottom: 20px;
@@ -21,7 +22,7 @@
     justify-content: space-evenly;
     margin-bottom: 28px;
     height: 200px;
-    background:  var(--color-card);
+    
     gap: 20px;
     .summary-card {
       border: medium solid var(--color-border);
@@ -32,6 +33,7 @@
       display: flex;
       align-items: center;
       min-width: 165px;
+      background:  var(--color-card);
       // .icon {
       //   font-size: 32px;
       //   margin-right: 12px;

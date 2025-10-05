@@ -35,7 +35,10 @@ $icon-color: #999;
     box-shadow: $shadow;
     padding: 25px;
     width: 100%;
-    .header {
+    .top{
+        display: flex;
+        justify-content: space-between;
+        .header {
         display: flex;
         align-items: center;
         margin-bottom: 10px;
@@ -44,9 +47,31 @@ $icon-color: #999;
             font-size: 1.5em;
             margin: 0;
             color: var(--gray);
+    }
+
+    .action {
+        display: flex;
+        gap: 20px;
+
+       ::ng-deep button.delete {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
         }
 
+        button.comment {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+
+            
+        }
     }
+}
+    }
+    
 
     .description {
         color: $secondary-text;

@@ -10,4 +10,5 @@ export class SummaryCardComponent {
    @Input({required:true}) totallength!:number;
    @Input({required:true}) iconLink!:string;
    @Input({required:true}) titel!:string
+   @Input({required:true}) iconcolor!:string;
 }

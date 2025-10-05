@@ -45,7 +45,9 @@ export class LoginComponent {
           //  }else{
           //   this.authservice.router.navigate(['employeeDashboard'])
           //  }
-          this.authservice.router.navigate(['dashboard'])
+          this.authservice.router.navigate(['dashboard'],{
+            replaceUrl:true
+          })
         },
         error:(err:HttpErrorResponse)=>{
           this.loading.set(false)

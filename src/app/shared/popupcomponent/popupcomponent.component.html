@@ -1,7 +1,5 @@
-
 <div class="popup-overlay" (click)="closePopup()">
   <div class="popup-content" (click)="$event.stopPropagation()">
-    <!-- This is where your dynamic component will be loaded based on the URL -->
-    <router-outlet name="popup"></router-outlet>
+    <router-outlet></router-outlet>
   </div>
 </div>

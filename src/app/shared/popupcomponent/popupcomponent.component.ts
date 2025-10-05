@@ -1,17 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-popupcomponent',
   imports: [RouterOutlet],
   templateUrl: './popupcomponent.component.html',
-  styleUrl: './popupcomponent.component.scss'
+  styleUrls: ['./popupcomponent.component.scss'],
 })
 export class PopupcomponentComponent {
-  constructor(private route:Router){
+  private router = inject(Router);
 
+  closePopup() {
+    this.router.navigate([{ outlets: { popup: null } }]);
   }
-closePopup(){
-  this.route.navigate()
-}
 }

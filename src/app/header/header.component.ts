@@ -4,10 +4,11 @@ import { AuthService } from '../services/auth.service';
 import { user } from '../models/user.model';
 import { DialogModule } from 'primeng/dialog';
 import { Dialog } from 'primeng/dialog';
+import { PopupcomponentComponent } from '../shared/popupcomponent/popupcomponent.component';
 
 @Component({
   selector: 'app-header',
-  imports: [Dialog],
+  imports: [Dialog,PopupcomponentComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -20,11 +21,19 @@ export class HeaderComponent implements OnInit {
   }
 logout(){
   alert("are you sure!")
-  this.router.navigate(['/login'])
   localStorage.clear()
+  sessionStorage.clear()
+  this.router.navigate(['/login'])
+  
 }
  visible: boolean = false;
-    onclick(){
-      this.visible=true;
+  onclick() {
+    
+    this.router.navigate([{ outlets: { popup: ['popup', 'profile'] } }],{
+      replaceUrl:true
+    });
+  }
+    onclose(){
+       this.visible=false;
     }
 }

@@ -13,7 +13,7 @@
         <span>Total Tasks</span>
         <h3>{{todo.length + inProgress.length + done.length}}</h3>
       </div> -->
-    <app-summary-card [totallength]="todo.length + inProgress.length + done.length" titel="Total Task" iconLink="pi pi-calendar"></app-summary-card>
+    <app-summary-card [totallength]="todo.length + inProgress.length + done.length" titel="Total Task" iconLink="pi pi-calendar" iconcolor="var(--p-purple-500)"></app-summary-card>
     </div>
     <div class="summary-card">
       <!-- <div class="icon"><span>&#9200;</span></div>
@@ -21,7 +21,7 @@
         <span>To Do</span>
         <h3>{{todo.length}}</h3>
       </div> -->
-      <app-summary-card [totallength]="todo.length" titel="To Do" iconLink="pi pi-clock"></app-summary-card>
+      <app-summary-card [totallength]="todo.length" titel="To Do" iconLink="pi pi-clock" iconcolor="var(--p-red-500)"></app-summary-card>
     </div>
     <div class="summary-card">
       <!-- <div class="icon"><span>&#8986;</span></div>
@@ -29,7 +29,7 @@
         <span>In Progress</span>
         <h3>{{inProgress.length}}</h3>
       </div> -->
-      <app-summary-card  [totallength]="inProgress.length" titel="In Progress" iconLink="pi pi-hourglass"></app-summary-card>
+      <app-summary-card  [totallength]="inProgress.length" titel="In Progress" iconLink="pi pi-hourglass" iconcolor="var(--p-yellow-500)"></app-summary-card>
     </div>
     <div class="summary-card">
       <!-- <div class="icon"><span>&#10003;</span></div>
@@ -37,7 +37,7 @@
         <span>Completed</span>
         <h3>{{done.length}}</h3>
       </div> -->
-      <app-summary-card  [totallength]="done.length" titel="Completed" iconLink="pi pi-check-circle"></app-summary-card>
+      <app-summary-card  [totallength]="done.length" titel="Completed" iconLink="pi pi-check-circle" iconcolor="var(--p-green-500)"></app-summary-card>
     </div>
   </div>
 
@@ -85,9 +85,13 @@
    
   <app-comment *ngIf="showComments" [isOpen]="showComments" [task]="selectedTask" (close)="closecommentbox()"></app-comment>
 
+  
+
+</div>
+<div>
 </div>
 
-<router-outlet></router-outlet>
+
 
 
   

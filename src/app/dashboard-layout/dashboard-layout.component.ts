@@ -16,11 +16,18 @@ export class DashboardLayoutComponent implements OnInit {
    ngOnInit():void{
      const user=this.authservice.newUser()
            if(user?.Role===Role.ADMIN){
-            this.authservice.router.navigate(['/dashboard/admin'])
-           }else if(user?.Role===Role.MANAGER){
-            this.authservice.router.navigate(['/dashboard/manager'])
-           }else{
-            this.authservice.router.navigate(['/dashboard/employee'])
+            this.authservice.router.navigate(['/dashboard/admin'],{
+              replaceUrl:true})
+           }
+           if(user?.Role===Role.MANAGER){
+            this.authservice.router.navigate(['/dashboard/manager'],{
+              replaceUrl:true
+            })
+           }
+           if(user?.Role===Role.EMPLOYEE){
+            this.authservice.router.navigate(['/dashboard/employee'],{
+              replaceUrl:true
+            })
            }
    }
 }

@@ -11,5 +11,5 @@ export const adminguardGuard: CanActivateFn = (route, state) => {
   if (newuser && newuser.Role === Role.ADMIN) {
     return true;
   }
-  return router.createUrlTree(['accessdenied']);
+  return router.navigate(['accessdenied']);
 };

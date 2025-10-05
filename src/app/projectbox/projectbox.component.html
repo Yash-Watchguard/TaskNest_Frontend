@@ -1,0 +1,27 @@
+<div class="project-box">
+  <div class="header">
+    <div class="title-section">
+      <h3>{{Project?.ProjectName}}</h3>
+      <p>{{Project?.ProjectDes}}</p>
+    </div>
+    <div class="action">
+         <button class="add-task-btn" (click)="loadTasks()">Tasks</button>
+    <button class="add-task-btn">+ Add Task</button>
+    </div>
+   
+  </div>
+  <div class="status-section">
+    <span class="status-badge">{{projectCompletionpercentage}}</span>
+    <span class="tasks">{{totalTask}} Task</span>
+  </div>
+  <div class="progress-section">
+    <label>Progress</label>
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width]="projectCompletionpercentage+'%'"></div>
+    </div>
+    <span class="progress-percent">{{projectCompletionpercentage}} %</span>
+  </div>
+  <div class="deadline">
+    Deadline: {{Project?.Deadline | date:"dd/MM/yyyy"}}
+  </div>
+</div>

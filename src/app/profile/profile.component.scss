@@ -1,0 +1,56 @@
+@use "../shared/variables";
+.profile-container{
+    .header{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   .profilebox{
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    background-color: var(--p-purple-100);
+   }
+   h2{
+    color: var(--dark-purple-text);
+    margin-bottom: 1px;
+   }
+   p{
+    font-size: 24px;
+    margin-top: 1px;
+    color: var(--light-purple-text);
+   }
+    }
+
+    .user-details-container{
+        margin:20px;
+        .p-field{
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            label{
+          font-size: 20px;
+          color: var(--dark-purple-text);
+        }
+        input{
+            font-size: 20px;
+            height:50px;
+            border-radius: 8px;
+            border: solid var(--color-border);
+            border-width: 3px;
+            margin-bottom: 25px;
+            background-color: var(--p-white-50);
+        }
+
+        }
+        .p-mt-4{
+            width: 100%;
+            margin-bottom: 20px;
+        }
+       :host ::ng-deep p-button{
+            margin-top: 20px;
+        }
+        
+    }
+   
+}

@@ -9,7 +9,7 @@ import { TaskboxComponent } from "../../taskbox/taskbox.component";
 import { NgForOf, NgClass } from "@angular/common";
 import { AppComponent } from '../../app.component';
 import { CommentComponent } from '../../comment/comment.component';
-import { ActivatedRoute, Route, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NgIf } from "@angular/common";
 import { SummaryCardComponent } from "../../shared/summary-card/summary-card.component";
 import { TooltipModule } from 'primeng/tooltip'
@@ -31,13 +31,14 @@ export class EmployeedashboardComponent implements OnInit {
   selectedTask: Task | null = null;
   showComments = false;
 
-  constructor(private taskservice: TaskService) {}
+  constructor(private taskservice: TaskService, private router:Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const userstring = localStorage.getItem('user');
     const user = userstring ? JSON.parse(userstring) : null;
     this.tasks$ = this.taskservice.tasks$;
-    this.taskservice.GetTasks(`employees/c00fdfa3-0ad2-4cd8-bf78-932cc679f73c/tasks`).subscribe({
+    const userId=localStorage.getItem('userId');
+    this.taskservice.GetTasks(`employees/${userId}/tasks`).subscribe({
       next: (response) => {
         console.log(response);
       },
@@ -67,8 +68,9 @@ export class EmployeedashboardComponent implements OnInit {
     });
   }
   onopencomment(task:Task){
-   this.showComments=true
-   this.selectedTask=task
+  //  this.showComments=true
+  //  this.selectedTask=task
+  this.router.navigate(['../task'],{relativeTo:this.route,state:{task:task}})
   }
   closecommentbox(){
     this.showComments=false

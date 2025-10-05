@@ -8,8 +8,8 @@ export const managerguardGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const newuser = authService.getCurrentUser();
 
-  if (newuser && (newuser.Role === Role.ADMIN || newuser.Role === Role.MANAGER)) {
+  if (newuser && (newuser.Role === Role.MANAGER)) {
     return true;
   }
-  return router.createUrlTree(['accessdenied']);
+  return router.navigate(['accessdenied']);
 };

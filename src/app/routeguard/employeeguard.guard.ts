@@ -8,8 +8,8 @@ export const employeeguardGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const newuser = authService.getCurrentUser();
 
-  if (newuser && (newuser.Role === Role.ADMIN || newuser.Role === Role.EMPLOYEE)) {
+  if (newuser && (newuser.Role === Role.EMPLOYEE)) {
     return true;
   }
-  return router.createUrlTree(['accessdenied']);
+  return router.navigate(['accessdenied']);
 };

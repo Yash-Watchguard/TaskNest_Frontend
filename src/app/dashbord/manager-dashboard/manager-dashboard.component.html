@@ -1,1 +1,48 @@
-<p>manager-dashboard works!</p>
+<div class="manager-container">
+  <div class="dashboard-header">
+    <h2>Manager Dashboard</h2>
+    <span>Manage your assigned projects and tasks</span>
+  </div>
+  <div class="summary-cards">
+    <div class="summary-card">
+      <app-summary-card [totallength]="assignedProjects.length" iconLink="pi pi-file-o" titel="My Projects" iconcolor="var(--p-purple-500)"></app-summary-card>
+    </div>
+    <div class="summary-card">
+      <app-summary-card [totallength]="allDonetask.length+allInProgresstask.length+alltodotask.length" iconLink="pi pi-calendar" titel="Total Task" iconcolor="var(--p-blue-500)"></app-summary-card>
+    </div>
+    <div class="summary-card">
+      <app-summary-card [totallength]="allDonetask.length" iconLink="pi pi-check-circle" titel="Completed Task" iconcolor="var(--p-green-500)"></app-summary-card>
+    </div>
+    <div class="summary-card">
+    <app-summary-card [totallength]="allInProgresstask.length" iconLink="pi pi-calendar" titel="In Progress" iconcolor="var(--p-red-500)"></app-summary-card>
+    </div>
+  </div>
+
+  <div class="main-section">
+      <div class="bock-titel">
+        <h3>My Assigned Projects</h3>
+        <p>Project you are managing</p>
+      </div>
+      <div class="project-box">
+        @for (item of assignedProjects; track item.ProjectId) {
+         <app-projectbox [Project]="item" (loadTasksignal)="loadTask($event)"></app-projectbox>
+        }
+      </div>
+  </div>
+  @if(shouldLoad){
+  <div class="task-section">
+    <h3>Tasks</h3>
+    <div class="task-box-section">
+      @if(SingleProjectTask.length>0){
+          @for(task of SingleProjectTask;track task.TaskId){
+           <app-taskbox [task]="task"></app-taskbox>
+          }
+      }@else {
+        <div class="no-task">
+          <p>Sorry No Task</p>
+        </div> 
+      }
+    </div>
+  </div>
+}
+</div>
