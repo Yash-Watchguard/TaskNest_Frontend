@@ -13,6 +13,17 @@ export class ProjectService{
 
     private getprojecturl='';
 
+    currentptojectid:any=''
+
+    // behaviour subject for the projectstatus
+    // private projectStatusobject$=new BehaviorSubject<{
+    //         projectId:string
+    //         completedTasks:string
+    //         totalTasks:number
+    //         completionPercentage:number
+    //     }[]>([]);
+    //     projectStatus=this.projectStatusobject$.asObservable();
+
     GetAssignedProject(url:string){
         this.getprojecturl=url;
         return this.httpclient.get<viewprojectresponse>(url).pipe(
@@ -35,6 +46,7 @@ export class ProjectService{
     Addproject(){
 
     }
+
     GetProjectStatuas(url:string){
       return this.httpclient.get<{
         status:string
@@ -43,9 +55,27 @@ export class ProjectService{
             projectId:string
             completedTasks:string
             totalTasks:number
-            completionPercentage:string
+            completionPercentage:number
         }
        }>(url)
+    //    .pipe(
+    //     map((response)=>{
+    //         return response.data.map((t)=>({
+    //             projectId:t.projectId,
+    //             completedTasks:t.completedTasks,
+    //             totalTasks:t.totalTasks,
+    //             completionPercentage:t.completionPercentage
+    //         }) as {
+    //         projectId:string
+    //         completedTasks:string
+    //         totalTasks:number
+    //         completionPercentage:number
+    //     } );
+    //     }),
+    //     tap((projectstatus)=>{
+    //           this.projectStatusobject$.next(projectstatus)
+    //     })
+    //    )
     }
     
 }

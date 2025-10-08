@@ -42,4 +42,13 @@ export type Task ={
   CreatedBy: string;
 }
 
+export type AddTask={
+  title: string,
+  description:string,
+  acceptance_criteria:string,
+  deadline:string,
+  priority:string,
+  assigned_to:string,
+}
+
 

@@ -16,7 +16,6 @@ $icon-color: #999;
 
 
 .task-card {
-    cursor: pointer;
     &.in-progress{
        border:  1px solid var(--p-yellow-400);
        background-color: var(--p-yellow-50);

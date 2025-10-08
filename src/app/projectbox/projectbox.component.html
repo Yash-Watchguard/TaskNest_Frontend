@@ -6,12 +6,12 @@
     </div>
     <div class="action">
          <button class="add-task-btn" (click)="loadTasks()">Tasks</button>
-    <button class="add-task-btn">+ Add Task</button>
+    <button class="add-task-btn" (click)="AddTask()">+ Add Task</button>
     </div>
    
   </div>
   <div class="status-section">
-    <span class="status-badge">{{projectCompletionpercentage}}</span>
+    <span class="status-badge">{{projectCompletionpercentage==100?'Complete':projectCompletionpercentage>0?'Inprogress':'Pending'}}</span>
     <span class="tasks">{{totalTask}} Task</span>
   </div>
   <div class="progress-section">
@@ -25,3 +25,5 @@
     Deadline: {{Project?.Deadline | date:"dd/MM/yyyy"}}
   </div>
 </div>
+
+

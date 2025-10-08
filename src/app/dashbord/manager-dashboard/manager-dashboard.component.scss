@@ -1,4 +1,5 @@
 .manager-container{
+  //  padding: 2px 200px 0px 200px;
     padding: 2px 32px 0px 32px;
   overflow-x: auto;
 
@@ -76,12 +77,25 @@
     padding: 30px;
     padding-top: 10px;
     min-height: 300px;
-    width: 100%; /* Increased width */
-    max-width: 100%;
+    width: 100%; 
+    
     border-radius: 20px;
     border: solid var(--p-purple-300);
     border-width: 1px;
     overflow-x: hidden; 
-    overflow-y: auto;
+ 
+    display: flex;
+   
+    flex-direction: column;
+      .task-box-section{
+        max-height:400px ;
+       overflow-y: auto;
+     .task-box{
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+     }
+      
+    }
   }
 }

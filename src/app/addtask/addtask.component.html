@@ -1,1 +1,95 @@
-<p>addtask works!</p>
+<div class="popup-overlay" >
+  <div class="popup-content">
+    <form #taskForm="ngForm" (ngSubmit)="addnewtask()" class="task-form">
+  <div class="header">
+    <h2 class="form-title">Create New Task</h2>
+    <p class="form-subtitle">Create a task for E-commerce Website</p>
+  </div>
+  
+  <div class="form-group">
+    <label for="titel">Task Title</label>
+    <input
+      type="text"
+      id="titel"
+      name="titel"
+      [(ngModel)]="titel"
+      required
+      class="form-control"
+      placeholder="Enter task title"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="description">Task Description</label>
+    <textarea
+      id="description"
+      name="description"
+      [(ngModel)]="destcription"
+      required
+      class="form-control"
+      placeholder="Enter task description"
+    ></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="acceptance">Acceptance Criteria (Optional)</label>
+    <textarea
+      id="acceptance"
+      name="acceptance"
+      [(ngModel)]="acceptance_criteria"
+      class="form-control"
+      required
+      placeholder="Enter acceptance criteria (one per line)"
+    ></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="priority">Task Type</label>
+    <select name="priority" id="priority" [(ngModel)]="priority" class="form-control">
+      <option value="" disabled selected>Feature</option>
+      <option value="High">high</option>
+      <option value="Medium">medium</option>
+      <option value="Low">low</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="date">Task Deadline</label>
+    <p-datepicker
+      [(ngModel)]="date"
+      [minDate]="minDate"
+      [readonlyInput]="true"
+      dateFormat="mm/dd/yy"
+      name="date"
+      id="date"
+      required
+      class="form-control"
+    ></p-datepicker>
+  </div>
+  
+  <div class="form-group">
+    <label for="employeeid">Assign Employee</label>
+    <input
+      type="text"
+      id="employeeid"
+      name="employeeId"
+      [(ngModel)]="employeeId"
+      class="form-control"
+      required
+      placeholder="Select an employee"
+    />
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn-submit" [disabled]="!taskForm.valid">
+      Create Task
+    </button>
+    <button type="button" class="btn-cancel" (click)="close()">
+      Cancel
+    </button>
+  </div>
+</form>
+     
+      
+  </div>
+</div>

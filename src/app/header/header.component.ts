@@ -29,9 +29,7 @@ logout(){
  visible: boolean = false;
   onclick() {
     
-    this.router.navigate([{ outlets: { popup: ['popup', 'profile'] } }],{
-      replaceUrl:true
-    });
+    this.router.navigate([{ outlets: { popup: ['popup', 'profile'] } }],);
   }
     onclose(){
        this.visible=false;

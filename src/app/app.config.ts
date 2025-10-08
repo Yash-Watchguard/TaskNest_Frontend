@@ -9,6 +9,8 @@ import { AddJwt } from './interceptors/addjwt.interceptors';
 import Aura from '@primeng/themes/aura'
 import { customPreset } from './custom-preset';
 import { loggingInterceptor } from './interceptors/logging.interceptors';
+import { MessageService } from 'primeng/api';
+import { Toast } from 'primeng/toast';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,5 +26,8 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([BaseUrl,AddJwt,loggingInterceptor])),
+    MessageService,
+    Toast,
+    
   ],
 };

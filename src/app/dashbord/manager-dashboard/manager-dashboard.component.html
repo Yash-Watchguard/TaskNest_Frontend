@@ -25,18 +25,21 @@
       </div>
       <div class="project-box">
         @for (item of assignedProjects; track item.ProjectId) {
-         <app-projectbox [Project]="item" (loadTasksignal)="loadTask($event)"></app-projectbox>
+         <app-projectbox [Project]="item" (loadTasksignal)="loadTask($event)" (Addtasksignal)="openaddtask($event)"></app-projectbox>
         }
       </div>
   </div>
   @if(shouldLoad){
-  <div class="task-section">
+  <div class="task-section" #secondDiv>
     <h3>Tasks</h3>
     <div class="task-box-section">
       @if(SingleProjectTask.length>0){
-          @for(task of SingleProjectTask;track task.TaskId){
-           <app-taskbox [task]="task"></app-taskbox>
+        <div class="task-box">
+           @for(task of SingleProjectTask;track task.TaskId){
+           <app-taskbox [task]="task" (openComments)="onopencomment($event) " (delcomment)="taskdelete($event)" ></app-taskbox>
           }
+        </div>
+         
       }@else {
         <div class="no-task">
           <p>Sorry No Task</p>
@@ -46,3 +49,4 @@
   </div>
 }
 </div>
+<app-addtask *ngIf="isaddtaskopen"  (closepopup)="oncloseaddtaskbox()" [ProjectId]="ProjectIdforAddTask"></app-addtask>

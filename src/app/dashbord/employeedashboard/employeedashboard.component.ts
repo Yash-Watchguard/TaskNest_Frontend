@@ -57,8 +57,8 @@ export class EmployeedashboardComponent implements OnInit {
 
   onStatusChange(event: { taskId: string; taskStatus: TaskStatus }) {
     const { taskId, taskStatus } = event;
-    const tasks = taskStatus === TaskStatus.Done ? 'done' : taskStatus == TaskStatus.InProgress ? 'in progress' : 'pending';
-    this.taskservice.UpdateStatus(`projects/${this.userId}/tasks/${taskId}`, tasks).subscribe({
+    const taskstattus = taskStatus === TaskStatus.Done ? 'done' : taskStatus == TaskStatus.InProgress ? 'in progress' : 'pending';
+    this.taskservice.UpdateStatus(`projects/${this.userId}/tasks/${taskId}`, taskstattus).subscribe({
       next: () => {
         console.log("task updated success");
       },

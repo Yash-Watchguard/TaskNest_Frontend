@@ -1,12 +1,17 @@
 import { inject, Injectable } from "@angular/core";
 import { InjectSetupWrapper } from "@angular/core/testing";
 import { BehaviorSubject,map,tap } from "rxjs";
-import { priority, Task, TaskApiResponse, TaskStatus } from "../models/task.model";
+import { AddTask, priority, Task, TaskApiResponse, TaskStatus } from "../models/task.model";
 import { HttpClient, HttpParams } from "@angular/common/http";
+import { ProjectService } from "./project.service";
 
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
+  private projectservice=inject(ProjectService)
+
+  private userId:string|null=localStorage.getItem('userId')
+ 
   private httpClient = inject(HttpClient);
   private taskObject = new BehaviorSubject<Task[]>([]);
   public tasks$ = this.taskObject.asObservable();
@@ -88,6 +93,65 @@ export class TaskService {
         }),
         tap((tasks)=>{
           this.AprojectTask.next(tasks)
+        })
+      )
+  }
+
+  deleteTask(taskId:string,projectId:string){
+        // first delete the comment then update the get all task of a project and also get all mnager created task
+
+       return this.httpClient.delete<{status:string,message:string}>(`projects/${projectId}/tasks/${taskId}`).pipe(
+          tap((response)=>{
+            // call the getallmanagertask
+            this.GetAllManagerProjectTask(`projects/${this.userId}/tasks/manager`).subscribe({
+              next:(response)=>{
+                
+              },
+              error:()=>{
+
+              }
+            });
+            // call get allproject task
+            this.GetAllTaskOfProject(`projects/${projectId}/tasks`).subscribe({
+              next:(response)=>{
+                
+              },
+              error:()=>{
+
+              }
+            });
+            // update the projectstatus
+            this.projectservice.GetProjectStatuas(`projects/status/${projectId}`).subscribe({
+              next:(response)=>{
+                
+              },
+              error:()=>{
+
+              }
+            });
+          })
+        )
+  }
+  addTask(projectId:string|undefined,taskdata:AddTask){
+      return this.httpClient.post(`projects/${projectId}/tasks`,taskdata).pipe(
+        tap(()=>{
+          this.GetAllManagerProjectTask(`projects/${this.userId}/tasks/manager`).subscribe({
+              next:(response)=>{
+                
+              },
+              error:()=>{
+
+              }
+            });
+            // call get allproject task
+            this.GetAllTaskOfProject(`projects/${projectId}/tasks`).subscribe({
+              next:(response)=>{
+                
+              },
+              error:()=>{
+
+              }
+            });
         })
       )
   }
