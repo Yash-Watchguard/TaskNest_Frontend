@@ -1,14 +1,19 @@
 <nav class="navbar">
-        <div class="navbar-left">
-            <img src="favicon.ico" alt="TaskNest Logo" class="logo">
-            <h1 class="font-h1">TaskNest</h1>
-            <span class="font-h2">{{user?.Role==1?'Manager':(user?.Role)==0?'Admin':'Employee'}}</span>
-            
-        </div>
-        <div class="navbar-right">
-            <i class="material-icons" (click)="logout()">logout</i>
-            <span class="font-h2">Welcome {{user?.Name}}</span>
-            <button class="user-button" (click)="onclick()"><span class="pi pi-user"></span></button>
-        </div>
+  <div class="navbar-left">
+    <img src="Media.jpg" alt="TaskNest Logo" class="logo" />
+    <h1 class="font-h1">TaskNest</h1>
+    <span>{{
+      user?.Role == 1 ? "Manager" : user?.Role == 0 ? "Admin" : "Employee"
+    }}</span>
+  </div>
+  <div class="navbar-right">
+    <i class="material-icons" (click)="logout()">logout</i>
+    <span class="font-h2">Welcome {{ user?.Name }}</span>
+    <button class="user-button" (click)="onclick()">
+      <span class="pi pi-user"></span>
+    </button>
+  </div>
 </nav>
-       
+<!-- @if(openProfile){
+<app-profile ></app-profile>
+} -->

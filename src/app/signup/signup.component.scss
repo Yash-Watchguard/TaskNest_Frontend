@@ -1,13 +1,14 @@
+/* Assumes a shared variables file for color definitions exists */
 @use "../shared/variables";
 
-.login {
+.login-page-container {
+  display: flex;
   height: 100vh;
   width: 100vw;
-  display: flex;
   overflow: hidden;
 }
 
-.login-img {
+.login-image-section {
   width: 50%;
   height: 100%;
 
@@ -18,13 +19,11 @@
   }
 }
 
-.login-page {
+.login-form-section {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* Frosted glass background */
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -37,20 +36,19 @@
   background: white;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 
-  header {
+  &-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 2rem;
  
-
     img {
       height: 3rem;
       width: 3rem;
       margin-bottom: 0.5rem;
     }
 
-    h3 {
+    h2 {
       font-size: 1.8rem;
       font-weight: bold;
       color: var(--mdark-purple-text);
@@ -59,7 +57,7 @@
 
     p {
       font-size: 1rem;
-      color:var(--light-purple-text) ; // purple-500
+      color: var(--light-purple-text);
     }
   }
 }
@@ -67,34 +65,48 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 
-  input {
-    font-size: 1.1rem;
+  p-button {
     height: 3rem;
-    padding: 0.8rem 1rem;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    background-color: var(--color-background);
-    color: var(--dark-purple-text); // purple-900
-
-
-    &:focus {
-      border-color: var(--dark-purple-text); // darker purple
-      outline: none;
-      box-shadow: 0 0 8px var(--dark-purple-text);
-    }
-  }
-
-   p-button{
-    height: 3rem;
-   }
-  .changelabel{
-    color:black;
+    margin-top: 1rem; 
   }
 }
 
-.signupChange {
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    input {
+        font-size: 1.1rem;
+        height: 3rem;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        background-color: var(--color-background);
+        color: var(--dark-purple-text);
+
+        &:focus {
+            border-color: var(--dark-purple-text);
+            outline: none;
+            box-shadow: 0 0 8px var(--dark-purple-text);
+        }
+    }
+}
+
+.validation-error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 2px;
+  color: red;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.signup-link {
   font-size: 1rem;
   padding-top: 2rem;
   text-align: center;
@@ -108,4 +120,11 @@
       text-decoration: underline;
     }
   }
+}
+
+p-button.button {
+    &[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 }

@@ -21,3 +21,10 @@ export type Project={
     CreatedBy:string
     AssignedManagerId:string
 }
+
+export interface AddProjectRequest{
+  projectName:string,
+  projectDescription:string,
+  deadline:string,
+  assignedManagerId:string,
+}

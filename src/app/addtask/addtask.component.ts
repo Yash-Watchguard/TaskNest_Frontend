@@ -1,73 +1,122 @@
-import { Component, EventEmitter, inject, Input, OnDestroy, Output, StreamingResourceOptions} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  Output,
+  signal,
+  StreamingResourceOptions,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { DatePicker } from 'primeng/datepicker';
-import { AddTask, priority } from '../models/task.model';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { TaskService } from '../services/task.service';
-
-
-import { ProjectService } from '../services/project.service';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import { AutoCompleteModule } from 'primeng/autocomplete';
+
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api'
+import { MessageService } from 'primeng/api';
+import { getAllUsersApiRes, person } from '../models/user.model';
+import { TaskService } from '../services/task.service';
+import { UserService } from '../services/user.service';
+import { AddTask} from '../models/task.model';
 
 @Component({
   selector: 'app-addtask',
-  imports: [FormsModule,AutoCompleteModule,DatePicker,ToastModule],
+  imports: [FormsModule, AutoCompleteModule, ToastModule],
   templateUrl: './addtask.component.html',
   styleUrl: './addtask.component.scss',
 })
-export class AddtaskComponent implements OnDestroy{
-  @Input({required:true}) ProjectId!:string 
-  messageservice=inject(MessageService)
-  constructor(private taskservice:TaskService ,private projectservice:ProjectService){}
+export class AddtaskComponent {
+ 
+  messageservice = inject(MessageService);
+  constructor(
+    private taskservice: TaskService,
+    private userservice: UserService,
+  ) {}
+  empList:person[]=[];
 
- items:any[]=['Low','Medium','High'];
+  items: any[] = ['Low', 'Medium', 'High'];
 
+  @Input({ required: true }) ProjectId!: string;
+  
+  @Output() closepopup = new EventEmitter();
+
+  titel= '';
+  destcription= '';
+  acceptance_criteria = '';
+  employeeId= '';
+  date='';
   priority!: string;
+  
+  isaddtasktrue = signal<boolean>(true);
+  count = 0;
+  
 
-  // ................................
-  @Output() closepopup=new EventEmitter();
-  close(){
+  close() {
     this.closepopup.emit();
   }
-  titel:string='';
-  destcription:string='';
-  acceptance_criteria='';
-  employeeId:string='';
-  date!: Date;
-  minDate: Date | undefined;
-   
+
+  ngOnInit() {
+      this.userservice.GetAllEmployee().subscribe({
+        next:(response:getAllUsersApiRes)=>{
+          this.empList=response.data;
+        },
+        error:(err:HttpErrorResponse)=>{
+          console.log(err);
+        }
+      });
+  }
   
-  ngOnInit(){
-    const today=new Date();
-    this.minDate=today
-    this.minDate?.setMonth(today.getMonth())
-    this.minDate?.setFullYear(today.getFullYear())
-  }
-  addnewtask(){
-    const taskdetails:AddTask={
-      title:this.titel,
-      description:this.destcription,
-      acceptance_criteria:this.acceptance_criteria,
-      deadline:this.date?.toISOString().split('T')[0],
-      priority:this.priority,
-      assigned_to:this.employeeId
-    }  
+  addnewtask(): void {
+    this.isaddtasktrue.set(false);
+    const taskdetails: AddTask = {
+      title: this.titel,
+      description: this.destcription,
+      acceptance_criteria: this.acceptance_criteria,
+      deadline: this.date,
+      priority: this.priority,
+      assigned_to: this.employeeId,
+    };
+    if (this.count == 0) {
+      this.count++;
+      this.taskservice.addTask(this.ProjectId, taskdetails).subscribe({
+        next: (response) => {
+          this.isaddtasktrue.set(true);
+          this.count--;
 
-    this.taskservice.addTask(this.ProjectId,taskdetails).subscribe({
-      next:(response)=>{
-           this.messageservice.add({ severity: 'success', summary: 'Success', detail: 'Task Added Successfully' });
-      },
-      error:(err:HttpErrorResponse)=>{
-           this.messageservice.add({ severity: 'error', summary: 'Error', detail: 'Task Add Fail' });
-         
-      }
-    })
-  }
-  ngOnDestroy(): void {
-    console.log(this.date?.toISOString().split('T')[0])
+          this.messageservice.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Task Added Successfully',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          this.isaddtasktrue.set(true);
+          this.count--;
+          this.messageservice.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Task Add Fail',
+          });
+        },
+      });
+    }
   }
 
+  onKeyDown(event: KeyboardEvent): void {
+    if (
+      [
+        'Backspace',
+        'Delete',
+        'Tab',
+        'Escape',
+        'ArrowLeft',
+        'ArrowRight',
+      ].includes(event.key)
+    ) {
+      return;
+    }
+    event.preventDefault();
+  }
+  
 }

@@ -1,52 +1,93 @@
 <div class="manager-container">
   <div class="dashboard-header">
-    <h2>Manager Dashboard</h2>
-    <span>Manage your assigned projects and tasks</span>
+    <h1>Manager Dashboard</h1>
+    <p>Manage your assigned projects and tasks</p>
   </div>
-  <div class="summary-cards">
-    <div class="summary-card">
-      <app-summary-card [totallength]="assignedProjects.length" iconLink="pi pi-file-o" titel="My Projects" iconcolor="var(--p-purple-500)"></app-summary-card>
+  <div class="dashboard-summary">
+    <div class="summary-box">
+      <div class="card-items">
+        <p>My Projects</p>
+        <h2>{{ assignedProjects.length }}</h2>
+      </div>
+      <div class="total-Project-right">
+        <i class="pi pi-file-o" style="font-size: 1.5rem"></i>
+      </div>
     </div>
-    <div class="summary-card">
-      <app-summary-card [totallength]="allDonetask.length+allInProgresstask.length+alltodotask.length" iconLink="pi pi-calendar" titel="Total Task" iconcolor="var(--p-blue-500)"></app-summary-card>
+    <div class="summary-box">
+      <div class="card-items">
+        <p>Total Task</p>
+        <h2>
+          {{
+            allDonetask.length + allInProgresstask.length + alltodotask.length
+          }}
+        </h2>
+      </div>
+      <div class="total-user-icon">
+        <i class="pi pi-calendar" style="font-size: 1.5rem"></i>
+      </div>
     </div>
-    <div class="summary-card">
-      <app-summary-card [totallength]="allDonetask.length" iconLink="pi pi-check-circle" titel="Completed Task" iconcolor="var(--p-green-500)"></app-summary-card>
+
+    <div class="summary-box">
+      <div class="card-items">
+        <p>Completed Task</p>
+        <h2>{{ allDonetask.length }}</h2>
+      </div>
+      <div class="active-tasks-icon">
+        <i class="pi pi-check-circle" style="font-size: 1.5rem"></i>
+      </div>
     </div>
-    <div class="summary-card">
-    <app-summary-card [totallength]="allInProgresstask.length" iconLink="pi pi-calendar" titel="In Progress" iconcolor="var(--p-red-500)"></app-summary-card>
+    <div class="summary-box">
+      <div class="card-items">
+        <p>In Progress</p>
+        <h2>{{ allInProgresstask.length }}</h2>
+      </div>
+      <div class="managers-icon">
+        <i class="pi pi-calendar" style="font-size: 1.5rem"></i>
+      </div>
     </div>
   </div>
 
   <div class="main-section">
-      <div class="bock-titel">
-        <h3>My Assigned Projects</h3>
-        <p>Project you are managing</p>
-      </div>
-      <div class="project-box">
-        @for (item of assignedProjects; track item.ProjectId) {
-         <app-projectbox [Project]="item" (loadTasksignal)="loadTask($event)" (Addtasksignal)="openaddtask($event)"></app-projectbox>
-        }
-      </div>
+    <div class="bock-titel">
+      <h3>My Assigned Projects</h3>
+      <p>Project you are managing</p>
+    </div>
+    <div class="project-box">
+      @for (item of assignedProjects; track item.ProjectId) {
+      <app-projectbox
+        [Project]="item"
+        (loadTasksignal)="loadTask($event)"
+        (Addtasksignal)="openaddtask($event)"
+      ></app-projectbox>
+      }
+    </div>
   </div>
   @if(shouldLoad){
   <div class="task-section" #secondDiv>
     <h3>Tasks</h3>
     <div class="task-box-section">
       @if(SingleProjectTask.length>0){
-        <div class="task-box">
-           @for(task of SingleProjectTask;track task.TaskId){
-           <app-taskbox [task]="task" (openComments)="onopencomment($event) " (delcomment)="taskdelete($event)" ></app-taskbox>
-          }
-        </div>
-         
+      <div class="task-box">
+        @for(task of SingleProjectTask;track task.TaskId){
+        <app-taskbox
+          [task]="task"
+          (openComments)="onopencomment($event)"
+          (deleteTask)="taskdelete($event)"
+        ></app-taskbox>
+        }
+      </div>
+
       }@else {
-        <div class="no-task">
-          <p>Sorry No Task</p>
-        </div> 
+      <div class="no-task">
+        <p>Sorry No Task</p>
+      </div>
       }
     </div>
   </div>
-}
+  }
 </div>
-<app-addtask *ngIf="isaddtaskopen"  (closepopup)="oncloseaddtaskbox()" [ProjectId]="ProjectIdforAddTask"></app-addtask>
+<app-addtask
+  *ngIf="isaddtaskopen"
+  (closepopup)="oncloseaddtaskbox()"
+  [ProjectId]="ProjectIdforAddTask"
+></app-addtask>

@@ -28,9 +28,10 @@ export class CommentService{
   }
 
   Addcomment(url:string, comment:string){
-    return this.httpClient.post(url,{
+    return this.httpClient.post(url.replace('/:','/'),{
         "content":comment
-    }).pipe(tap(response=>{
+    })
+    .pipe(tap(response=>{
         this.GetComments(this.getcommenturl).subscribe()
     }))
   }

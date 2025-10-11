@@ -1,13 +1,15 @@
+/* A variables file should contain all the project's color definitions. */
 @use "../shared/variables";
 
-.login {
+/* Refactor using more specific, descriptive class names. */
+.login-page-container {
+  display: flex;
   height: 100vh;
   width: 100vw;
-  display: flex;
   overflow: hidden;
 }
 
-.login-img {
+.login-image-section {
   width: 50%;
   height: 100%;
 
@@ -18,7 +20,7 @@
   }
 }
 
-.login-page {
+.login-form-section {
   width: 50%;
   display: flex;
   justify-content: center;
@@ -37,20 +39,19 @@
   background: white;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 
-  header {
+  &-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 2rem;
  
-
     img {
       height: 3rem;
       width: 3rem;
       margin-bottom: 0.5rem;
     }
 
-    h3 {
+    h2 { /* Use h2 for semantic hierarchy */
       font-size: 1.8rem;
       font-weight: bold;
       color: var(--mdark-purple-text);
@@ -59,7 +60,7 @@
 
     p {
       font-size: 1rem;
-      color:var(--light-purple-text) ; // purple-500
+      color: var(--light-purple-text);
     }
   }
 }
@@ -67,7 +68,14 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem; /* Better spacing between form controls */
+}
+
+.form-control {
+  position: relative; /* Needed for positioning the error message */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 
   input {
     font-size: 1.1rem;
@@ -76,25 +84,36 @@
     border: 1px solid var(--color-border);
     border-radius: 8px;
     background-color: var(--color-background);
-    color: var(--dark-purple-text); // purple-900
-
+    color: var(--dark-purple-text);
 
     &:focus {
-      border-color: var(--dark-purple-text); // darker purple
+      border-color: var(--dark-purple-text);
       outline: none;
       box-shadow: 0 0 8px var(--dark-purple-text);
     }
   }
-
-   p-button{
-    height: 3rem;
-   }
-  .changelabel{
-    color:black;
-  }
 }
 
-.signupChange {
+.validation-error {
+  position: absolute;
+  top: 100%; /* Position below the input */
+  left: 0;
+  margin-top: 0.25rem; /* Small gap between input and error text */
+  color: red;
+  font-size: 12px;
+  padding: 0;
+  white-space: nowrap; /* Prevents text from wrapping if too long */
+}
+
+p-button {
+  height: 3rem;
+}
+p-button:disabled{
+  cursor: not-allowed;
+}
+
+
+.signup-link {
   font-size: 1rem;
   padding-top: 2rem;
   text-align: center;
@@ -109,3 +128,4 @@
     }
   }
 }
+

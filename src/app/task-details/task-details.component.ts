@@ -1,9 +1,9 @@
-import { Component, inject, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, inject, OnChanges, OnInit, OnDestroy, SimpleChange, SimpleChanges } from '@angular/core';
 import { Task, TaskStatus } from '../models/task.model';
 import { Router } from '@angular/router';
 import { CommonModule, DatePipe, NgClass } from "@angular/common";
 import { CommentService } from '../services/comment.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { comment } from '../models/comment.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.scss'
 })
-export class TaskDetailsComponent implements OnInit{
+export class TaskDetailsComponent implements OnInit, OnDestroy{
     task!:Task;
     taskstatus=TaskStatus
    constructor(private router:Router){
@@ -30,9 +30,10 @@ export class TaskDetailsComponent implements OnInit{
    private comments$!:Observable<comment[]>
    allcomments:comment[]=[];
    newComment='';
+   private commentSubscription?: Subscription;
    ngOnInit(){
+     this.allcomments = [];
      this.loadComments()
-     this.allcomments=[]
    }
 
   loadComments(): void {
@@ -46,8 +47,11 @@ export class TaskDetailsComponent implements OnInit{
           console.log(err)
         }
       });
-      this.comments$.subscribe(comments=>{
-        this.allcomments=[...this.allcomments,...comments]
+      if (this.commentSubscription) {
+        this.commentSubscription.unsubscribe();
+      }
+      this.commentSubscription = this.comments$.subscribe(comments=>{
+        this.allcomments = comments;
       });
   }
 
@@ -70,12 +74,19 @@ export class TaskDetailsComponent implements OnInit{
     this.newComment = '';
   }
 
+  ngOnDestroy(): void {
+    if (this.commentSubscription) {
+      this.commentSubscription.unsubscribe();
+    }
+  }
+
   //  ngOnInit(): void {
   //    const stored = localStorage.getItem('selectedTask');
   //    if (stored) {
   //      this.task = JSON.parse(stored);
   //    } else {
-       
+
   //    }
   //  }
 }
+

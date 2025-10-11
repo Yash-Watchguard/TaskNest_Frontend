@@ -1,1 +1,120 @@
-<p>admin-dashboard works!</p>
+<p-toast position="top-right"></p-toast>
+<div class="admin-dashboard">
+  <div class="dashboard-header">
+    <div class="left">
+      <h1>Admin Dashboard</h1>
+      <p>Manage projects, users, and monitor progress</p>
+    </div>
+    <div class="right">
+      <button
+        pInputText
+        pTooltip="Create a new project and assign a manager"
+        tooltipPosition="top"
+        (click)="AddProjectModal()"
+      >
+        + Create Project
+      </button>
+    </div>
+  </div>
+  <div class="dashboard-summary">
+    <div class="summary-box">
+      <div class="card-items">
+        <p>Total Project</p>
+        <h2>{{ AllProject.length }}</h2>
+      </div>
+      <div class="total-Project-right">
+        <i class="pi pi-folder" style="font-size: 1.5rem"></i>
+      </div>
+    </div>
+    <div class="summary-box">
+      <div class="card-items">
+        <p>Total Users</p>
+        <h2>{{ Allusers.length }}</h2>
+      </div>
+      <div class="total-user-icon">
+        <i class="pi pi-users" style="font-size: 1.5rem"></i>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <div class="card-items">
+        <p>Active Employees</p>
+        <h2>{{ EmployeeList.length }}</h2>
+      </div>
+      <div class="active-tasks-icon">
+        <i class="pi pi-calendar" style="font-size: 1.5rem"></i>
+      </div>
+    </div>
+    <div class="summary-box">
+      <div class="card-items">
+        <p>Managers</p>
+        <h2>{{ ManagersList.length }}</h2>
+      </div>
+      <div class="managers-icon">
+        <i class="pi pi-user" style="font-size: 1.5rem"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="porjects-users">
+    <div class="projects">
+      <div class="heading">
+        <h6><i class="pi pi-folder"> All Projects</i></h6>
+        <p>Manage and monitor all projects</p>
+      </div>
+      <div class="all-projects">
+        <div class="project-box" *ngFor="let project of AllProject">
+          <app-projectbox
+            [Project]="project"
+            (loadTasksignal)="loadTask($event)"
+          ></app-projectbox>
+        </div>
+      </div>
+    </div>
+    <div class="users">
+      <div class="heading">
+        <h6><i class="pi pi-user">User Management</i></h6>
+        <p>Manage users and their roles</p>
+      </div>
+      <div class="all-users">
+        <div class="user" *ngFor="let user of Allusers">
+          @if(user.Role!='Admin'){
+          <app-user
+            [user]="user"
+            (PromoteEmployeeSignal)="PromoteEmp($event)"
+            (DeleteUserSignal)="Deleteuser($event)"
+          ></app-user>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  @if(shouldLoad){
+  <div class="task-section" #secondDiv>
+    <h3>Tasks</h3>
+    <div class="task-box-section">
+      @if(SingleProjectTask.length>0){
+      <div class="task-box">
+        @for(task of SingleProjectTask;track task.TaskId){
+        <app-taskbox
+          [task]="task"
+          (openComments)="onopencomment($event)"
+        ></app-taskbox>
+        }
+      </div>
+
+      }@else {
+      <div class="no-task">
+        <p>Sorry No Task</p>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>
+@if(openAddProject()){
+<app-addproject
+  (CloseModal)="closeAddProjectModal()"
+  [managerList]="ManagersList"
+></app-addproject>
+}

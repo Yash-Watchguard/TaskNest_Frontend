@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 60px;
   padding: 10px 20px;
   background-color: var(--color-card);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -19,30 +19,33 @@
     height: 30px;
     margin-right: 10px;
   }
-  span{
-    font-size: 20px;
+  span {
+    font-size: 15px;
     margin-left: 10px;
-    background-color: var(--p-purple-100);
-    border-radius: 10px;
-    width: auto;
+    background-color: var(--p-purple-200);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
   }
 }
 .navbar-right {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  span.font-h2 {
+  span {
     margin-right: 10px;
-    font-size: 0.9em;
   }
   i {
     margin-right: 25px;
-    font-size: 50px;
+    font-size: 30px;
     color: var(--dark-purple-text);
     cursor: pointer;
   }
   .user-button {
     background-color: var(--p-purple-400);
+    border: white;
     color: white;
     border-radius: 50%;
     width: 40px;
@@ -52,6 +55,10 @@
     align-items: center;
     font-weight: bold;
     font-size: 0.9em;
+
+    span {
+      margin-left: 10px;
+    }
 
     &:hover {
       background-color: var(--mdark-purple-text);

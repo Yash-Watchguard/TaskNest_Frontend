@@ -1,0 +1,1 @@
+- [ ] Modify loadTask method in manager-dashboard.component.ts to scroll to the task-section after loading tasks

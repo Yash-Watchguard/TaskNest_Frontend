@@ -1,5 +1,105 @@
-<div class="overlay">
-    <div class="overlaycontent">
-        
-    </div>
+<p-toast position="top-right"></p-toast>
+<div class="modal-overlay">
+  <div class="modal-content">
+    <header class="modal-header">
+      <div class="modal-title-container">
+        <i class="plus-icon">+</i>
+        <h2>Create New Project</h2>
+      </div>
+      <p class="modal-subtitle">Fill in the details to create a new project</p>
+    </header>
+
+    <form class="form" #addproject="ngForm">
+      <div class="form-group">
+        <label for="project-name" class="form-label">Project Name</label>
+        <input
+          type="text"
+          class="form-input"
+          id="project-name"
+          placeholder="Enter project name"
+          required
+          [(ngModel)]="ProjectDetails.projectName"
+          name="titel"
+          #projectNameInput="ngModel"
+        />
+        @if (projectNameInput.touched && projectNameInput.invalid) {
+        <p class="validation-error">Project name cannot be empty</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="project-description" class="form-label"
+          >Project Description</label
+        >
+        <textarea
+          class="form-input"
+          id="project-description"
+          placeholder="Enter project description"
+          rows="3"
+          maxlength="500"
+          required
+          [(ngModel)]="ProjectDetails.projectDescription"
+          name="project_description"
+          #descriptionInput="ngModel"
+        ></textarea>
+        @if (descriptionInput.touched && descriptionInput.invalid &&
+        descriptionInput.dirty) {
+        <p class="validation-error">Project description cannot be empty</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="deadline" class="form-label">Project Deadline</label>
+        <input
+          type="date"
+          class="form-input"
+          id="deadline"
+          min="2025-10-09"
+          required
+          (keydown)="onKeyDown($event)"
+          (paste)="$event.preventDefault()"
+          [(ngModel)]="ProjectDetails.deadline"
+          name="deadline"
+          #deadlineInput="ngModel"
+        />
+        @if (deadlineInput.touched && deadlineInput.invalid) {
+        <p class="validation-error">Deadline cannot be empty</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="manager-id" class="form-label">Assign Manager</label>
+        <select
+          class="form-input"
+          id="manager-id"
+          required
+          [(ngModel)]="ProjectDetails.assignedManagerId"
+          name="managerId"
+          #managerInput="ngModel"
+        >
+          <option value="">Select a manager</option>
+          @for(manager of managerList;track manager.Id){
+          <option [value]="manager.Id">{{ manager.Name }}</option>
+          }
+        </select>
+        @if (managerInput.touched && managerInput.invalid) {
+        <p class="validation-error">Please select a manager</p>
+        }
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="addproject.invalid && isButtonDisabled"
+          (click)="AddProject(addproject)"
+        >
+          Create Project
+        </button>
+        <button type="button" class="cancel-btn" (click)="CloseAddProject()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

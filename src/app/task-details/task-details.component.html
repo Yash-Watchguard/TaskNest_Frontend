@@ -1,64 +1,76 @@
 <header class="project-header">
   <div class="center-section">
-    <h1>{{task.Title}}</h1>
+    <h1>{{ task.Title }}</h1>
     <div class="tags">
-      <span class="tag" [class.completed]="task.TaskStatus==taskstatus.Done" [class.pending]="task.TaskStatus===taskstatus.Pending" [class.inprogress]="task.TaskStatus===taskstatus.InProgress" >{{task.TaskStatus}}</span>
-      <span class="project-name">Project: {{task.ProjectId}}</span>
+      <span
+        class="tag"
+        [class.completed]="task.TaskStatus == taskstatus.Done"
+        [class.pending]="task.TaskStatus === taskstatus.Pending"
+        [class.inprogress]="task.TaskStatus === taskstatus.InProgress"
+        >{{ task.TaskStatus }}</span
+      >
+      <span class="project-name">Project: Fodd delievery app</span>
     </div>
   </div>
 </header>
 <div class="task-details">
-    <div class="detail-title">
-        <span class="description-label">Description</span>
-    </div>
-    <div class="content">
-        {{task.Description}}
-    </div>
+  <div class="detail-title">
+    <span class="description-label">Description</span>
+  </div>
+  <div class="content">
+    {{ task.Description }}
+  </div>
 </div>
 <div class="task-details">
-    <div class="detail-title">
-        <span class="description-label">Acceptance Criteria</span>
-    </div>
-    <div class="content">
-        {{task.AcceptanceCriteria}}
-    </div>
+  <div class="detail-title">
+    <span class="description-label">Acceptance Criteria</span>
+  </div>
+  <div class="content">
+    {{ task.AcceptanceCriteria }}
+  </div>
 </div>
 <div class="task-details">
-    <div class="detail-title">
-        <span class="description-label">Deadline</span>
-    </div>
-    <div class="content">
-        {{task.Deadline | date : "dd/MM/yyyy" }}
-    </div>
+  <div class="detail-title">
+    <span class="description-label">Deadline</span>
+  </div>
+  <div class="content">
+    {{ task.Deadline | date : "dd/MM/yyyy" }}
+  </div>
 </div>
 
 <div class="task-details">
-    <i class="material-icons">mode   <span>activity</span></i>
-   <div class="comment-form">
-      <label for="newComment">Write your comment</label>
-      <textarea 
-        id="newComment" 
-        [(ngModel)]="newComment" 
-        placeholder="Enter your comment here..."
-        rows="3"
-        (keyup.enter)="addComment()"></textarea>
-      <div class="form-actions">
-        <button class="clear-button" (click)="clearComment()" type="button">Clear</button>
-        <button class="post-button" (click)="addComment()" [disabled]="!newComment.trim()">Post Comment</button>
-      </div>
+  <i class="material-icons">mode <span>activity</span></i>
+  <div class="comment-form">
+    <label for="newComment">Write your comment</label>
+    <textarea
+      id="newComment"
+      [(ngModel)]="newComment"
+      placeholder="Enter your comment here..."
+      maxlength="150"
+      rows="3"
+      (keyup.enter)="addComment()"
+    ></textarea>
+    <div class="form-actions">
+      <button class="clear-button" (click)="clearComment()" type="button">
+        Clear
+      </button>
+      <button
+        class="post-button"
+        (click)="addComment()"
+        [disabled]="!newComment.trim()"
+      >
+        Post Comment
+      </button>
     </div>
+  </div>
 
-    <div class="comments-list">
-      <div *ngFor="let comment of allcomments" class="comment-item">
-        <div class="comment-header">
-          <span class="comment-user">{{ comment.created_by}}</span>
-           
-        </div >
-        <p class="comment-content">{{ comment.content }}</p>
+  <div class="comments-list">
+    <div *ngFor="let comment of allcomments" class="comment-item">
+      <div class="comment-header">
+        <span class="comment-user">{{ comment.created_by }}</span>
       </div>
-      <div *ngIf="allcomments.length === 0" class="no-comments">
-        No comments 
-      </div>
+      <p class="comment-content">{{ comment.content }}</p>
     </div>
+    <div *ngIf="allcomments.length === 0" class="no-comments">No comments</div>
+  </div>
 </div>
-

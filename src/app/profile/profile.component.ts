@@ -1,54 +1,77 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
-import { user } from '../models/user.model';
-import { FormBuilder, FormGroup, Validators ,ReactiveFormsModule} from '@angular/forms';
+import { person, UpdateProfileDetails, user } from '../models/user.model';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+  NgForm,
+} from '@angular/forms';
 import { from } from 'rxjs';
 import { Button } from 'primeng/button';
+import { UserService } from '../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule,Button,ReactiveFormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+  styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
-  userForm!: FormGroup;
-  isEditMode: boolean = false;
+  OpenProfileBar = true;
+  OpenEditMenu = false;
 
-  constructor(private fb: FormBuilder) {}
-
+  user = signal<person>({
+    Id: '',
+    Name: '',
+    Email: '',
+    PhoneNumber: '',
+    Role: '',
+  });
+  updatedDetails!:UpdateProfileDetails;
+  constructor(private userservice: UserService) {}
   ngOnInit() {
-    this.userForm = this.fb.group({
-      name: [{ value: 'John Doe', disabled: !this.isEditMode }, Validators.required],
-      email: [{ value: 'john.doe@example.com', disabled: !this.isEditMode }, [Validators.required, Validators.email]],
-      phoneNumber: [{ value: '+91', disabled: !this.isEditMode }, [Validators.required, Validators.pattern(/^\+91[0-9]{10}$/)]],
+    const userId = localStorage.getItem('userId') as string;
+    this.userservice.GetProfile(userId).subscribe({
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+      },
     });
-  }
-
-  toggleEditMode() {
-    this.isEditMode = !this.isEditMode;
-    if (this.isEditMode) {
-      this.userForm.enable();
-    } else {
-      this.userForm.disable();
+    this.user = this.userservice.userProfile;
+    this.updatedDetails={
+      name:this.user().Name,
+      phoneNumber:this.user().PhoneNumber,
+      email:this.user().Email,
     }
   }
 
+  toggleEditMode(): void {
+    this.OpenProfileBar=false;
+    this.OpenEditMenu=true;
+  }
+  toggleProfileMode(form:NgForm): void {
+    this.OpenProfileBar=true;
+    this.OpenEditMenu=false;
+    form.resetForm();
+  }
   saveChanges() {
-    if (this.userForm.valid) {
-      // Use getRawValue() to include disabled controls in the output
-      console.log('Updated user data:', this.userForm.getRawValue());
-      this.toggleEditMode(); // Exit edit mode after saving
-    }
-    const user=this.userForm.getRawValue()
-    
-    
+     this.userservice.updateUserProfile(this.user().Id,this.updatedDetails).subscribe(
+      {
+        next:()=>{
+          this.userservice.GetProfile(this.user().Id).subscribe({
+            error:(err:HttpErrorResponse)=>{
+              console.log(err);
+            }
+          });
+        }
+      }
+     );
   }
 
-  cancelEdit() {
-    // Reset form to its initial values and exit edit mode
-    // Note: this.userForm.reset(this.userForm.getRawValue()); would also work
-    this.toggleEditMode();
-  }
+  cancelEdit() {}
 }

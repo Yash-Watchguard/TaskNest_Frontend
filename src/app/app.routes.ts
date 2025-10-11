@@ -80,28 +80,5 @@ export const routes: Routes = [
       import('../app/profile/profile.component').then(
         (m) => m.ProfileComponent
       ),
-    outlet: 'popup',
-  },
-  {
-    path: 'popup',
-    component: PopupcomponentComponent,
-    outlet: 'popup',
-    children: [
-      {
-        path: 'profile',
-        loadComponent: () =>
-          import('../app/profile/profile.component').then(
-            (m) => m.ProfileComponent
-          ),
-          
-      },
-      {
-        path: 'addtask',
-        loadComponent: () =>
-          import('../app/addtask/addtask.component').then(
-            (m) => m.AddtaskComponent
-          ),
-      },
-    ],
   },
 ];

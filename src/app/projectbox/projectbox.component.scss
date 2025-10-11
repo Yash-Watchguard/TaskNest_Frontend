@@ -1,33 +1,160 @@
+// .project-box {
+//   background:var(--p-white-100);
+//   border: 1px solid gray ;
+//   border-radius: 8px;
+//   padding: 16px;
+//   box-shadow: 0 2px 8px rgb(0 0 0 / 0.6);
+//   width: 100%;
+//   display: flex;
+
+//   flex-direction: column;
+//   gap: 12px;
+// }
+
+// .header {
+
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: flex-start;
+//   .title-section {
+//     h3 {
+//   color:var(--mdark-purple-text);
+//   font-weight: 700;
+//   margin: 0 0 4px 0;
+//   font-size: 1.2rem;
+//   margin-bottom: 3px;
+// }
+// p{
+//   margin-top: 5px;
+//   font-size: 20px;
+// }
+//   }
+//   .action{
+//     display: flex;
+//     gap: 20px;
+//   }
+
+// }
+
+
+// .add-task-btn {
+//   background-color: var(--mdark-purple-text);
+//   color: white;
+//   border: none;
+//   border-radius: 8px;
+//   padding: 8px 14px;
+//   height: 40px;
+//   font-size: 20px;
+//   cursor: pointer;
+//   transition: background-color 0.2s ease;
+// }
+
+// .add-task-btn:hover {
+//   background-color: var(--p-purple-400);
+// }
+
+// .status-section {
+
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+//   .tasks{
+//     font-size: 20px;
+//     color: var(--gray-text);
+//   }
+// }
+
+// .status-badge {
+//   background-color: #3b82f6; 
+//   color: white;
+//   padding: 4px 10px;
+//   border-radius: 20px;
+//   font-size: 20px;
+//   font-weight: 600;
+//   // text-transform: lowercase;
+//   margin-top: 1px;
+//   margin-bottom: 10px;
+// }
+
+// .progress-section {
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+// }
+
+// .progress-section label {
+//   font-size: 20px;
+//   color: var(--gray-text);
+//   font-weight: 600;
+//   min-width: 60px;
+// }
+
+// .progress-bar {
+//   flex-grow: 1;
+//   height: 15px;
+//   background-color: var(--p-purple-200);
+//   border-radius: 10px;
+//   overflow: hidden;
+// }
+
+// .progress-fill {
+//   height: 100%;
+//   background-color:var(--p-purple-400);
+//   border-radius: 4px 0 0 4px;
+// }
+
+// .progress-percent {
+//   font-size: 1rem;
+//   color: #555;
+//   min-width: 30px;
+//   text-align: right;
+// }
+
+// .deadline {
+//   font-size: 20px;
+//   color: #777;
+//   font-weight: 500;
+// }
+
+
+
 .project-box {
   background:var(--p-white-100);
-  border: px solid gray ;
+  border: 1px solid gray ;
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.6);
+  border: 1px solid var(--p-purple-500);
   width: 100%;
   display: flex;
-
+  
   flex-direction: column;
   gap: 12px;
-  font-family: Arial, sans-serif;
+  transition: translate 0.2 ease;
+  &:hover{
+    translate: 0px -1px;
+    box-shadow: 0px 5px 8px rgba(225, 122, 235, 0.3);
+  }
 }
 
 .header {
 
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   .title-section {
+    top: 0;
     h3 {
-  color:var(--mdark-purple-text);
-  font-weight: 700;
+       font-weight: 600; /* for font-semibold */
+  font-size: 1.125rem; /* 18px, for text-lg */
+  line-height: 1.75rem;
   margin: 0 0 4px 0;
-  font-size: 1.2rem;
   margin-bottom: 3px;
 }
 p{
   margin-top: 5px;
-  font-size: 20px;
+  margin-bottom: 2px;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem;
 }
   }
   .action{
@@ -39,23 +166,42 @@ p{
 
 
 .add-task-btn {
-  background-color: var(--mdark-purple-text);
+  background-color: var(--p-purple-500);
   color: white;
   border: none;
   border-radius: 8px;
   padding: 8px 14px;
-  height: 40px;
-  font-size: 20px;
+  height: 30px;
+  font-size: 16px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color 0.2s ease;
 }
+.delete-button{
+  border-radius: 6px;
+  border: 1px ;
+  width: 2.2rem;
+  i{
+    color: red;
+  }
+  &:hover{
+    cursor: pointer;
+    background-color: var(--p-red-500);
+    i{
+      color: white;
+    }
+  }
+
+}
+
 
 .add-task-btn:hover {
   background-color: var(--p-purple-400);
 }
 
 .status-section {
-
   display: flex;
   align-items: center;
   gap: 10px;
@@ -66,13 +212,14 @@ p{
 }
 
 .status-badge {
-  background-color: #3b82f6; 
-  color: white;
+  background-color: var(--p-blue-200);
+  color: var(--p-blue-800);
   padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 20px;
-  font-weight: 600;
+  border-radius: 16px;
+  font-size: 14px;
+  // font-weight: 600;
   // text-transform: lowercase;
+  
   margin-top: 1px;
   margin-bottom: 10px;
 }
@@ -84,15 +231,14 @@ p{
 }
 
 .progress-section label {
-  font-size: 20px;
-  color: var(--gray-text);
-  font-weight: 600;
+  font-size: 16px;
+  color: var(--p-black-50);
   min-width: 60px;
 }
 
 .progress-bar {
   flex-grow: 1;
-  height: 15px;
+  height: 12px;
   background-color: var(--p-purple-200);
   border-radius: 10px;
   overflow: hidden;
@@ -100,19 +246,19 @@ p{
 
 .progress-fill {
   height: 100%;
-  background-color:var(--p-purple-400);
+  background-color:var(--p-purple-600);
   border-radius: 4px 0 0 4px;
 }
 
 .progress-percent {
   font-size: 1rem;
-  color: #555;
+  color: var(--dark-purple-text);
   min-width: 30px;
   text-align: right;
 }
 
 .deadline {
-  font-size: 20px;
+  font-size: 12px;
   color: #777;
   font-weight: 500;
 }

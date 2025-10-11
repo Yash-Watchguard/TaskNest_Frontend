@@ -1,0 +1,119 @@
+$primary-color: #512da8;
+$text-color: #333;
+$secondary-text-color: #666;
+$employee-badge-bg: #e5f1e8;
+$employee-badge-text: #378b47;
+$promote-button-border: #dcdde1;
+$promote-button-bg: #fff;
+$promote-button-text: $primary-color;
+$delete-button-bg: #fff;
+$delete-button-text: #dc3545;
+
+  ::ng-deep .p-tooltip{
+    color: red;
+    height: 50px;
+
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  
+  border: 1px solid var(--p-purple-500);
+   transition: translate 0.2 ease;
+        &:hover{
+            translate: 0px -1px;
+            box-shadow: 0px 5px 8px rgba(225, 122, 235, 0.3);
+        }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #e8dff6;
+  .initials {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $primary-color;
+  }
+}
+
+.details {
+  .name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: $text-color;
+  }
+  .email {
+    font-size: 0.9rem;
+    color: $secondary-text-color;
+  }
+}
+
+.label-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background-color: $employee-badge-bg;
+  color: $employee-badge-text;
+  margin-left: 1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .promote-button,
+  .delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid $promote-button-border;
+    background-color: $promote-button-bg;
+    color: $promote-button-text;
+    transition: background-color 0.2s, border-color 0.2s;
+
+    &:hover {
+      background-color: #f7f7f7;
+    }
+  }
+
+  .promote-button {
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .delete-button {
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    color: $delete-button-text;
+    border-color: $promote-button-border;
+    
+    &:hover {
+      background-color: #fcebeb;
+    }
+  }
+}

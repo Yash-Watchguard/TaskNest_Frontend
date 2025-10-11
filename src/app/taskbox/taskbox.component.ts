@@ -22,7 +22,7 @@ export class TaskboxComponent {
 
   @Output() statusChange = new EventEmitter<{ taskId: string; taskStatus: TaskStatus }>();
   @Output() openComments = new EventEmitter<Task>();
-  @Output() delcomment=new EventEmitter<{taskId:string;projectId:string}>();
+  @Output() deleteTask=new EventEmitter<{taskId:string;projectId:string}>();
 
   isOverdue(deadline: Date): boolean {
     return new Date(deadline) < new Date();
@@ -49,7 +49,7 @@ export class TaskboxComponent {
       // }
       this.openComments.emit(this.task)
   }
-  deletecomment(){
-      this.delcomment.emit({taskId: this.task.TaskId , projectId:this.task.ProjectId});
+  deletetask(){
+      this.deleteTask.emit({taskId: this.task.TaskId , projectId:this.task.ProjectId});
   }
 }

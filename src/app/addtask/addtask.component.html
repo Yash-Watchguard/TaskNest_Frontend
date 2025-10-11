@@ -1,95 +1,143 @@
-<div class="popup-overlay" >
-  <div class="popup-content">
-    <form #taskForm="ngForm" (ngSubmit)="addnewtask()" class="task-form">
-  <div class="header">
-    <h2 class="form-title">Create New Task</h2>
-    <p class="form-subtitle">Create a task for E-commerce Website</p>
-  </div>
-  
-  <div class="form-group">
-    <label for="titel">Task Title</label>
-    <input
-      type="text"
-      id="titel"
-      name="titel"
-      [(ngModel)]="titel"
-      required
-      class="form-control"
-      placeholder="Enter task title"
-    />
-  </div>
+<p-toast position="top-right"></p-toast>
+<div class="modal-overlay">
+  <div class="modal-content">
+    <header class="modal-header">
+      <div class="modal-title-container">
+        <i class="plus-icon">+</i>
+        <h2>Create New Project</h2>
+      </div>
+      <p class="modal-subtitle">Fill in the details to create a new project</p>
+    </header>
 
-  <div class="form-group">
-    <label for="description">Task Description</label>
-    <textarea
-      id="description"
-      name="description"
-      [(ngModel)]="destcription"
-      required
-      class="form-control"
-      placeholder="Enter task description"
-    ></textarea>
-  </div>
+    <div class="modal-scroll-area">
+      <form class="form" #addtask="ngForm">
+        <div class="form-group">
+          <label for="task-titel" class="form-label">Titel</label>
+          <input
+            type="text"
+            class="form-input"
+            id="task-titel"
+            placeholder="Enter task titel"
+            required
+            [(ngModel)]="titel"
+            name="titel"
+            #projectNameInput="ngModel"
+          />
+          @if (projectNameInput.touched && projectNameInput.invalid) {
+          <p class="validation-error">Task titel cannot be empty</p>
+          }
+        </div>
 
-  <div class="form-group">
-    <label for="acceptance">Acceptance Criteria (Optional)</label>
-    <textarea
-      id="acceptance"
-      name="acceptance"
-      [(ngModel)]="acceptance_criteria"
-      class="form-control"
-      required
-      placeholder="Enter acceptance criteria (one per line)"
-    ></textarea>
-  </div>
+        <div class="form-group">
+          <label for="description" class="form-label">Task Description</label>
+          <textarea
+            class="form-input"
+            id="description"
+            placeholder="Enter task description"
+            rows="3"
+            maxlength="500"
+            required
+            [(ngModel)]="destcription"
+            name="project_description"
+            #descriptionInput="ngModel"
+          ></textarea>
+          @if (descriptionInput.touched && descriptionInput.invalid && descriptionInput.dirty) {
+          <p class="validation-error">Task description cannot be empty</p>
+          }
+        </div>
 
-  <div class="form-group">
-    <label for="priority">Task Type</label>
-    <select name="priority" id="priority" [(ngModel)]="priority" class="form-control">
-      <option value="" disabled selected>Feature</option>
-      <option value="High">high</option>
-      <option value="Medium">medium</option>
-      <option value="Low">low</option>
-    </select>
-  </div>
-  
-  <div class="form-group">
-    <label for="date">Task Deadline</label>
-    <p-datepicker
-      [(ngModel)]="date"
-      [minDate]="minDate"
-      [readonlyInput]="true"
-      dateFormat="mm/dd/yy"
-      name="date"
-      id="date"
-      required
-      class="form-control"
-    ></p-datepicker>
-  </div>
-  
-  <div class="form-group">
-    <label for="employeeid">Assign Employee</label>
-    <input
-      type="text"
-      id="employeeid"
-      name="employeeId"
-      [(ngModel)]="employeeId"
-      class="form-control"
-      required
-      placeholder="Select an employee"
-    />
-  </div>
+        <div class="form-group">
+          <label for="acceptance" class="form-label">Acceptance Criteria</label>
+          <textarea
+            class="form-input"
+            id="acceptance"
+            placeholder="Enter acceptance criteria"
+            rows="3"
+            maxlength="500"
+            required
+            [(ngModel)]="acceptance_criteria"
+            name="acceptance_criteria"
+            #acceptanceInput="ngModel"
+          ></textarea>
+          @if (acceptanceInput.touched && acceptanceInput.invalid) {
+          <p class="validation-error">Acceptance criteria cannot be empty</p>
+          }
+        </div>
 
-  <div class="form-actions">
-    <button type="submit" class="btn-submit" [disabled]="!taskForm.valid">
-      Create Task
-    </button>
-    <button type="button" class="btn-cancel" (click)="close()">
-      Cancel
-    </button>
-  </div>
-</form>
-     
-      
+        <div class="form-group">
+          <label for="priority" class="form-label">Select priority</label>
+          <select
+            class="form-input"
+            [(ngModel)]="priority"
+            required
+            name="priority"
+            #priorityInput="ngModel"
+          >
+            <option value="" disabled selected>Select priority</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          @if (priorityInput.touched && priorityInput.invalid) {
+          <p class="validation-error">Please select a priority</p>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="deadline" class="form-label">Task Deadline</label>
+          <input
+            type="date"
+            class="form-input"
+            id="deadline"
+            min="2025-10-09"
+            required
+            (keydown)="onKeyDown($event)"
+            (paste)="$event.preventDefault()"
+            [(ngModel)]="date"
+            name="deadline"
+            #deadlineInput="ngModel"
+          />
+          @if (deadlineInput.touched && deadlineInput.invalid) {
+          <p class="validation-error">Deadline cannot be empty</p>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="manager-id" class="form-label">Assign Employee</label>
+          <select
+            class="form-input"
+            id="manager-id"
+            required
+            [(ngModel)]="employeeId"
+            name="managerId"
+            #managerInput="ngModel"
+          >
+            <option value="">Select an employee</option>
+            @for(manager of empList;track manager.Id){
+            <option [value]="manager.Id">{{ manager.Name }}</option>
+            }
+          </select>
+          @if (managerInput.touched && managerInput.invalid) {
+          <p class="validation-error">Please select an employee</p>
+          }
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="addtask.invalid && isaddtasktrue()"
+          (click)="addnewtask()"
+        >
+          Create Project
+        </button>
+        <button type="button" class="cancel-btn" (click)="close()">
+          Cancel
+        </button>
+      </div>
+    </div>
   </div>
 </div>

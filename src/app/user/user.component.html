@@ -1,0 +1,23 @@
+
+<div class="user-card">
+  <div class="user-info">
+    <div class="avatar">
+      <span class="initials">{{user.Name[0]}}{{user.Role[0]}}</span>
+    </div>
+    <div class="details">
+      <div class="name">{{user.Name}} {{user.Role}}</div>
+      <div class="email">"janetasknest.com"</div>
+    </div>
+    <div class="label-badge">{{user.Role}}</div>
+  </div>
+  <div class="actions">
+    <button *ngIf="user?.Role==='Employee'"  class="promote-button" (click)="promoteemployee()" 
+     pTooltip="Promote to Manager" tooltipPosition="top" placeholder="Top">
+      <i class="pi pi-user-plus"></i>
+      <span>Promote</span>
+    </button>
+    <button class="delete-button" (click)="deleteuser()">
+      <i class="pi pi-trash"></i>
+    </button>
+  </div>
+</div>

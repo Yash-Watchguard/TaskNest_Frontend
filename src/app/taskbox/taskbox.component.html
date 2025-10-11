@@ -12,7 +12,7 @@
     <h2 class="title">{{ task.Title }}</h2>
   </div>
   <div class="action" style="display: flex;gap: 20px;">
-    <button (click)="deletecomment()" *ngIf="user?.Role!=2"  class="delete" style="border-radius: 6px; background-color:var(--p-purple-50);cursor: pointer;" ><i class="pi pi-trash" style="color: red !important;width: 30px;border-radius:6px;"></i></button>
+    <button (click)="deletetask()" *ngIf="user?.Role==1"  class="delete" style="border-radius: 6px; background-color:var(--p-purple-50);cursor: pointer;" ><i class="pi pi-trash" style="color: red !important;width: 30px;border-radius:6px;"></i></button>
     <button (click)="onclick($event)" class="comment" style="border-radius: 6px;cursor: pointer;" ><i class="pi pi-comment" style="color: purple !important;width: 30px;"></i></button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { Button } from 'primeng/button';
 import { FloatLabelModule, FloatLabelStyle } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -73,7 +73,7 @@ export class SignupComponent {
     });
   }
 
-  callLogin() {
+  callLogin():void {
     const loginsub = this.authservice
       .Login('login', {
         email: this.email,

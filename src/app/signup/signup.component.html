@@ -1,28 +1,96 @@
+<p-toast position="top-right"></p-toast>
+<div class="login-page-container">
+  <div class="login-image-section">
+    <img src="im2.png" alt="An image representing the TaskNest platform." />
+  </div>
 
+  <div class="login-form-section">
+    <div class="login-card">
+      <header class="login-card-header">
+        <img src="Media.jpg" alt="TaskNest logo" />
+        <h2>Welcome to TaskNest</h2>
+        <p>Sign Up to create your account and continue</p>
+      </header>
 
-<div class="login">
-    <div class="login-img">
-        <img src="im2.png" alt="">
-    </div>
-    <div class="login-page">
-  <div class="login-card">
-    <header>
-        <img src="favicon.ico" alt="">
-         <h3>Welcome to TaskNest</h3>
-         <p class="font-h2">Sign Up to your account to continue</p>
-    </header>
-   
-    <form class="login-form" (ngSubmit)="onSubmit()">
-      <p-toast></p-toast>
-      <input type="name" placeholder="UserName" [(ngModel)]="name" name="username">
-      <input type="email" placeholder="Email" [(ngModel)]="email" name="email"/>
-      <input type="phonenumber" placeholder="PhoneNumber" [(ngModel)]="phonenumber" name="phonenumber"/>
-      <input type="password" placeholder="Password" [(ngModel)]="password" name="password" />
-      <p-button type="submit" Class="button" fluid [disabled]='loading()' >{{loading()?'Hang on...':'Sign up'}}</p-button>
-    </form>
-    <div class="signupChange">
-        <p>already registered? <a routerLink="/login">Login</a></p>
+      <form class="login-form" (ngSubmit)="onSubmit()" #signupform="ngForm">
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Username"
+            [(ngModel)]="name"
+            name="username"
+            required
+            minlength="4"
+            #usernameInput="ngModel"
+          />
+          @if (usernameInput.touched && usernameInput.invalid) {
+          <p class="validation-error">
+            Username is required
+          </p>
+          }
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            email
+            #emailInput="ngModel"
+          />
+          @if (emailInput.touched && emailInput.invalid) {
+          <p class="validation-error">Please enter a valid email address.</p>
+          }
+        </div>
+
+        <div class="form-group">
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            [(ngModel)]="phonenumber"
+            name="phonenumber"
+            #phonenumberInput="ngModel"
+          />
+          @if (phonenumberInput.touched && phonenumberInput.invalid) {
+          <p class="validation-error">Please enter a valid phone number.</p>
+          }
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            placeholder="Password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            minlength="8"
+            #passwordInput="ngModel"
+          />
+          @if (passwordInput.touched && passwordInput.invalid) {
+          <p class="validation-error">
+            Password is required and must be at least 8 characters.
+          </p>
+          }
+        </div>
+
+        <p-button
+          type="submit"
+          Class="button"
+          fluid
+          [disabled]="signupform.invalid || loading()"
+        >
+          @if (loading()) {
+          <span>Hang on...</span>
+          } @else {
+          <span>Sign up</span>
+          }
+        </p-button>
+      </form>
+      <div class="signup-link">
+        <p>Already have an account? <a routerLink="/login">Login</a></p>
+      </div>
     </div>
   </div>
-</div>
 </div>
