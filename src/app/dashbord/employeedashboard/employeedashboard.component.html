@@ -1,45 +1,53 @@
-<!-- <div class="welcome">
-  <app-header></app-header>
-</div> -->
+
 <div class="dashboard-container">
   <div class="dashboard-header">
-    <h2>Employee Dashboard</h2>
+    <h1>Employee Dashboard</h1>
     <p>Manage your assigned tasks and track progress</p>
   </div>
-  <div class="summary-cards">
-    <div class="summary-card">
-      <app-summary-card
-        [totallength]="todo.length + inProgress.length + done.length"
-        titel="Total Task"
-        iconLink="pi pi-calendar"
-        iconcolor="var(--p-purple-500)"
-      ></app-summary-card>
+  <div class="dashboard-summary">
+    <div class="summary-box">
+      <div class="card-items">
+        <p>Total Task</p>
+        <h2>{{ todo.length + inProgress.length + done.length }}</h2>
+      </div>
+      <div class="total-Project-right">
+        <i class="pi pi-calendar" style="font-size: 1.5rem"></i>
+      </div>
     </div>
-    <div class="summary-card">
-      <app-summary-card
-        [totallength]="todo.length"
-        titel="To Do"
-        iconLink="pi pi-clock"
-        iconcolor="var(--p-red-500)"
-      ></app-summary-card>
+    <div class="summary-box">
+      <div class="card-items">
+        <p>To Do</p>
+        <h2>
+          {{
+            todo.length
+          }}
+        </h2>
+      </div>
+      <div class="total-user-icon">
+        <i class="pi pi-clock" style="font-size: 1.5rem"></i>
+      </div>
     </div>
-    <div class="summary-card">
-      <app-summary-card
-        [totallength]="inProgress.length"
-        titel="In Progress"
-        iconLink="pi pi-hourglass"
-        iconcolor="var(--p-yellow-500)"
-      ></app-summary-card>
+
+    <div class="summary-box">
+      <div class="card-items">
+        <p>In Progress</p>
+        <h2>{{ inProgress.length }}</h2>
+      </div>
+      <div class="active-tasks-icon">
+        <i class="pi pi-hourglass" style="font-size: 1.5rem"></i>
+      </div>
     </div>
-    <div class="summary-card">
-      <app-summary-card
-        [totallength]="done.length"
-        titel="Completed"
-        iconLink="pi pi-check-circle"
-        iconcolor="var(--p-green-500)"
-      ></app-summary-card>
+    <div class="summary-box">
+      <div class="card-items">
+        <p>Completed</p>
+        <h2>{{ done.length }}</h2>
+      </div>
+      <div class="managers-icon">
+        <i class="pi pi-check-circle" style="font-size: 1.5rem"></i>
+      </div>
     </div>
   </div>
+
 
   <div class="tasks-main-section">
     <div class="tasks-block to-do">

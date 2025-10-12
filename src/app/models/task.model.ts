@@ -51,4 +51,13 @@ export type AddTask={
   assigned_to:string,
 }
 
+export type EditTask={
+  titel:string
+  description:string
+  acceptanceCriteria:string
+  deadline:string
+  task_priority:string
+  empId:string
+}
+
 

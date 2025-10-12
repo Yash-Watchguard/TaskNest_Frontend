@@ -12,6 +12,13 @@
       <span class="project-name">Project: Fodd delievery app</span>
     </div>
   </div>
+  <div class="action">
+    @if(user?.Role!=2){
+    <button (click)="OpenEditTaskBox()" class="edit-task">
+      <i class="pi pi-pen-to-square"></i>
+    </button>
+    }
+  </div>
 </header>
 <div class="task-details">
   <div class="detail-title">
@@ -39,7 +46,7 @@
 </div>
 
 <div class="task-details">
-  <i class="material-icons">mode <span>activity</span></i>
+  <i class="material-icons">mode <span>Activity</span></i>
   <div class="comment-form">
     <label for="newComment">Write your comment</label>
     <textarea
@@ -74,3 +81,6 @@
     <div *ngIf="allcomments.length === 0" class="no-comments">No comments</div>
   </div>
 </div>
+@if(isOpenEditTask){
+<app-edit-task [task]="task" (closeSignal)="closeEditbox()"></app-edit-task>
+}

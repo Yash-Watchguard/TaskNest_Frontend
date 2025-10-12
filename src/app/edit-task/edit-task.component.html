@@ -4,9 +4,9 @@
     <header class="modal-header">
       <div class="modal-title-container">
         <i class="plus-icon">+</i>
-        <h2>Create New Task</h2>
+        <h2>Edit Task</h2>
       </div>
-      <p class="modal-subtitle">Fill in the details to create a new Task</p>
+      <p class="modal-subtitle">Update the task details</p>
     </header>
 
     <div class="modal-scroll-area">
@@ -17,15 +17,12 @@
             type="text"
             class="form-input"
             id="task-titel"
-            placeholder="Enter task titel"
+            [placeholder]="titel"
             required
             [(ngModel)]="titel"
             name="titel"
-            #projectNameInput="ngModel"
           />
-          @if (projectNameInput.touched && projectNameInput.invalid) {
-          <p class="validation-error">Task titel cannot be empty</p>
-          }
+         
         </div>
 
         <div class="form-group">
@@ -33,17 +30,14 @@
           <textarea
             class="form-input"
             id="description"
-            placeholder="Enter task description"
             rows="3"
             maxlength="500"
             required
-            [(ngModel)]="destcription"
+            [(ngModel)]="description"
             name="project_description"
-            #descriptionInput="ngModel"
+            [placeholder]="description"
+            name="des"
           ></textarea>
-          @if (descriptionInput.touched && descriptionInput.invalid && descriptionInput.dirty) {
-          <p class="validation-error">Task description cannot be empty</p>
-          }
         </div>
 
         <div class="form-group">
@@ -51,36 +45,29 @@
           <textarea
             class="form-input"
             id="acceptance"
-            placeholder="Enter acceptance criteria"
+           [placeholder]="acceptanceCriteria"
             rows="3"
             maxlength="500"
             required
-            [(ngModel)]="acceptance_criteria"
+            [(ngModel)]="acceptanceCriteria"
             name="acceptance_criteria"
-            #acceptanceInput="ngModel"
+           
           ></textarea>
-          @if (acceptanceInput.touched && acceptanceInput.invalid) {
-          <p class="validation-error">Acceptance criteria cannot be empty</p>
-          }
         </div>
 
         <div class="form-group">
           <label for="priority" class="form-label">Select priority</label>
           <select
             class="form-input"
-            [(ngModel)]="priority"
+            [(ngModel)]="task_priority"
             required
             name="priority"
-            #priorityInput="ngModel"
           >
             <option value="" disabled selected>Select priority</option>
             <option value="High">High</option>
             <option value="Medium">Medium</option>
             <option value="Low">Low</option>
           </select>
-          @if (priorityInput.touched && priorityInput.invalid) {
-          <p class="validation-error">Please select a priority</p>
-          }
         </div>
 
         <div class="form-group">
@@ -89,17 +76,14 @@
             type="date"
             class="form-input"
             id="deadline"
-            min="2025-10-09"
+            min="2025-10-13"
             required
             (keydown)="onKeyDown($event)"
             (paste)="$event.preventDefault()"
-            [(ngModel)]="date"
+            [(ngModel)]="deadline"
             name="deadline"
-            #deadlineInput="ngModel"
+            [placeholder]="task.Deadline |date:'dd/MM/yyyy'"
           />
-          @if (deadlineInput.touched && deadlineInput.invalid) {
-          <p class="validation-error">Deadline cannot be empty</p>
-          }
         </div>
 
         <div class="form-group">
@@ -108,18 +92,15 @@
             class="form-input"
             id="manager-id"
             required
-            [(ngModel)]="employeeId"
-            name="managerId"
-            #managerInput="ngModel"
+            [(ngModel)]="empId"
+            name="emp"
           >
             <option value="">Select an employee</option>
             @for(manager of empList;track manager.Id){
             <option [value]="manager.Id">{{ manager.Name }}</option>
             }
           </select>
-          @if (managerInput.touched && managerInput.invalid) {
-          <p class="validation-error">Please select an employee</p>
-          }
+         
         </div>
       </form>
     </div>
@@ -132,12 +113,12 @@
         <button
           type="submit"
           class="submit-btn"
-          [disabled]="addtask.invalid && isaddtasktrue()"
-          (click)="addnewtask()"
+          [disabled]="!isedit()"
+          (click)="editTask()"
+
         >
-          Create Project
+          Save Changes
         </button>
-        
       </div>
     </div>
   </div>

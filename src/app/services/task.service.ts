@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { InjectSetupWrapper } from '@angular/core/testing';
-import { BehaviorSubject, map, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import {
   AddTask,
+  EditTask,
   priority,
   Task,
   TaskApiResponse,
@@ -145,7 +146,7 @@ export class TaskService {
         })
       );
   }
-  addTask(projectId: string | undefined, taskdata: AddTask) {
+  addTask(projectId: string | undefined, taskdata: AddTask){
     return this.httpClient.post(`projects/${projectId}/tasks`, taskdata).pipe(
       tap(() => {
         this.GetAllManagerProjectTask(
@@ -161,6 +162,10 @@ export class TaskService {
         });
       })
     );
+  }
+
+  EditTask(url:string,updatedTask:EditTask){
+      return this.httpClient.patch(url,updatedTask);
   }
   // private AllTaskObserable=new BehaviorSubject<Task[]>([]);
   // AllTask$=this.AllTaskObserable.asObservable()

@@ -42,7 +42,7 @@ export class TaskboxComponent {
    
     this.openComments.emit(this.task)
   }
-  onclick(event:MouseEvent){
+  onclick(){
       // if(event.target==event.currentTarget){
       //   // localStorage.setItem('selectedTask', JSON.stringify(this.task));
       //   this.router.navigate(['../task', 'details'], { relativeTo: this.route, state:{task:this.task} });

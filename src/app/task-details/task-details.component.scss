@@ -5,16 +5,13 @@ $completed-color: #4caf50;
 $text-grey: #757575;
 $white: #ffffff;
 $shadow-color: rgba(0, 0, 0, 0.1);
-// :host {
-//   display: block;
-//   width: 80%;
-//   margin: 0 auto;
-// }
+
 
 .project-header {
   padding: 10px 100px 10px 100px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 25px 60px;
   background-color: $white;
   min-height: 100px;
@@ -67,6 +64,21 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         margin-left: 5px;
       }
     }
+  }
+  .edit-task {
+    cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 35px;
+      width: 35px;
+      background-color: var(--p-blue-200);
+      border: transparent;
+      border-radius: 8px;
+      &:hover{
+        background-color: var(--p-blue-300);
+      }
+      
   }
 }
 .task-details {

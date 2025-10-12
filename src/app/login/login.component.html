@@ -27,7 +27,7 @@
           }
         </div>
         
-        <p-button type="submit" Class="button" fluid [disabled]="loading() && loginform.invalid">
+        <p-button type="submit" Class="button" fluid [disabled]="loginform.invalid || loading()">
           @if (loading()) {
             <span>Hang on...</span>
           } @else {

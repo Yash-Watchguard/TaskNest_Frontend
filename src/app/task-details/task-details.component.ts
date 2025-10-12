@@ -7,31 +7,42 @@ import { Observable, Subscription } from 'rxjs';
 import { comment } from '../models/comment.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { EditTaskComponent } from "../edit-task/edit-task.component";
+import { user } from '../models/user.model';
 
 
 @Component({
   selector: 'app-task-details',
   standalone:true,
-  imports: [DatePipe,FormsModule,CommonModule],
+  imports: [DatePipe, FormsModule, CommonModule, EditTaskComponent],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.scss'
 })
 export class TaskDetailsComponent implements OnInit, OnDestroy{
-    task!:Task;
-    taskstatus=TaskStatus
+  task!:Task;
+  taskstatus=TaskStatus
    constructor(private router:Router){
     const navigation =this.router.getCurrentNavigation();
        const state=navigation?.extras.state as {task:Task};
        if(state?.task){
-        this.task=state.task
+        localStorage.setItem('task',JSON.stringify(state.task));
        }
    }
+   
+   isOpenEditTask=false;
+
    private commentservice=inject(CommentService)
    private comments$!:Observable<comment[]>
    allcomments:comment[]=[];
    newComment='';
    private commentSubscription?: Subscription;
+
+   userobject:string|null=localStorage.getItem('user')
+   user:user|null=this.userobject?JSON.parse(this.userobject):null
+   
    ngOnInit(){
+     const taskobject=localStorage.getItem('task');
+     this.task=JSON.parse(taskobject as string)
      this.allcomments = [];
      this.loadComments()
    }
@@ -78,7 +89,16 @@ export class TaskDetailsComponent implements OnInit, OnDestroy{
     if (this.commentSubscription) {
       this.commentSubscription.unsubscribe();
     }
+    localStorage.removeItem('task')
   }
+  OpenEditTaskBox():void{
+    this.isOpenEditTask=true;
+  }
+  closeEditbox():void{
+    this.isOpenEditTask=false;
+  }
+
+
 
   //  ngOnInit(): void {
   //    const stored = localStorage.getItem('selectedTask');
