@@ -1,12 +1,12 @@
 
-<div class="user-card">
+<div class="user-card" (click)="openTask()">
   <div class="user-info">
     <div class="avatar">
       <span class="initials">{{user.Name[0]}}{{user.Role[0]}}</span>
     </div>
     <div class="details">
       <div class="name">{{user.Name}} {{user.Role}}</div>
-      <div class="email">"janetasknest.com"</div>
+      <div class="email">{{user.Email}}</div>
     </div>
     <div class="label-badge">{{user.Role}}</div>
   </div>

@@ -146,7 +146,7 @@ export class TaskService {
         })
       );
   }
-  addTask(projectId: string | undefined, taskdata: AddTask){
+  addTask(projectId: string | undefined, taskdata: AddTask) {
     return this.httpClient.post(`projects/${projectId}/tasks`, taskdata).pipe(
       tap(() => {
         this.GetAllManagerProjectTask(
@@ -164,8 +164,8 @@ export class TaskService {
     );
   }
 
-  EditTask(url:string,updatedTask:EditTask){
-      return this.httpClient.patch(url,updatedTask);
+  EditTask(url: string, updatedTask: EditTask) {
+    return this.httpClient.patch(url, updatedTask);
   }
   // private AllTaskObserable=new BehaviorSubject<Task[]>([]);
   // AllTask$=this.AllTaskObserable.asObservable()
@@ -190,4 +190,26 @@ export class TaskService {
   //       })
   //     )
   // }
+
+  GetEmpTask(url:string){
+     return this.httpClient.get<TaskApiResponse>(url).pipe(
+      map((response) => {
+        return response.data.map(
+          (t) =>
+            ({
+              TaskId: t.task_id,
+              Title: t.title,
+              Description: t.description,
+              AcceptanceCriteria: t.acceptance_criteria,
+              Deadline: new Date(t.deadline),
+              TaskPriority: t.taskpriority as priority,
+              TaskStatus: t.taskstatus as TaskStatus,
+              AssignedTo: t.assigned_to,
+              ProjectId: t.project_id,
+              CreatedBy: t.created_by,
+            } as Task)
+        );
+      })
+    );
+  }
 }

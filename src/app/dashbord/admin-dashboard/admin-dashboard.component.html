@@ -80,6 +80,7 @@
         <div class="user" *ngFor="let user of Allusers">
           @if(user.Role!='Admin'){
           <app-user
+            (opentask)="openEmpTask($event)"
             [user]="user"
             (PromoteEmployeeSignal)="PromoteEmp($event)"
             (DeleteUserSignal)="Deleteuser($event)"
@@ -96,7 +97,7 @@
       @if(SingleProjectTask.length>0){
       <div class="task-box">
         @for(task of SingleProjectTask;track task.TaskId){
-        <app-taskbox
+        <app-taskbox 
           [task]="task"
           (openComments)="onopencomment($event)"
         ></app-taskbox>
@@ -117,4 +118,7 @@
   (CloseModal)="closeAddProjectModal()"
   [managerList]="ManagersList"
 ></app-addproject>
+}
+@if(shouldOpenEmpTasks){
+  <app-emp-task  [user]="SelectedUser" (closePopup)="closeEmpTasks()"></app-emp-task>
 }

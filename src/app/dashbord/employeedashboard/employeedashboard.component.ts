@@ -19,7 +19,6 @@ import { SummaryCardComponent } from '../../shared/summary-card/summary-card.com
     NgForOf,
     CommentComponent,
     NgIf,
-    SummaryCardComponent,
   ],
   templateUrl: './employeedashboard.component.html',
   styleUrls: ['./employeedashboard.component.scss'],

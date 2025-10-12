@@ -18,6 +18,7 @@ export class UserComponent {
   @Input({ required: true }) user!: person;
   @Output() PromoteEmployeeSignal=new EventEmitter();
   @Output() DeleteUserSignal=new EventEmitter();
+  @Output() opentask=new EventEmitter<person>();
 
   constructor(
     private userservice: UserService,
@@ -30,5 +31,8 @@ export class UserComponent {
   }
   deleteuser() {
     this.DeleteUserSignal.emit(this.user?.Id);
+  }
+  openTask(){
+    this.opentask.emit(this.user);
   }
 }

@@ -1,0 +1,43 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="task-card">
+      <div class="task-header">
+        <div class="user-info">
+          <div class="user-avatar">
+            <span>{{ user?.Name?.at(0) }}{{ user?.Role?.at(0) }}</span>
+          </div>
+          <div class="task-title-and-count">
+            <h3>{{ user?.Name }} {{ user?.Role }}'s Tasks</h3>
+            <p class="task-count">{{ tasks.length }} assigned tasks</p>
+          </div>
+        </div>
+        <button class="close-btn" (click)="close()">&times;</button>
+      </div>
+      <div class="task-body">
+        @if(tasks.length>0){
+        <div class="all-tasks">
+          @for(task of tasks;track task.TaskId){
+          <div class="task-item-card" (click)="onopencomment(task)">
+            <h3 class="task-item-title">{{ task.Title }}</h3>
+            <p class="task-item-description">{{ task.Description }}</p>
+            <div class="task-item-details">
+              <span class="label completed">{{ task.TaskStatus }}</span>
+              <span class="project-name">E-commerce Website</span>
+              <span class="due-date"
+                ><i class="pi pi-calendar"></i>
+                {{ task.Deadline | date : "yyyy/MM/dd" }}</span
+              >
+            </div>
+          </div>
+          }
+        </div>
+        }@else{
+        <div class="empty-state">
+          <i class="pi pi-calendar"></i>
+          <p>No tasks assigned yet</p>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

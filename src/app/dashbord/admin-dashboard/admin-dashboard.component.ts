@@ -26,6 +26,7 @@ import { UserComponent } from '../../user/user.component';
 import { UserService } from '../../services/user.service';
 import { ProjectService } from '../../services/project.service';
 import { person } from '../../models/user.model';
+import { EmpTaskComponent } from '../../emp-task/emp-task.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -38,6 +39,7 @@ import { person } from '../../models/user.model';
     Toast,
     AddprojectComponent,
     TaskboxComponent,
+    EmpTaskComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
@@ -66,6 +68,8 @@ export class AdminDashboardComponent implements OnInit {
   openAddProject = signal(false);
 
   shouldLoad: boolean = false;
+  shouldOpenEmpTasks=false;
+  SelectedUser!: person|null ;
 
   projectId: string = '';
 
@@ -199,5 +203,13 @@ export class AdminDashboardComponent implements OnInit {
       relativeTo: this.route,
       state: { task: task },
     });
+  }
+  openEmpTask(user:person):void{
+    this.SelectedUser = user;
+    this.shouldOpenEmpTasks = true;
+  }
+  closeEmpTasks(): void {
+    this.shouldOpenEmpTasks = false;
+    this.SelectedUser=null;
   }
 }

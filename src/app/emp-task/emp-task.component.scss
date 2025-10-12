@@ -1,0 +1,184 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+$purple-50: #f5f3ff;
+$text-dark: #333;
+$text-medium: #666;
+$border-color: #ddd;
+
+.modal-overlay {
+  position: fixed;
+  top: 120px;
+  right: 20px;
+  width: 500px;
+  height: 500px; 
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-height: 100%;
+  overflow: hidden; /* Ensures task-body overflow is handled correctly */
+  display: flex;
+  flex-direction: column;
+}
+
+.task-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Take up the full height of the modal-content */
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid $border-color;
+  background-color: $purple-50;
+  flex-shrink: 0; /* Prevents header from shrinking */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #9333ea;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.task-title-and-count {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-title-and-count h3 {
+  margin: 0;
+  font-size: 18px;
+  color: $text-dark;
+}
+
+.task-count {
+  margin: 0;
+  font-size: 14px;
+  color: $text-medium;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: $text-medium;
+  &:hover {
+    color: $text-dark;
+  }
+}
+
+.task-body {
+  padding: 20px;
+  flex-grow: 1; /* Allows task-body to fill remaining space */
+  overflow-y: auto; /* Correctly handles vertical overflow */
+}
+
+.all-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-item-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  width: 100%;
+
+  &:hover{
+    cursor: pointer;
+    border:1px solid var(--p-purple-500) ;
+  }
+}
+
+.task-item-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.task-item-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+}
+
+.task-item-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+}
+
+.label {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.completed {
+  background-color: #e8f8f5;
+  color: #2ecc71;
+}
+
+.project-name {
+  margin-left: 8px;
+}
+
+.due-date {
+  i{
+    font-size: 15px;
+    color: red;
+  }
+  margin-right: 4px;
+}
+
+.empty-state {
+  text-align: center;
+  color: $text-medium;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  height: 100%;
+  justify-content: center;
+}
+
+.pi-calendar {
+  /* Assuming this is a PrimeIcons class or similar */
+  font-size: 40px;
+  color: #ccc;
+}
+
+.empty-state p {
+  margin: 0;
+}

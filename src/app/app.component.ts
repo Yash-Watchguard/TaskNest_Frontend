@@ -4,7 +4,7 @@ import { PopupcomponentComponent } from "./shared/popupcomponent/popupcomponent.
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PopupcomponentComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
