@@ -16,22 +16,22 @@ export type person = {
   Name: string;
   Email: string;
   PhoneNumber: string;
-  Role: string
+  Role: string;
 };
 
-export type getAllUsersApiRes={
-  status:string;
-  message:string;
-  data:person[];
-}
-export type getUsersApiRes={
-  status:string;
-  message:string;
-  data:person;
-}
-export type UpdateProfileDetails={
-  "name"?:string,
-  "phoneNumber"?:string,
-  "password"?:string,
-  "email"?:string
-}
+export type getAllUsersApiRes = {
+  status: string;
+  message: string;
+  data: person[];
+};
+export type getUsersApiRes = {
+  status: string;
+  message: string;
+  data: person;
+};
+export type UpdateProfileDetails = {
+  name?: string;
+  phoneNumber?: string;
+  password?: string;
+  email?: string;
+};

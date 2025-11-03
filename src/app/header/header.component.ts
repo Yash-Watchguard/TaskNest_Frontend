@@ -11,17 +11,19 @@ import { user } from '../models/user.model';
 })
 export class HeaderComponent implements OnInit {
   private router = inject(Router);
-  
+
   user!: user | null;
+
   openProfile = false;
+  visible = false;
 
   constructor(private authservice: AuthService, private route: Router) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.user = this.authservice.getCurrentUser();
   }
 
-  logout():void {
+  logout(): void {
     alert('are you sure!');
     localStorage.clear();
     sessionStorage.clear();
@@ -29,11 +31,12 @@ export class HeaderComponent implements OnInit {
     this.user = null;
     this.router.navigate(['/login']);
   }
-  visible: boolean = false;
-  onclick():void {
+
+  onclick(): void {
     this.route.navigate(['profile']);
   }
-  onclose():void {
+  
+  onclose(): void {
     this.visible = false;
   }
 }

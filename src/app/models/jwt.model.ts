@@ -1,6 +1,6 @@
-import { Role } from "./user.model"
+import { Role } from './user.model';
 
 export type jwt = {
-    userId :string
-    role:Role
-}
+  userId: string;
+  role: Role;
+};

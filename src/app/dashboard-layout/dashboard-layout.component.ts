@@ -15,7 +15,7 @@ export class DashboardLayoutComponent implements OnInit {
   private authservice = inject(AuthService);
 
   ngOnInit(): void {
-    const user = this.authservice.newUser();
+    const user = this.authservice.getCurrentUser();
     if (user?.Role === Role.ADMIN) {
       this.authservice.router.navigate(['/dashboard/admin'], {
         replaceUrl: true,

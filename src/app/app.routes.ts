@@ -13,6 +13,7 @@ import { AdminDashboardComponent } from './dashbord/admin-dashboard/admin-dashbo
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 import { loginguardGuard } from './routeguard/loginguard.guard';
 import { PopupcomponentComponent } from './shared/popupcomponent/popupcomponent.component';
+import { WildcardComponent } from './wildcard/wildcard.component';
 
 export const routes: Routes = [
   {
@@ -39,7 +40,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
-    
+
     children: [
       {
         path: 'manager',
@@ -47,7 +48,7 @@ export const routes: Routes = [
           import(
             '../app/dashbord/manager-dashboard/manager-dashboard.component'
           ).then((m) => m.ManagerDashboardComponent),
-          canActivate:[managerguardGuard]
+        canActivate: [managerguardGuard],
       },
       {
         path: 'employee',
@@ -55,7 +56,7 @@ export const routes: Routes = [
           import(
             '../app/dashbord/employeedashboard/employeedashboard.component'
           ).then((m) => m.EmployeedashboardComponent),
-          canActivate:[employeeguardGuard]
+        canActivate: [employeeguardGuard],
       },
       {
         path: 'admin',
@@ -63,7 +64,7 @@ export const routes: Routes = [
           import(
             '../app/dashbord/admin-dashboard/admin-dashboard.component'
           ).then((m) => m.AdminDashboardComponent),
-          canActivate:[adminguardGuard]
+        canActivate: [adminguardGuard],
       },
       {
         path: 'task',
@@ -81,4 +82,8 @@ export const routes: Routes = [
         (m) => m.ProfileComponent
       ),
   },
+  {
+    path:'**',
+    component:WildcardComponent
+  }
 ];

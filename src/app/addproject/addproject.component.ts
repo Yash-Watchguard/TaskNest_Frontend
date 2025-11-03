@@ -23,10 +23,12 @@ import { ProjectService } from '../services/project.service';
   styleUrl: './addproject.component.scss',
 })
 export class AddprojectComponent implements OnDestroy {
+
   constructor(
     private projectservice: ProjectService,
     private messageservice: MessageService
   ) {}
+
   ProjectDetails: AddProjectRequest = {
     projectName: '',
     projectDescription: '',
@@ -42,6 +44,7 @@ export class AddprojectComponent implements OnDestroy {
   CloseAddProject() {
     this.CloseModal.emit();
   }
+
   onKeyDown(event: KeyboardEvent): void {
     if (
       [
@@ -83,5 +86,7 @@ export class AddprojectComponent implements OnDestroy {
       },
     });
   }
+
   ngOnDestroy() {}
+  
 }

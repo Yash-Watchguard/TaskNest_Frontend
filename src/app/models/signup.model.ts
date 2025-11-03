@@ -1,14 +1,14 @@
-import { user } from "./user.model";
+import { user } from './user.model';
 
 export type signupuserdto = {
-    name: string;
-    email: string;
-    password: string;
-    phonenumber: string;
-}
+  name: string;
+  email: string;
+  password: string;
+  phonenumber: string;
+};
 
-export type signupresponse={
+export type signupresponse = {
   status: string;
   message: string;
   data: user;
-}
+};

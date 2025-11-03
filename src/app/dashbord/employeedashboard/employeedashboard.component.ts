@@ -14,12 +14,7 @@ import { SummaryCardComponent } from '../../shared/summary-card/summary-card.com
 
 @Component({
   selector: 'app-employeedashboard',
-  imports: [
-    TaskboxComponent,
-    NgForOf,
-    CommentComponent,
-    NgIf,
-  ],
+  imports: [TaskboxComponent, NgForOf, CommentComponent, NgIf],
   templateUrl: './employeedashboard.component.html',
   styleUrls: ['./employeedashboard.component.scss'],
 })
@@ -62,9 +57,9 @@ export class EmployeedashboardComponent implements OnInit {
     });
   }
 
-  onclickupdate(status: string):void {}
+  onclickupdate(status: string): void {}
 
-  onStatusChange(event: { taskId: string; taskStatus: TaskStatus }):void {
+  onStatusChange(event: { taskId: string; taskStatus: TaskStatus }): void {
     const { taskId, taskStatus } = event;
     const taskstattus =
       taskStatus === TaskStatus.Done
@@ -83,7 +78,8 @@ export class EmployeedashboardComponent implements OnInit {
         },
       });
   }
-  onopencomment(task: Task):void {
+
+  onopencomment(task: Task): void {
     //  this.showComments=true
     //  this.selectedTask=task
     this.router.navigate(['../task'], {
@@ -91,7 +87,8 @@ export class EmployeedashboardComponent implements OnInit {
       state: { task: task },
     });
   }
-  closecommentbox():void {
+
+  closecommentbox(): void {
     this.showComments = false;
     this.selectedTask = null;
   }

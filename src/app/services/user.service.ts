@@ -1,7 +1,14 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { BehaviorSubject, map, take, tap } from 'rxjs';
-import { getAllUsersApiRes, getUsersApiRes, person, Role, UpdateProfileDetails, user } from '../models/user.model';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, map, Observable, take, tap } from 'rxjs';
+import {
+  getAllUsersApiRes,
+  getUsersApiRes,
+  person,
+  Role,
+  UpdateProfileDetails,
+  user,
+} from '../models/user.model';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -9,16 +16,16 @@ export class UserService {
   AllUsers$ = this.allusersobject.asObservable();
   httpClient = inject(HttpClient);
 
-  userProfile=signal<person>({
-    Id:'',
-    Name:'',
-    Email:'',
-    PhoneNumber:'',
-    Role:'',
-  })
+  userProfile = signal<person>({
+    Id: '',
+    Name: '',
+    Email: '',
+    PhoneNumber: '',
+    Role: '',
+  });
 
   GetAllUsers() {
-     return this.httpClient.get<getAllUsersApiRes>(`users`).pipe(
+    return this.httpClient.get<getAllUsersApiRes>(`users`).pipe(
       map((response) => {
         return response.data.map(
           (user) =>
@@ -28,32 +35,36 @@ export class UserService {
               Email: user.Email,
               PhoneNumber: user.PhoneNumber,
               Role: user.Role as string,
-            })as person);
+            } as person)
+        );
       }),
-      tap((users)=>{
+      tap((users) => {
         this.allusersobject.next(users);
-      }),
+      })
     );
   }
 
-  Deleteuser(userId:string|undefined){
-      return this.httpClient.delete(`users/${userId}`);
+  Deleteuser(userId: string | undefined): Observable<any> {
+    return this.httpClient.delete(`users/${userId}`);
   }
-  PromoteUser(userId:string){
-     return this.httpClient.put(`users/${userId}/promote`,null)
+
+  PromoteUser(userId: string) {
+    return this.httpClient.put(`users/${userId}/promote`, null);
   }
-  GetProfile(userId:string){
+
+  GetProfile(userId: string) {
     return this.httpClient.get<getUsersApiRes>(`users/${userId}`).pipe(
-     tap((res)=>{
+      tap((res) => {
         this.userProfile.set(res.data);
-     })
+      })
     );
   }
-  updateUserProfile(userId:string,data:UpdateProfileDetails){
-    return this.httpClient.patch(`users/${userId}`,data);
+
+  updateUserProfile(userId: string, data: UpdateProfileDetails) {
+    return this.httpClient.patch(`users/${userId}`, data);
   }
 
-  GetAllEmployee(){
-    return this.httpClient.get<getAllUsersApiRes>(`employees`)
+  GetAllEmployee() {
+    return this.httpClient.get<getAllUsersApiRes>(`employees`);
   }
 }

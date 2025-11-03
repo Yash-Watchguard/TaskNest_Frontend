@@ -103,4 +103,5 @@ export class CommentComponent implements OnChanges, OnDestroy{
       this.closeDialog();
     }
   }
+  
 }

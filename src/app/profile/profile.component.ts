@@ -33,9 +33,11 @@ export class ProfileComponent implements OnInit {
     PhoneNumber: '',
     Role: '',
   });
-  updatedDetails!:UpdateProfileDetails;
+
+  updatedDetails!: UpdateProfileDetails;
   constructor(private userservice: UserService) {}
-  ngOnInit() {
+
+  ngOnInit(): void {
     const userId = localStorage.getItem('userId') as string;
     this.userservice.GetProfile(userId).subscribe({
       error: (err: HttpErrorResponse) => {
@@ -43,34 +45,36 @@ export class ProfileComponent implements OnInit {
       },
     });
     this.user = this.userservice.userProfile;
-    this.updatedDetails={
-      name:this.user().Name,
-      phoneNumber:this.user().PhoneNumber,
-      email:this.user().Email,
-    }
+    this.updatedDetails = {
+      name: this.user().Name,
+      phoneNumber: this.user().PhoneNumber,
+      email: this.user().Email,
+    };
   }
 
   toggleEditMode(): void {
-    this.OpenProfileBar=false;
-    this.OpenEditMenu=true;
+    this.OpenProfileBar = false;
+    this.OpenEditMenu = true;
   }
-  toggleProfileMode(form:NgForm): void {
-    this.OpenProfileBar=true;
-    this.OpenEditMenu=false;
+
+  toggleProfileMode(form: NgForm): void {
+    this.OpenProfileBar = true;
+    this.OpenEditMenu = false;
     form.resetForm();
   }
-  saveChanges() {
-     this.userservice.updateUserProfile(this.user().Id,this.updatedDetails).subscribe(
-      {
-        next:()=>{
+
+  saveChanges(): void {
+    this.userservice
+      .updateUserProfile(this.user().Id, this.updatedDetails)
+      .subscribe({
+        next: () => {
           this.userservice.GetProfile(this.user().Id).subscribe({
-            error:(err:HttpErrorResponse)=>{
+            error: (err: HttpErrorResponse) => {
               console.log(err);
-            }
+            },
           });
-        }
-      }
-     );
+        },
+      });
   }
 
   cancelEdit() {}

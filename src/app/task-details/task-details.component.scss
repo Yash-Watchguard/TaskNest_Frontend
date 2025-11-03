@@ -99,7 +99,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
   }
 
   .content {
-    min-height: 100px;
+    height:fit-content;
     border: 1px solid var(--p-purple-200);
     background-color: white;
     border-radius: 8px;

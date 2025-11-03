@@ -39,7 +39,7 @@ import { EmpTaskComponent } from '../../emp-task/emp-task.component';
     Toast,
     AddprojectComponent,
     TaskboxComponent,
-    EmpTaskComponent
+    EmpTaskComponent,
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
@@ -68,15 +68,15 @@ export class AdminDashboardComponent implements OnInit {
   openAddProject = signal(false);
 
   shouldLoad: boolean = false;
-  shouldOpenEmpTasks=false;
-  SelectedUser!: person|null ;
+  shouldOpenEmpTasks = false;
+  SelectedUser!: person | null;
 
   projectId: string = '';
 
   @ViewChild('secondDiv') secondDiv!: ElementRef;
 
   messageservice = inject(MessageService);
-  ngOnInit() {
+  ngOnInit(): void {
     this.userobserver$ = this.userservice.AllUsers$;
     this.userservice.GetAllUsers().subscribe({
       next: (res) => {
@@ -114,6 +114,7 @@ export class AdminDashboardComponent implements OnInit {
       this.AllProject = projects;
     });
   }
+
   PromoteEmp(userId: string): void {
     this.userservice.PromoteUser(userId).subscribe({
       next: () => {
@@ -162,9 +163,11 @@ export class AdminDashboardComponent implements OnInit {
       },
     });
   }
+
   AddProjectModal(): void {
     this.openAddProject.set(true);
   }
+
   closeAddProjectModal(): void {
     this.openAddProject.set(false);
   }
@@ -198,18 +201,21 @@ export class AdminDashboardComponent implements OnInit {
       },
     });
   }
+
   onopencomment(task: Task): void {
     this.router.navigate(['../task'], {
       relativeTo: this.route,
       state: { task: task },
     });
   }
-  openEmpTask(user:person):void{
+
+  openEmpTask(user: person): void {
     this.SelectedUser = user;
     this.shouldOpenEmpTasks = true;
   }
+
   closeEmpTasks(): void {
     this.shouldOpenEmpTasks = false;
-    this.SelectedUser=null;
+    this.SelectedUser = null;
   }
 }

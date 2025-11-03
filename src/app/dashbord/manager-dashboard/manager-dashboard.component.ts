@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgIf } from '@angular/common';
@@ -15,12 +21,7 @@ import { Project } from '../../models/project.model';
 @Component({
   selector: 'app-manager-dashboard',
   standalone: true, // Use standalone component for modern Angular
-  imports: [
-    ProjectboxComponent,
-    TaskboxComponent,
-    AddtaskComponent,
-    NgIf,
-  ],
+  imports: [ProjectboxComponent, TaskboxComponent, AddtaskComponent, NgIf],
   templateUrl: './manager-dashboard.component.html',
   styleUrl: './manager-dashboard.component.scss',
 })
@@ -38,13 +39,13 @@ export class ManagerDashboardComponent implements OnInit {
 
   ProjectIdforAddTask = '';
   projectId: string = '';
-  
+
   projects$!: Observable<Project[]>;
 
   tasks$!: Observable<Task[]>;
   TaskOfSingleProect$!: Observable<Task[]>;
 
-  isaddtask=signal(false)
+  isaddtask = signal(false);
 
   constructor(
     private projectservice: ProjectService,
@@ -53,7 +54,7 @@ export class ManagerDashboardComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.projects$ = this.projectservice.projects$;
     this.tasks$ = this.taskservce.allTaskOfManager$;
     const userId = localStorage.getItem('userId');
@@ -93,7 +94,7 @@ export class ManagerDashboardComponent implements OnInit {
     });
   }
 
-  loadTask(projectId: string):void {
+  loadTask(projectId: string): void {
     if (this.projectId != projectId) {
       this.taskservce.AprojectTask.next([]);
       this.projectId = projectId;
@@ -122,28 +123,30 @@ export class ManagerDashboardComponent implements OnInit {
       },
     });
   }
-  onopencomment(task: Task):void {
+
+  onopencomment(task: Task): void {
     this.router.navigate(['../task'], {
       relativeTo: this.route,
       state: { task: task },
     });
   }
-  taskdelete(event: { taskId: string; projectId: string }):void {
+
+  taskdelete(event: { taskId: string; projectId: string }): void {
     this.taskservce.deleteTask(event.taskId, event.projectId).subscribe({
-      next: () => {
-          
-      },
+      next: () => {},
       error: () => {
         console.log('error in deleting the task');
       },
     });
   }
-  openaddtask(projectId: string):void {
-    this.ProjectIdforAddTask=projectId;
+
+  openaddtask(projectId: string): void {
+    this.ProjectIdforAddTask = projectId;
     this.isaddtaskopen = true;
   }
-  oncloseaddtaskbox() :void{
-    this.ProjectIdforAddTask='';
+
+  oncloseaddtaskbox(): void {
+    this.ProjectIdforAddTask = '';
     this.isaddtaskopen = false;
   }
 }

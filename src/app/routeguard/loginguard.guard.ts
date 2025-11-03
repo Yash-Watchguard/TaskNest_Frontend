@@ -1,11 +1,14 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Role } from '../models/user.model';
 
 export const loginguardGuard: CanActivateFn = (route, state) => {
+  const rout=inject(Router)
   const userservice=inject(AuthService)
-  if(userservice.newUser()){
-    return false
+  const user=userservice.getCurrentUser()
+  if(user){
+      rout.navigate(['dashboard'])
   }
-  return true
+  return true;
 };
