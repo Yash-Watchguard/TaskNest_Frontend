@@ -1,18 +1,23 @@
-@use "app/shared/_variables.scss" ;
+@use "app/shared/_variables.scss";
 @import "primeicons/primeicons.css";
-:root{
-  ---p-tooltip-background:#e100ff !important;
+:root {
+  --p-tooltip-background: var(--p-purple-500)  !important;
 }
 
-*{
-    font-family: sans-serif;
+i.pi {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+* {
+  font-family: sans-serif;
 }
 body {
-    margin: 0;
-    padding: 0;
-    background: var(--p-purple-50);
+  margin: 0;
+  padding: 0;
+  background: var(--p-purple-50);
 }
-.font-h1{
+.font-h1 {
   color: var(--dark-purple-text);
   font-size: var(--font-h1);
   font-weight: var(--font-weight-medium);
@@ -24,9 +29,8 @@ body {
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-default);
 }
-.font-h3{
-    font-size: var(--font-h3);
+.font-h3 {
+  font-size: var(--font-h3);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-default);
 }
-
