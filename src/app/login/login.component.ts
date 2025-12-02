@@ -45,6 +45,7 @@ export class LoginComponent {
       })
       .subscribe({
         next: (response) => {
+          console.log("hi")
           this.authservice.router.navigate(['dashboard'], {
             replaceUrl: true,
           });

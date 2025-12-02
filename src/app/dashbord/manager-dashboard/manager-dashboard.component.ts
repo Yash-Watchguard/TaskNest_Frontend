@@ -39,6 +39,7 @@ export class ManagerDashboardComponent implements OnInit {
 
   ProjectIdforAddTask = '';
   projectId: string = '';
+  userId: string|null='';
 
   projects$!: Observable<Project[]>;
 
@@ -57,9 +58,9 @@ export class ManagerDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.projects$ = this.projectservice.projects$;
     this.tasks$ = this.taskservce.allTaskOfManager$;
-    const userId = localStorage.getItem('userId');
+    this.userId = localStorage.getItem('userId');
 
-    this.projectservice.GetAssignedProject(`projects/${userId}`).subscribe({
+    this.projectservice.GetAssignedProject(`projects/assigned/${this.userId}`).subscribe({
       next: (response) => {
         console.log(response);
       },
@@ -73,7 +74,7 @@ export class ManagerDashboardComponent implements OnInit {
     });
 
     this.taskservce
-      .GetAllManagerProjectTask(`project/${userId}/tasks/manager`)
+      .GetAllManagerProjectTask(`projects/managers/${this.userId}/tasks`)
       .subscribe({
         next: () => {
           console.log('Task get successfully');
@@ -108,7 +109,7 @@ export class ManagerDashboardComponent implements OnInit {
     }, 0);
     this.TaskOfSingleProect$ = this.taskservce.ProjectTasks$;
     this.taskservce
-      .GetAllTaskOfProject(`projects/${projectId}/tasks`)
+      .GetAllTaskOfProject(`creator/${this.userId}/projects/${projectId}`)
       .subscribe({
         next: () => {
           console.log('success');

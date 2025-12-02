@@ -32,7 +32,7 @@ export class ProjectboxComponent implements OnInit {
   ngOnInit(){
      this.user=this.userservice.getCurrentUser();
 
-     this.projectservice.GetProjectStatuas(`projects/status/${this.Project?.ProjectId}`).subscribe({
+     this.projectservice.GetProjectStatuas(`projects/${this.Project?.ProjectId}/status/manager/${this.Project?.AssignedManagerId}`).subscribe({
       next:(response)=>{
         this.projectCompletionpercentage=response.data.completionPercentage;
         this.totalTask=response.data.totalTasks

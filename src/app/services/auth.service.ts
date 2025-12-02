@@ -1,9 +1,7 @@
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { LoginRequest, LoginResponse } from '../models/login.model';
-
 import { HttpClient } from '@angular/common/http';
-import { Header } from 'primeng/api';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs';
 import { signupresponse, signupuserdto } from '../models/signup.model';
 import { Role, user } from '../models/user.model';
 import { jwt } from '../models/jwt.model';
@@ -30,17 +28,24 @@ export class AuthService {
     }).pipe(
       tap((response) => {
         try {
-          const user = this.jwtDecoder(
-            response.token,
-            userDetails,
-            response.name
-          );
+          // Extract response fields
+          const token = response.data.token;
+          const name = response.data.name;
+          const userId = response.data.UserId;
+
+          // Decode token
+          const user = this.jwtDecoder(token, userDetails, name);
+
+          console.log("Response from Lambda:", response);
+
+          // Store user
           this.newUser.set(user);
           localStorage.setItem('user', JSON.stringify(user));
-          localStorage.setItem('userId', response.UserId);
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('userId', userId);
+          localStorage.setItem('token', token);
+
         } catch (e) {
-          console.log(e);
+          console.log("Login parsing error:", e);
         }
       })
     );

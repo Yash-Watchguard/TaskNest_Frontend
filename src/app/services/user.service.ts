@@ -49,7 +49,7 @@ export class UserService {
   }
 
   PromoteUser(userId: string) {
-    return this.httpClient.put(`users/${userId}/promote`, null);
+    return this.httpClient.put(`users/promote/${userId}`, null);
   }
 
   GetProfile(userId: string) {

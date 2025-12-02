@@ -23,8 +23,11 @@ import { NgIf } from '@angular/common';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
+ 
   OpenProfileBar = true;
   OpenEditMenu = false;
+
+  curentUser!:user|null
 
   user = signal<person>({
     Id: '',
@@ -35,11 +38,12 @@ export class ProfileComponent implements OnInit {
   });
 
   updatedDetails!: UpdateProfileDetails;
-  constructor(private userservice: UserService) {}
+  constructor(private userservice: UserService,private authService:AuthService) {}
 
   ngOnInit(): void {
-    const userId = localStorage.getItem('userId') as string;
-    this.userservice.GetProfile(userId).subscribe({
+    this.curentUser=this.authService.getCurrentUser();
+
+    this.userservice.GetProfile(this.curentUser?.Email as string).subscribe({
       error: (err: HttpErrorResponse) => {
         console.log(err);
       },

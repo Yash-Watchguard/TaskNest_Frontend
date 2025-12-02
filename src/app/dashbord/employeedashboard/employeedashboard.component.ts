@@ -59,7 +59,7 @@ export class EmployeedashboardComponent implements OnInit {
 
   onclickupdate(status: string): void {}
 
-  onStatusChange(event: { taskId: string; taskStatus: TaskStatus }): void {
+  onStatusChange(event: { taskId: string; taskStatus: TaskStatus },task:Task): void {
     const { taskId, taskStatus } = event;
     const taskstattus =
       taskStatus === TaskStatus.Done
@@ -68,7 +68,7 @@ export class EmployeedashboardComponent implements OnInit {
         ? 'in progress'
         : 'pending';
     this.taskservice
-      .UpdateStatus(`projects/${this.userId}/tasks/${taskId}`, taskstattus)
+      .UpdateStatus(`creator/${task.CreatedBy}/projects/${task.ProjectId}/tasks/${task.TaskId}`, taskstattus)
       .subscribe({
         next: () => {
           console.log('task updated success');

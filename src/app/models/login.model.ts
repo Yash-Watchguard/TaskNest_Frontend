@@ -4,9 +4,11 @@ export type LoginRequest = {
 };
 
 export type LoginResponse = {
-  message: string;
-  status: string;
-  UserId: string;
-  name: string;
-  token: string;
+  Status: string;
+  Message: string;
+  data: {
+    token: string;
+    name: string;
+    UserId: string;
+  };
 };

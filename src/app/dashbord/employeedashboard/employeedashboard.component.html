@@ -61,7 +61,7 @@
           <li *ngFor="let task of todo">
             <app-taskbox
               [task]="task"
-              (statusChange)="onStatusChange($event)"
+              (statusChange)="onStatusChange($event,task)"
               (openComments)="onopencomment($event)"
             ></app-taskbox>
           </li>
@@ -76,7 +76,7 @@
           <li *ngFor="let task of inProgress">
             <app-taskbox
               [task]="task"
-              (statusChange)="onStatusChange($event)"
+              (statusChange)="onStatusChange($event,task)"
               (openComments)="onopencomment($event)"
             ></app-taskbox>
           </li>

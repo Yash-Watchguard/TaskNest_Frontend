@@ -9,7 +9,7 @@
     <div class="action">
          <button class="add-task-btn" (click)="loadTasks()">Tasks</button>
     <button class="add-task-btn" *ngIf="user?.Role===roles.MANAGER" (click)="AddTask()">+ Add Task</button>
-    <button class="delete-button" *ngIf="user?.Role===roles.ADMIN" (click)="deleteproject()"><i class="pi pi-trash" style="size: 1rem;"></i></button>
+    <button  class="delete-button" *ngIf="user?.Role===roles.ADMIN" (click)="deleteproject()" disabled="true"><i class="pi pi-trash" style="size: 1rem;"></i></button>
     </div>
    
   </div>
