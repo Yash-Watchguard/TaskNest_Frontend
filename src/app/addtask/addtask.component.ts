@@ -84,6 +84,14 @@ export class AddtaskComponent {
           this.isaddtasktrue.set(true);
           this.count--;
 
+          // Clear the form
+          this.titel = '';
+          this.destcription = '';
+          this.acceptance_criteria = '';
+          this.employeeId = '';
+          this.date = '';
+          this.priority = '';
+
           this.messageservice.add({
             severity: 'success',
             summary: 'Success',

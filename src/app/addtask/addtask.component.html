@@ -89,7 +89,7 @@
             type="date"
             class="form-input"
             id="deadline"
-            min="2025-10-14"
+            min="2025-12-05"
             required
             (keydown)="onKeyDown($event)"
             (paste)="$event.preventDefault()"
@@ -132,10 +132,10 @@
         <button
           type="submit"
           class="submit-btn"
-          [disabled]="addtask.invalid && isaddtasktrue()"
+          [disabled]="addtask.invalid || !isaddtasktrue()"
           (click)="addnewtask()"
         >
-          Create Project
+          Create Task
         </button>
         
       </div>

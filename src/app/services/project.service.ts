@@ -11,13 +11,16 @@ export class ProjectService{
 
     projects$ =this.ProjectObject.asObservable();
 
+     baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
+
     private getprojecturl='';
 
     currentptojectid:any=''
 
     GetAssignedProject(url:string){
         this.getprojecturl=url;
-        return this.httpclient.get<viewprojectresponse>(url).pipe(
+        return this.httpclient.get<viewprojectresponse>(this.baseUrl+url).pipe(
             map((response)=>{
              return response.data.map((p: projectresponse)=>({
                 ProjectId:p.project_id,
@@ -35,7 +38,7 @@ export class ProjectService{
     }
 
     Addproject(project:AddProjectRequest){
-       return this.httpclient.post(`projects`,project);
+       return this.httpclient.post(this.baseUrl+`projects`,project);
     }
 
     GetProjectStatuas(url:string){
@@ -48,13 +51,13 @@ export class ProjectService{
             totalTasks:number
             completionPercentage:number
         }
-       }>(url);
+       }>(this.baseUrl2+url);
     }
     
     private AllprojectSubject=new BehaviorSubject<Project[]>([]);
     AllProjectObserver$=this.AllprojectSubject.asObservable();
     GetAllProject(){
-        return this.httpclient.get<viewprojectresponse>(`projects`).pipe(
+        return this.httpclient.get<viewprojectresponse>(this.baseUrl+`projects`).pipe(
             map((response)=>{
              return response.data.map((p)=>({
                 ProjectId:p.project_id,
@@ -71,8 +74,8 @@ export class ProjectService{
         );
     }
 
-    DeleteProject(projectId:string){
-       return this.httpclient.delete(`projects/${projectId}`)
+    DeleteProject(projectId:string,managerId:string){
+       return this.httpclient.delete(this.baseUrl2+`/project/${projectId}/assigned/${managerId}/delete`)
     }
     
 }

@@ -26,12 +26,15 @@ export class TaskService {
   public allTaskOfManager$ = this.ProjecttaskObject.asObservable();
 
   // Task of a particular project
+
+   baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
   AprojectTask = new BehaviorSubject<Task[]>([]);
   public ProjectTasks$ = this.AprojectTask.asObservable();
   private gettaskurl = '';
   GetTasks(url: string) {
     this.gettaskurl = url;
-    return this.httpClient.get<TaskApiResponse>(url).pipe(
+    return this.httpClient.get<TaskApiResponse>(this.baseUrl2+url).pipe(
       map((response) => {
         return response.data.map(
           (t) =>
@@ -57,7 +60,7 @@ export class TaskService {
 
   UpdateStatus(url: string, update: string) {
     return this.httpClient
-      .patch(url, {
+      .patch(this.baseUrl2+url, {
         status: update,
       })
       .pipe(
@@ -68,7 +71,7 @@ export class TaskService {
   }
 
   GetAllManagerProjectTask(url: string) {
-    return this.httpClient.get<TaskApiResponse>(url).pipe(
+    return this.httpClient.get<TaskApiResponse>(this.baseUrl2+url).pipe(
       map((response) => {
         return response.data.map(
           (t) =>
@@ -93,7 +96,7 @@ export class TaskService {
   }
 
   GetAllTaskOfProject(url: string) {
-    return this.httpClient.get<TaskApiResponse>(url).pipe(
+    return this.httpClient.get<TaskApiResponse>(this.baseUrl2+url).pipe(
       map((response) => {
         return response.data.map(
           (t) =>
@@ -112,15 +115,16 @@ export class TaskService {
         );
       }),
       tap((tasks) => {
+        console.log(tasks)
         this.AprojectTask.next(tasks);
       })
     );
   }
 
-  deleteTask(taskId: string, projectId: string) {
+  deleteTask(taskId: string, projectId: string,managerId:string,empId:string) {
     return this.httpClient
       .delete<{ status: string; message: string }>(
-        `projects/${projectId}/tasks/${taskId}`
+       this.baseUrl2+ `/projects/${projectId}/tasks/${taskId}/manager/${managerId}/employee/${empId}/deletetask`
       )
       .pipe(
         tap((response) => {
@@ -147,7 +151,7 @@ export class TaskService {
       );
   }
   addTask(projectId: string | undefined, taskdata: AddTask) {
-    return this.httpClient.post(`projects/${projectId}/tasks`, taskdata).pipe(
+    return this.httpClient.post(this.baseUrl2+`projects/${projectId}/tasks`, taskdata).pipe(
       tap(() => {
         this.GetAllManagerProjectTask(
           `project/${this.userId}/tasks/manager`
@@ -165,7 +169,7 @@ export class TaskService {
   }
 
   EditTask(url: string, updatedTask: EditTask) {
-    return this.httpClient.patch(url, updatedTask);
+    return this.httpClient.patch(this.baseUrl2+url, updatedTask);
   }
   // private AllTaskObserable=new BehaviorSubject<Task[]>([]);
   // AllTask$=this.AllTaskObserable.asObservable()
@@ -192,8 +196,9 @@ export class TaskService {
   // }
 
   GetEmpTask(url:string){
-     return this.httpClient.get<TaskApiResponse>(url).pipe(
+     return this.httpClient.get<TaskApiResponse>(this.baseUrl2+url).pipe(
       map((response) => {
+        console.log('GetEmpTask response:', response);
         return response.data.map(
           (t) =>
             ({

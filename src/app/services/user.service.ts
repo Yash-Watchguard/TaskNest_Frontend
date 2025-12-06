@@ -24,8 +24,11 @@ export class UserService {
     Role: '',
   });
 
+  baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
+
   GetAllUsers() {
-    return this.httpClient.get<getAllUsersApiRes>(`users`).pipe(
+    return this.httpClient.get<getAllUsersApiRes>(this.baseUrl+`users`).pipe(
       map((response) => {
         return response.data.map(
           (user) =>
@@ -45,15 +48,15 @@ export class UserService {
   }
 
   Deleteuser(userId: string | undefined): Observable<any> {
-    return this.httpClient.delete(`users/${userId}`);
+    return this.httpClient.delete(this.baseUrl+`users/${userId}`);
   }
 
-  PromoteUser(userId: string) {
-    return this.httpClient.put(`users/promote/${userId}`, null);
+  PromoteUser(email: string) {
+    return this.httpClient.patch(this.baseUrl2+`users/promote/${email}`, null);
   }
 
   GetProfile(userId: string) {
-    return this.httpClient.get<getUsersApiRes>(`users/${userId}`).pipe(
+    return this.httpClient.get<getUsersApiRes>(this.baseUrl+`users/${userId}`).pipe(
       tap((res) => {
         this.userProfile.set(res.data);
       })
@@ -61,10 +64,10 @@ export class UserService {
   }
 
   updateUserProfile(userId: string, data: UpdateProfileDetails) {
-    return this.httpClient.patch(`users/${userId}`, data);
+    return this.httpClient.patch(this.baseUrl+`users/${userId}`, data);
   }
 
   GetAllEmployee() {
-    return this.httpClient.get<getAllUsersApiRes>(`employees`);
+    return this.httpClient.get<getAllUsersApiRes>(this.baseUrl+`employees`);
   }
 }

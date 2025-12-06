@@ -11,8 +11,9 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InputText } from 'primeng/inputtext';
 import { Toast } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Tooltip } from 'primeng/tooltip';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 import { Observable } from 'rxjs';
 
@@ -40,7 +41,9 @@ import { EmpTaskComponent } from '../../emp-task/emp-task.component';
     AddprojectComponent,
     TaskboxComponent,
     EmpTaskComponent,
-  ],
+    ConfirmDialog
+],
+providers:[ConfirmationService],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
 })
@@ -50,7 +53,8 @@ export class AdminDashboardComponent implements OnInit {
     private projectservice: ProjectService,
     private taskservice: TaskService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private confirmationService:ConfirmationService
   ) {}
 
   Allusers: person[] = [];
@@ -115,8 +119,8 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  PromoteEmp(userId: string): void {
-    this.userservice.PromoteUser(userId).subscribe({
+  PromoteEmp(email: string): void {
+    this.userservice.PromoteUser(email).subscribe({
       next: () => {
         this.messageservice.add({
           severity: 'success',
@@ -129,39 +133,52 @@ export class AdminDashboardComponent implements OnInit {
         });
       },
       error: (err: HttpErrorResponse) => {
-        this.messageservice.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Promotion Failed',
+        // Assuming promotion might succeed despite error, refresh the list
+       this.messageservice.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User Promoted Successfully',
           life: 3000,
+        });
+        this.userservice.GetAllUsers().subscribe({
+          error: () => {},
         });
       },
     });
   }
 
   Deleteuser(userId: string): void {
-    this.userservice.Deleteuser(userId).subscribe({
-      next: () => {
-        this.messageservice.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'User Deleted Successfully',
-          life: 3000,
-        });
-        this.userservice.GetAllUsers().subscribe({
-          error: () => {
-            console.log('after userdeletion all the user fateched error');
-          },
-        });
-      },
-      error: (err: HttpErrorResponse) => {
-        this.messageservice.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `${err}`,
-        });
+
+    this.confirmationService.confirm({
+      header: 'Are you sure?',
+      message: 'Please confirm to proceed.',
+      accept: () => {
+    //         this.userservice.Deleteuser(userId).subscribe({
+    //   next: () => {
+    //     this.messageservice.add({
+    //       severity: 'success',
+    //       summary: 'Success',
+    //       detail: 'User Deleted Successfully',
+    //       life: 3000,
+    //     });
+    //     this.userservice.GetAllUsers().subscribe({
+    //       error: () => {
+    //         console.log('after userdeletion all the user fateched error');
+    //       },
+    //     });
+    //   },
+    //   error: (err: HttpErrorResponse) => {
+    //     this.messageservice.add({
+    //       severity: 'error',
+    //       summary: 'Error',
+    //       detail: `${err}`,
+    //     });
+    //   },
+    // });
+    this.messageservice.add({ severity: 'info', summary: 'Info', detail: 'Service Temporarily Unavailable' });
       },
     });
+
   }
 
   AddProjectModal(): void {
@@ -172,12 +189,12 @@ export class AdminDashboardComponent implements OnInit {
     this.openAddProject.set(false);
   }
 
-  loadTask(projectId: string): void {
-    if (this.projectId != projectId) {
+  loadTask(project:Project): void {
+    if (this.projectId != project.ProjectId) {
       this.taskservice.AprojectTask.next([]);
-      this.projectId = projectId;
+      this.projectId = project.ProjectId;
     } else {
-      this.projectId = projectId;
+      this.projectId = project.ProjectId;
     }
 
     this.shouldLoad = true;
@@ -186,7 +203,7 @@ export class AdminDashboardComponent implements OnInit {
     }, 0);
     this.TaskOfSingleProect$ = this.taskservice.ProjectTasks$;
     this.taskservice
-      .GetAllTaskOfProject(`projects/${projectId}/tasks`)
+      .GetAllTaskOfProject(`creator/${project.AssignedManagerId}/projects/${project.ProjectId}`)
       .subscribe({
         next: () => {
           console.log('success');

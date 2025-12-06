@@ -10,9 +10,12 @@ export class CommentService{
   public comments$ = this.commentobject.asObservable();
   private getcommenturl=''
 
+   baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
+
   GetComments(url:string){
     this.getcommenturl=url;
-    return this.httpClient.get<viewallcommentrespinse>(url)
+    return this.httpClient.get<viewallcommentrespinse>(this.baseUrl+url)
     .pipe(
         map((response)=>{
             return response.data.map((t)=>({
@@ -28,7 +31,7 @@ export class CommentService{
   }
 
   Addcomment(url:string, comment:string){
-    return this.httpClient.post(url.replace('/:','/'),{
+    return this.httpClient.post(this.baseUrl+url.replace('/:','/'),{
         "content":comment
     })
     .pipe(tap(response=>{

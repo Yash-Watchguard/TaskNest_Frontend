@@ -16,13 +16,16 @@ export class AuthService {
 
   signupsignal = signal<boolean>(false);
   newUser = signal<user | null>(null);
+
+  baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
   
   Signup(url: string, UserDetails: signupuserdto) {
-    return this.HttpClient.post<signupresponse>('signup', UserDetails);
+    return this.HttpClient.post<signupresponse>(this.baseUrl+'signup', UserDetails);
   }
 
   Login(url: string, userDetails: LoginRequest) {
-    return this.HttpClient.post<LoginResponse>(url, {
+    return this.HttpClient.post<LoginResponse>(this.baseUrl+url, {
       email: userDetails.email,
       password: userDetails.password,
     }).pipe(

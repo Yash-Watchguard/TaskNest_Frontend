@@ -47,9 +47,7 @@ export class EmpTaskComponent implements OnInit, OnChanges {
   }
 
   loadUserTasks(): void {
-    // Since no GetAllTask, for admin to get all tasks, we can loop through all projects and get their tasks, but to simplify, assume GetTasks('tasks') works if endpoint exists.
-    // For now, use GetTasks('tasks') and hope it works.
-    this.taskService.GetEmpTask(`employees/${this.user?.Id}/tasks`).subscribe({
+    this.taskService.GetEmpTask(`employees/${this.user?.Id}/tasksy`).subscribe({
       next: (allTasks: Task[]) => {
         this.tasks = allTasks;
       },

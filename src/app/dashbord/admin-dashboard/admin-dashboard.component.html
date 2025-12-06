@@ -1,4 +1,5 @@
 <p-toast position="top-right"></p-toast>
+<p-confirmDialog></p-confirmDialog>
 <div class="admin-dashboard">
   <div class="dashboard-header">
     <div class="left">
@@ -7,7 +8,7 @@
     </div>
     <div class="right">
       <button
-        pInputText
+        pButton
         pTooltip="Create a new project and assign a manager"
         tooltipPosition="top"
         (click)="AddProjectModal()"
@@ -106,6 +107,7 @@
 
       }@else {
       <div class="no-task">
+        <i class="pi pi-info-circle" style="font-size: 2rem; color: var(--p-purple-500);"></i>
         <p>Sorry No Task</p>
       </div>
       }

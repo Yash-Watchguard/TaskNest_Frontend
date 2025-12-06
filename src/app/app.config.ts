@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
       }
     }),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([BaseUrl,AddJwt,loggingInterceptor])),
+    provideHttpClient(withInterceptors([AddJwt,loggingInterceptor])),
     MessageService,
     Toast,
     

@@ -18,12 +18,15 @@ import { AddtaskComponent } from '../../addtask/addtask.component';
 import { ProjectService } from '../../services/project.service';
 import { TaskService } from '../../services/task.service';
 import { Project } from '../../models/project.model';
+import { MessageService } from 'primeng/api';
+import { Toast } from "primeng/toast";
 @Component({
   selector: 'app-manager-dashboard',
   standalone: true, // Use standalone component for modern Angular
-  imports: [ProjectboxComponent, TaskboxComponent, AddtaskComponent, NgIf],
+  imports: [ProjectboxComponent, TaskboxComponent, AddtaskComponent, NgIf, Toast],
   templateUrl: './manager-dashboard.component.html',
   styleUrl: './manager-dashboard.component.scss',
+  providers:[MessageService]
 })
 export class ManagerDashboardComponent implements OnInit {
   @ViewChild('secondDiv') secondDiv!: ElementRef;
@@ -52,7 +55,8 @@ export class ManagerDashboardComponent implements OnInit {
     private projectservice: ProjectService,
     private taskservce: TaskService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService:MessageService
   ) {}
 
   ngOnInit(): void {
@@ -95,12 +99,12 @@ export class ManagerDashboardComponent implements OnInit {
     });
   }
 
-  loadTask(projectId: string): void {
-    if (this.projectId != projectId) {
+  loadTask(project:Project): void {
+    if (this.projectId != project.ProjectId) {
       this.taskservce.AprojectTask.next([]);
-      this.projectId = projectId;
+      this.projectId = project.ProjectId;
     } else {
-      this.projectId = projectId;
+      this.projectId = project.ProjectId;
     }
 
     this.shouldLoad = true;
@@ -109,7 +113,7 @@ export class ManagerDashboardComponent implements OnInit {
     }, 0);
     this.TaskOfSingleProect$ = this.taskservce.ProjectTasks$;
     this.taskservce
-      .GetAllTaskOfProject(`creator/${this.userId}/projects/${projectId}`)
+      .GetAllTaskOfProject(`creator/${project.AssignedManagerId}/projects/${project.ProjectId}`)
       .subscribe({
         next: () => {
           console.log('success');
@@ -132,9 +136,19 @@ export class ManagerDashboardComponent implements OnInit {
     });
   }
 
-  taskdelete(event: { taskId: string; projectId: string }): void {
-    this.taskservce.deleteTask(event.taskId, event.projectId).subscribe({
-      next: () => {},
+  taskdelete(event: { taskId: string;
+    projectId: string;
+    managerId: string;
+    emdId: string;}): void {
+    this.taskservce.deleteTask(event.taskId, event.projectId,event.managerId,event.emdId).subscribe({
+      next: () => {
+              this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Task Deleted Successfully',
+          life: 3000,
+        });
+      },
       error: () => {
         console.log('error in deleting the task');
       },

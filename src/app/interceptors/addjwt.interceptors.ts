@@ -5,7 +5,7 @@ export function AddJwt(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<any> {
-  
+
   if (req.url.includes('login') || req.url.includes('signup')) {
     return next(req);
   }

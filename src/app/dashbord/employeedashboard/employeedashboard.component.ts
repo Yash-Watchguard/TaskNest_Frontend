@@ -40,7 +40,7 @@ export class EmployeedashboardComponent implements OnInit {
     const user = userstring ? JSON.parse(userstring) : null;
     this.tasks$ = this.taskservice.tasks$;
     const userId = localStorage.getItem('userId');
-    this.taskservice.GetTasks(`employees/${userId}/tasks`).subscribe({
+    this.taskservice.GetTasks(`employees/${userId}/tasksy`).subscribe({
       next: (response) => {
         console.log(response);
       },
@@ -61,14 +61,9 @@ export class EmployeedashboardComponent implements OnInit {
 
   onStatusChange(event: { taskId: string; taskStatus: TaskStatus },task:Task): void {
     const { taskId, taskStatus } = event;
-    const taskstattus =
-      taskStatus === TaskStatus.Done
-        ? 'done'
-        : taskStatus == TaskStatus.InProgress
-        ? 'in progress'
-        : 'pending';
+    
     this.taskservice
-      .UpdateStatus(`creator/${task.CreatedBy}/projects/${task.ProjectId}/tasks/${task.TaskId}`, taskstattus)
+      .UpdateStatus(`projects/${task.ProjectId}/tasks/${task.TaskId}/manager/${task.CreatedBy}/update`, taskStatus)
       .subscribe({
         next: () => {
           console.log('task updated success');

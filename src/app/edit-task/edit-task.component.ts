@@ -100,7 +100,7 @@ export class EditTaskComponent implements OnInit {
               next: (response) => {},
               error: (err: HttpErrorResponse) => {},
             });
-          // call get allproject task
+
           this.taskservice
             .GetAllTaskOfProject(`projects/${this.task.ProjectId}/tasks`)
             .subscribe({
