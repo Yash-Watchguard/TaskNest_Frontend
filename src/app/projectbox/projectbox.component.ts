@@ -29,7 +29,7 @@ export class ProjectboxComponent implements OnInit {
   projectIdForAddTask!:string|undefined;
   projectCompletionpercentage!:number
   totalTask!:number
-  constructor(private projectservice:ProjectService ,private router:Router,private userservice:AuthService, private confirmationService:ConfirmationService){}
+  constructor(private projectservice:ProjectService ,private router:Router,private userservice:AuthService, private confirmationService:ConfirmationService,private messageService:MessageService){}
   ngOnInit(){
      this.user=this.userservice.getCurrentUser();
 
@@ -63,7 +63,11 @@ export class ProjectboxComponent implements OnInit {
         });
       },
       error:()=>{
-        this.projectDeleted.emit(false);
+        this.projectDeleted.emit(true);
+        
+        this.projectservice.GetAllProject().subscribe(()=>{
+          error:()=>{console.log("error")}
+        });
       }
      });
       },

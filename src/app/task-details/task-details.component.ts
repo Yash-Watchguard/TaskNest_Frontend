@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { EditTaskComponent } from "../edit-task/edit-task.component";
 import { user } from '../models/user.model';
+import { TaskService } from '../services/task.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { user } from '../models/user.model';
 export class TaskDetailsComponent implements OnInit, OnDestroy{
   task!:Task;
   taskstatus=TaskStatus
-   constructor(private router:Router){
+   constructor(private router:Router , private taskService:TaskService){
     const navigation =this.router.getCurrentNavigation();
        const state=navigation?.extras.state as {task:Task};
        if(state?.task){
@@ -98,15 +99,12 @@ export class TaskDetailsComponent implements OnInit, OnDestroy{
     this.isOpenEditTask=false;
   }
 
-
-
-  //  ngOnInit(): void {
-  //    const stored = localStorage.getItem('selectedTask');
-  //    if (stored) {
-  //      this.task = JSON.parse(stored);
-  //    } else {
-
-  //    }
-  //  }
+  onSuccessfulledit():void{
+      this.taskService.GetSingleTask(`creator/${this.task.CreatedBy}/projects/${this.task.ProjectId}/tasks/${this.task.TaskId}`).subscribe({
+        next:(Response:Task[])=>{
+          this.task=Response[0];
+        }
+      });
+  }
 }
 

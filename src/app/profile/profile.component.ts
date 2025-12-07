@@ -1,85 +1,126 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
-import { person, UpdateProfileDetails, user } from '../models/user.model';
+import { UpdateProfileDetails, user } from '../models/user.model';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   ReactiveFormsModule,
-  FormsModule,
-  NgForm,
 } from '@angular/forms';
-import { from } from 'rxjs';
-import { Button } from 'primeng/button';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, NgIf],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit {
- 
-  OpenProfileBar = true;
-  OpenEditMenu = false;
 
-  curentUser!:user|null
+  private userservice = inject(UserService);
+  private authService = inject(AuthService);
+  private fb = inject(FormBuilder);
 
-  user = signal<person>({
-    Id: '',
-    Name: '',
-    Email: '',
-    PhoneNumber: '',
-    Role: '',
-  });
+  OpenProfileBar = signal(true);
+  OpenEditMenu = signal(false);
+  isLoading = signal(false);
 
-  updatedDetails!: UpdateProfileDetails;
-  constructor(private userservice: UserService,private authService:AuthService) {}
+  currentUser!: user | null;
+
+  userProfile = this.userservice.userProfile;
+
+  profileForm!: FormGroup;
+
+  constructor() {
+    effect(() => {
+      const profile = this.userProfile();
+      if (profile.Name) {
+        this.profileForm.patchValue({
+          name: profile.Name,
+          email: profile.Email,
+          phoneNumber: profile.PhoneNumber,
+        });
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.curentUser=this.authService.getCurrentUser();
+    this.currentUser = this.authService.getCurrentUser();
 
-    this.userservice.GetProfile(this.curentUser?.Email as string).subscribe({
+    this.profileForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', Validators.required],
+    });
+
+    if (this.currentUser?.Email && !this.userProfile().Name) {
+      this.loadProfile();
+    }
+  }
+
+  loadProfile(): void {
+    if (!this.currentUser?.Email) return;
+    this.isLoading.set(true);
+    this.userservice.GetProfile(this.currentUser.Email).subscribe({
+      next: () => {
+        this.isLoading.set(false);
+      },
       error: (err: HttpErrorResponse) => {
         console.log(err);
+        this.isLoading.set(false);
       },
     });
-    this.user = this.userservice.userProfile;
-    this.updatedDetails = {
-      name: this.user().Name,
-      phoneNumber: this.user().PhoneNumber,
-      email: this.user().Email,
-    };
   }
 
   toggleEditMode(): void {
-    this.OpenProfileBar = false;
-    this.OpenEditMenu = true;
+    if (this.isLoading()) return;
+    if (!this.userProfile().Name) {
+      this.loadProfile();
+    }
+    this.OpenProfileBar.set(false);
+    this.OpenEditMenu.set(true);
   }
 
-  toggleProfileMode(form: NgForm): void {
-    this.OpenProfileBar = true;
-    this.OpenEditMenu = false;
-    form.resetForm();
+  toggleProfileMode(): void {
+    this.OpenProfileBar.set(true);
+    this.OpenEditMenu.set(false);
+    this.profileForm.reset();
   }
 
   saveChanges(): void {
-    this.userservice
-      .updateUserProfile(this.user().Id, this.updatedDetails)
-      .subscribe({
-        next: () => {
-          this.userservice.GetProfile(this.user().Id).subscribe({
-            error: (err: HttpErrorResponse) => {
-              console.log(err);
-            },
-          });
-        },
-      });
+    if (this.profileForm.valid && !this.isLoading()) {
+      this.isLoading.set(true);
+      const updatedDetails: UpdateProfileDetails = this.profileForm.value;
+      this.userservice
+        .updateUserProfile(this.userProfile().Id, updatedDetails)
+        .subscribe({
+          next: () => {
+            this.userservice.GetProfile(this.userProfile().Id).subscribe({
+              next: () => {
+                this.isLoading.set(false);
+                this.toggleProfileMode();
+              },
+              error: (err: HttpErrorResponse) => {
+                console.log(err);
+                this.isLoading.set(false);
+              },
+            });
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err);
+            this.isLoading.set(false);
+          },
+        });
+    }
   }
 
-  cancelEdit() {}
+  cancelEdit(): void {
+    this.toggleProfileMode();
+  }
+  close(){
+    window.history.back();
+  }
 }

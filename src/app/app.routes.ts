@@ -83,6 +83,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path:'projecttask',
+    loadComponent: () =>
+      import('../app/user-project-task/user-project-task.component').then(
+        (m) => m.UserProjectTaskComponent
+      ),
+  },
+  {
     path:'**',
     component:WildcardComponent
   }

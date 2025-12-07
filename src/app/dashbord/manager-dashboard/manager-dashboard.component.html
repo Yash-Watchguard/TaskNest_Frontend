@@ -53,7 +53,11 @@
       <h3>My Assigned Projects</h3>
       <p>Project you are managing</p>
     </div>
-    <div class="project-box">
+    @if(projectLoader){
+      <app-loader></app-loader>
+      }@else {
+        @if(assignedProjects.length>0){
+          <div class="project-box">
       @for (item of assignedProjects; track item.ProjectId) {
       <app-projectbox
         [Project]="item"
@@ -62,11 +66,21 @@
       ></app-projectbox>
       }
     </div>
+        }@else {
+        <div class="no-projects-note">
+          <i class="pi pi-info-circle" style="font-size: 2rem; color: var(--p-purple-500);"></i>
+          <p>No projects assigned to you.</p>
+        </div>
+        }
+      }
   </div>
   @if(shouldLoad){
   <div class="task-section" #secondDiv>
     <h3>Tasks</h3>
-    <div class="task-box-section">
+    @if(taskLoader){
+      <app-loader></app-loader>
+    }@else{
+      <div class="task-box-section">
       @if(SingleProjectTask.length>0){
       <div class="task-box">
         @for(task of SingleProjectTask;track task.TaskId){
@@ -80,10 +94,13 @@
 
       }@else {
       <div class="no-task">
+        <i class="pi pi-info-circle" style="font-size: 2rem; color: var(--p-purple-500);"></i>
         <p>Sorry No Task</p>
       </div>
       }
     </div>
+    }
+    
   </div>
   }
 </div>

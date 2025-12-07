@@ -20,10 +20,11 @@ import { TaskService } from '../../services/task.service';
 import { Project } from '../../models/project.model';
 import { MessageService } from 'primeng/api';
 import { Toast } from "primeng/toast";
+import { LoaderComponent } from "../../loader/loader.component";
 @Component({
   selector: 'app-manager-dashboard',
   standalone: true, // Use standalone component for modern Angular
-  imports: [ProjectboxComponent, TaskboxComponent, AddtaskComponent, NgIf, Toast],
+  imports: [ProjectboxComponent, TaskboxComponent, AddtaskComponent, NgIf, Toast, LoaderComponent],
   templateUrl: './manager-dashboard.component.html',
   styleUrl: './manager-dashboard.component.scss',
   providers:[MessageService]
@@ -51,6 +52,9 @@ export class ManagerDashboardComponent implements OnInit {
 
   isaddtask = signal(false);
 
+  projectLoader:boolean=false;
+  taskLoader:boolean=false;
+
   constructor(
     private projectservice: ProjectService,
     private taskservce: TaskService,
@@ -63,8 +67,12 @@ export class ManagerDashboardComponent implements OnInit {
     this.projects$ = this.projectservice.projects$;
     this.tasks$ = this.taskservce.allTaskOfManager$;
     this.userId = localStorage.getItem('userId');
-
+    this.projectLoader=true;
+    setTimeout(() => {
+      this.projectLoader=false;
+    }, 2000);
     this.projectservice.GetAssignedProject(`projects/assigned/${this.userId}`).subscribe({
+
       next: (response) => {
         console.log(response);
       },
@@ -100,6 +108,10 @@ export class ManagerDashboardComponent implements OnInit {
   }
 
   loadTask(project:Project): void {
+    this.taskLoader=true;
+    setTimeout(() => {
+      this.taskLoader=false;
+    }, 1000);
     if (this.projectId != project.ProjectId) {
       this.taskservce.AprojectTask.next([]);
       this.projectId = project.ProjectId;
@@ -163,5 +175,7 @@ export class ManagerDashboardComponent implements OnInit {
   oncloseaddtaskbox(): void {
     this.ProjectIdforAddTask = '';
     this.isaddtaskopen = false;
+    this.projectservice.GetAssignedProject(`projects/assigned/${this.userId}`).subscribe()
   }
+
 }

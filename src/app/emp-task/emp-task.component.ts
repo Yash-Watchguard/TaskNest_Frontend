@@ -13,10 +13,11 @@ import { TaskboxComponent } from '../taskbox/taskbox.component';
 import { UserService } from '../services/user.service';
 import { person } from '../models/user.model';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { LoaderComponent } from "../loader/loader.component";
 
 @Component({
   selector: 'app-emp-task',
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './emp-task.component.html',
   styleUrl: './emp-task.component.scss',
 })
@@ -45,8 +46,12 @@ export class EmpTaskComponent implements OnInit, OnChanges {
       this.loadUserTasks();
     }
   }
-
+  taskloader:boolean=false;
   loadUserTasks(): void {
+    this.taskloader=true;
+    setTimeout(() => {
+      this.taskloader=false;
+    }, 2000);
     this.taskService.GetEmpTask(`employees/${this.user?.Id}/tasksy`).subscribe({
       next: (allTasks: Task[]) => {
         this.tasks = allTasks;

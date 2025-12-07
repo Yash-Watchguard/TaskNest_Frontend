@@ -56,7 +56,11 @@
       <p pTooltip="Enter your username" tooltipPosition="right">
         Tasks that need to be started
       </p>
-      <div class="task-box">
+      @if(showLoader){
+        <app-loader></app-loader>
+      }@else {
+        @if(todo.length>0){
+ <div class="task-box">
         <ul>
           <li *ngFor="let task of todo">
             <app-taskbox
@@ -67,11 +71,23 @@
           </li>
         </ul>
       </div>
+        }@else {
+          <div class="no-task">
+        <i class="pi pi-info-circle" style="font-size: 2rem; color: var(--p-purple-500);"></i>
+        <p>Sorry No Task</p>
+      </div>
+        }
+      }
+     
     </div>
     <div class="tasks-block in-progress">
       <div class="block-title">In Progress</div>
       <p>Tasks you're currently working on</p>
-      <div class="task-box">
+      @if(showLoader){
+        <app-loader></app-loader>
+      }@else {
+        @if(inProgress.length>0){
+ <div class="task-box">
         <ul>
           <li *ngFor="let task of inProgress">
             <app-taskbox
@@ -82,22 +98,38 @@
           </li>
         </ul>
       </div>
+        }@else {
+          <div class="no-task">
+        <i class="pi pi-info-circle" style="font-size: 2rem; color: var(--p-purple-500);"></i>
+        <p>Sorry No Task</p>
+      </div>
+        }
+      }
     </div>
     <div class="tasks-block completed">
       <div class="block-title completed-title">Completed</div>
       <p>Tasks you've finished</p>
-      <div class="completed-task">
-        <div class="task-box">
-          <ul>
-            <li *ngFor="let task of done">
-              <app-taskbox
-                [task]="task"
-                (openComments)="onopencomment($event)"
-              ></app-taskbox>
-            </li>
-          </ul>
-        </div>
+      @if(showLoader){
+        <app-loader></app-loader>
+      }@else {
+        @if(done.length>0){
+ <div class="task-box">
+        <ul>
+          <li *ngFor="let task of done">
+            <app-taskbox
+              [task]="task"
+              (openComments)="onopencomment($event)"
+            ></app-taskbox>
+          </li>
+        </ul>
       </div>
+        }@else {
+          <div class="no-task">
+        <i class="pi pi-info-circle" style="font-size: 2rem; color: var(--p-purple-500);"></i>
+        <p>Sorry No Task</p>
+      </div>
+        }
+      }
     </div>
 
     <app-comment

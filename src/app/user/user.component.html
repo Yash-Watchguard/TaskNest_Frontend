@@ -11,7 +11,7 @@
     <div class="label-badge">{{user.Role}}</div>
   </div>
   <div class="actions">
-    <button *ngIf="user?.Role==='Employee'"  class="promote-button" (click)="promoteemployee()" 
+    <button *ngIf="user.Role==='Employee'"  class="promote-button" (click)="promoteemployee()" 
      pTooltip="Promote to Manager" tooltipPosition="top" placeholder="Top">
       <i class="pi pi-user-plus"></i>
       <span>Promote</span>

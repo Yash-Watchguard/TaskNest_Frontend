@@ -26,14 +26,14 @@ import { Project } from '../../models/project.model';
 import { UserComponent } from '../../user/user.component';
 import { UserService } from '../../services/user.service';
 import { ProjectService } from '../../services/project.service';
-import { person } from '../../models/user.model';
+import { person, user } from '../../models/user.model';
 import { EmpTaskComponent } from '../../emp-task/emp-task.component';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
     Tooltip,
-    InputText,
     ProjectboxComponent,
     CommonModule,
     UserComponent,
@@ -41,7 +41,8 @@ import { EmpTaskComponent } from '../../emp-task/emp-task.component';
     AddprojectComponent,
     TaskboxComponent,
     EmpTaskComponent,
-    ConfirmDialog
+    ConfirmDialog,
+    LoaderComponent
 ],
 providers:[ConfirmationService],
   templateUrl: './admin-dashboard.component.html',
@@ -59,6 +60,7 @@ export class AdminDashboardComponent implements OnInit {
 
   Allusers: person[] = [];
   EmployeeList: person[] = [];
+  is:boolean=true;
   ManagersList: person[] = [];
 
   AllProject: Project[] = [];
@@ -119,6 +121,7 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
+
   PromoteEmp(email: string): void {
     this.userservice.PromoteUser(email).subscribe({
       next: () => {
@@ -147,36 +150,15 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  Deleteuser(userId: string): void {
+  Deleteuser(user:person): void {
 
     this.confirmationService.confirm({
       header: 'Are you sure?',
       message: 'Please confirm to proceed.',
       accept: () => {
-    //         this.userservice.Deleteuser(userId).subscribe({
-    //   next: () => {
-    //     this.messageservice.add({
-    //       severity: 'success',
-    //       summary: 'Success',
-    //       detail: 'User Deleted Successfully',
-    //       life: 3000,
-    //     });
-    //     this.userservice.GetAllUsers().subscribe({
-    //       error: () => {
-    //         console.log('after userdeletion all the user fateched error');
-    //       },
-    //     });
-    //   },
-    //   error: (err: HttpErrorResponse) => {
-    //     this.messageservice.add({
-    //       severity: 'error',
-    //       summary: 'Error',
-    //       detail: `${err}`,
-    //     });
-    //   },
-    // });
-    this.messageservice.add({ severity: 'info', summary: 'Info', detail: 'Service Temporarily Unavailable' });
-      },
+        
+            this.router.navigate(['projecttask'], { state: { user: user } });
+      }
     });
 
   }
@@ -185,11 +167,24 @@ export class AdminDashboardComponent implements OnInit {
     this.openAddProject.set(true);
   }
 
+  projectDeleted(isDesleted:boolean):void{
+    this.messageservice.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Project deleted Successfully',
+        });
+  }
+
   closeAddProjectModal(): void {
     this.openAddProject.set(false);
   }
-
+  taskLoader:boolean=false
   loadTask(project:Project): void {
+    this.taskLoader=true;
+    setTimeout(() => {
+      this.taskLoader=false
+    }, 3000);
+
     if (this.projectId != project.ProjectId) {
       this.taskservice.AprojectTask.next([]);
       this.projectId = project.ProjectId;

@@ -18,7 +18,7 @@ export class AuthService {
   newUser = signal<user | null>(null);
 
   baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
-  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v6/'
   
   Signup(url: string, UserDetails: signupuserdto) {
     return this.HttpClient.post<signupresponse>(this.baseUrl+'signup', UserDetails);

@@ -25,7 +25,7 @@ export class UserService {
   });
 
   baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
-  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v6/'
 
   GetAllUsers() {
     return this.httpClient.get<getAllUsersApiRes>(this.baseUrl+`users`).pipe(
@@ -47,8 +47,8 @@ export class UserService {
     );
   }
 
-  Deleteuser(userId: string | undefined): Observable<any> {
-    return this.httpClient.delete(this.baseUrl+`users/${userId}`);
+  Deleteuser(email:string): Observable<any> {
+    return this.httpClient.delete(this.baseUrl2+`user/${email}/delete`);
   }
 
   PromoteUser(email: string) {

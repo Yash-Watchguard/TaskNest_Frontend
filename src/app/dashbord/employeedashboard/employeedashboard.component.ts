@@ -11,10 +11,11 @@ import { TaskService } from '../../services/task.service';
 import { TaskboxComponent } from '../../taskbox/taskbox.component';
 import { CommentComponent } from '../../comment/comment.component';
 import { SummaryCardComponent } from '../../shared/summary-card/summary-card.component';
+import { LoaderComponent } from "../../loader/loader.component";
 
 @Component({
   selector: 'app-employeedashboard',
-  imports: [TaskboxComponent, NgForOf, CommentComponent, NgIf],
+  imports: [TaskboxComponent, NgForOf, CommentComponent, NgIf, LoaderComponent],
   templateUrl: './employeedashboard.component.html',
   styleUrls: ['./employeedashboard.component.scss'],
 })
@@ -29,6 +30,8 @@ export class EmployeedashboardComponent implements OnInit {
 
   showComments = false;
 
+  showLoader:boolean=false;
+
   constructor(
     private taskservice: TaskService,
     private router: Router,
@@ -36,6 +39,10 @@ export class EmployeedashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.showLoader=true;
+    setTimeout(() => {
+      this.showLoader=false;
+    }, 1000);
     const userstring = localStorage.getItem('user');
     const user = userstring ? JSON.parse(userstring) : null;
     this.tasks$ = this.taskservice.tasks$;

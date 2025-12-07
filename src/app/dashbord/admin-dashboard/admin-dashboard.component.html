@@ -1,5 +1,6 @@
 <p-toast position="top-right"></p-toast>
 <p-confirmDialog></p-confirmDialog>
+
 <div class="admin-dashboard">
   <div class="dashboard-header">
     <div class="left">
@@ -11,6 +12,7 @@
         pButton
         pTooltip="Create a new project and assign a manager"
         tooltipPosition="top"
+        
         (click)="AddProjectModal()"
       >
         + Create Project
@@ -63,38 +65,53 @@
         <h6><i class="pi pi-folder"> All Projects</i></h6>
         <p>Manage and monitor all projects</p>
       </div>
-      <div class="all-projects">
+      @if(AllProject.length!=0){
+        <div class="all-projects">
         <div class="project-box" *ngFor="let project of AllProject">
           <app-projectbox
             [Project]="project"
             (loadTasksignal)="loadTask($event)"
+            (projectDeleted)="projectDeleted($event)"
           ></app-projectbox>
         </div>
       </div>
+      }@else {
+        <app-loader></app-loader>
+      }
+      
     </div>
     <div class="users">
       <div class="heading">
         <h6><i class="pi pi-user">User Management</i></h6>
         <p>Manage users and their roles</p>
       </div>
-      <div class="all-users">
+      @if(Allusers.length!=0){
+        <div class="all-users">
         <div class="user" *ngFor="let user of Allusers">
           @if(user.Role!='Admin'){
           <app-user
             (opentask)="openEmpTask($event)"
             [user]="user"
             (PromoteEmployeeSignal)="PromoteEmp($event)"
-            (DeleteUserSignal)="Deleteuser($event)"
+            (DeleteUserSignal)="Deleteuser(user)"
           ></app-user>
           }
         </div>
       </div>
+      }@else{
+        <app-loader></app-loader>
+      }
+      
     </div>
   </div>
   @if(shouldLoad){
   <div class="task-section" #secondDiv>
     <h3>Tasks</h3>
-    <div class="task-box-section">
+
+    @if(taskLoader){
+      <app-loader></app-loader>
+    }@else {
+      <div class="task-box-section">
       @if(SingleProjectTask.length>0){
       <div class="task-box">
         @for(task of SingleProjectTask;track task.TaskId){
@@ -104,7 +121,6 @@
         ></app-taskbox>
         }
       </div>
-
       }@else {
       <div class="no-task">
         <i class="pi pi-info-circle" style="font-size: 2rem; color: var(--p-purple-500);"></i>
@@ -112,6 +128,8 @@
       </div>
       }
     </div>
+    }
+    
   </div>
   }
 </div>

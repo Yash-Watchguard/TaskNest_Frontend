@@ -1,12 +1,11 @@
-
 <div class="overlay">
   <div class="overlay-content">
-    <div class="profile-card" *ngIf="OpenProfileBar">
+    <div class="profile-card" *ngIf="OpenProfileBar()">
 
-    <button class="close-btn">&times;</button>
-    
+    <button class="close-btn" (click)="close()">&times;</button>
+
     <div class="profile-header">
-      <div class="avatar">AU</div>
+      <div class="avatar">{{userProfile().Name.at(0)+ userProfile().Role.charAt(0)}}</div>
       <h3>Profile Settings</h3>
       <p>Manage your account information</p>
     </div>
@@ -14,43 +13,46 @@
     <div class="user-details">
       <div class="detail-item">
         <label>Full Name</label>
-        <p>{{user().Name}}</p>
+        <p>{{userProfile().Name}}</p>
       </div>
       <div class="detail-item">
         <label>Email</label>
-        <p>{{user().Email}}</p>
+        <p>{{userProfile().Email.replace('USER#', '')}}</p>
       </div>
       <div class="detail-item">
         <label>PhoneNumber</label>
-        <span class="role-badge">{{user().PhoneNumber}}</span>
+        <span class="role-badge">{{userProfile().PhoneNumber}}</span>
       </div>
     </div>
-    
-    <button class="edit-btn" (click)="toggleEditMode()">
+
+    <button class="edit-btn" (click)="toggleEditMode()" [disabled]="isLoading()">
      Edit Profile
     </button>
   </div>
 
-  <div class="editprofile" *ngIf="OpenEditMenu">
+  <div class="editprofile" *ngIf="OpenEditMenu()">
+    <button class="close-btn" (click)="close()">&times;</button>
     <div class="profile-header">
-      <div class="avatar">AU</div>
+      <div class="avatar">{{userProfile().Name.at(0)+ userProfile().Role.charAt(0)}}</div>
       <h3>Profile Settings</h3>
       <p>Manage your account information</p>
     </div>
     <div class="updateform">
-      <form action="" #profileform="ngForm">
+      <form [formGroup]="profileForm" (ngSubmit)="saveChanges()">
         <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="{{updatedDetails.name}}" [(ngModel)]="updatedDetails.name" name="username">
+        <input type="text" id="name" formControlName="name">
 
         <label for="email">Email</label>
-        <input type="text" id="email" placeholder="{{updatedDetails.email}}" [(ngModel)]="updatedDetails.email" name="email">
+        <input type="email" id="email" formControlName="email">
 
         <label for="phonenumber">Phone Number</label>
-        <input type="text" id="phonenumber" placeholder="{{updatedDetails.phoneNumber}}" [(ngModel)]="updatedDetails.phoneNumber" name="phoenumber">
+        <input type="text" id="phonenumber" formControlName="phoneNumber">
 
         <div class="action">
-          <button (click)="saveChanges()">Save Changes</button>
-          <button (click)="toggleProfileMode(profileform)">Cancel </button>
+          <button type="submit" [disabled]="profileForm.invalid || isLoading()">
+            {{ isLoading() ? 'Saving...' : 'Save Changes' }}
+          </button>
+          <button type="button" (click)="cancelEdit()" [disabled]="isLoading()">Cancel</button>
         </div>
       </form>
     </div>

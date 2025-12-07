@@ -12,7 +12,7 @@ export class ProjectService{
     projects$ =this.ProjectObject.asObservable();
 
      baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
-  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v6/'
 
     private getprojecturl='';
 
@@ -38,7 +38,11 @@ export class ProjectService{
     }
 
     Addproject(project:AddProjectRequest){
-       return this.httpclient.post(this.baseUrl+`projects`,project);
+       return this.httpclient.post(this.baseUrl+`projects`,project).pipe(
+        tap(()=>{
+            this.GetAllProject();
+        })
+       );
     }
 
     GetProjectStatuas(url:string){
@@ -75,7 +79,15 @@ export class ProjectService{
     }
 
     DeleteProject(projectId:string,managerId:string){
-       return this.httpclient.delete(this.baseUrl2+`/project/${projectId}/assigned/${managerId}/delete`)
+       return this.httpclient.delete(this.baseUrl2+`/project/${projectId}/assigned/${managerId}/delete`).pipe(
+        tap(()=>{
+            this.GetAllProject();
+        })
+       )
+    }
+
+    UpdateProject(url:string,updates:any){
+        return this.httpclient.patch(this.baseUrl2+url,updates)
     }
     
 }

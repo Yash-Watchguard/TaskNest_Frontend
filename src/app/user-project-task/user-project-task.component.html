@@ -1,0 +1,169 @@
+<!-- Task UI HTML (Angular Compatible) -->
+ <p-toast></p-toast>
+
+@if(loadEmployee){
+<div class="delete-user-container">
+  <a class="back-btn" (click)="goBack()"><i class="pi pi-arrow-left"></i> Back</a>
+
+  <div class="user-header">
+    <div class="avatar">{{user?.Name?.charAt(0)}}</div>
+    <div>
+      <h3><i class="pi pi-user"></i> Delete User: {{user?.Name}}</h3>
+      <p>{{user?.Email?.replace('USER#','')}}• <span class="role-badge">employee</span></p>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <i class="pi pi-exclamation-triangle"></i>
+    This employee has tasks assigned. You must reassign or delete each task before removing this user.
+  </div>
+
+  <div class="assigned-section">
+    <h3><i class="pi pi-list"></i> Assigned Tasks</h3>
+    <p class="hint">Reassign these tasks to another employee or delete them</p>
+
+    <!-- Task Loop -->
+      @if(Tasks.length===0){
+        <p class="no-projects-note">No tasks assigned to this employee.</p>
+        }
+    <div class="task-card" *ngFor="let task of Tasks">
+      <h4>{{ task.Title }}</h4>
+      <p class="task-desc">{{ task.Description }}</p>
+
+      <div class="task-meta">
+        <span class="status" [ngClass]="task.TaskStatus">{{ task.TaskStatus }}</span>
+       
+        <span class="due">Due: {{ task.Deadline }}</span>
+      </div>
+
+      <div class="task-actions">
+        <label>Reassign to:</label>
+
+        <button class="reassign-btn" (click)="toggleEmployeeList(task)">
+          <i class="pi pi-user-edit"></i> Reassign
+        </button>
+
+        <button class="delete-btn" (click)="onDeleteTask(task.TaskId)">
+          <i class="pi pi-trash"></i> Delete Task
+        </button>
+      </div>
+    </div>
+
+        <!-- Centered Modal for Reassigning -->
+        <div class="modal-overlay" *ngIf="openEmployeeListFor">
+          <div class="modal">
+            <div class="modal-header">
+              <h3>Reassign Task</h3>
+              <button class="modal-close" (click)="closeEmployeeModal()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+              <p class="modal-task-title">Select employee</p>
+
+              <div class="employee-list-modal">
+                <button class="employee-item" *ngFor="let emp of empList" (click)="reassignTask(selectedTask?.TaskId, emp.Id)">
+                  {{ emp.Name }}
+                </button>
+                <p *ngIf="empList.length === 0" class="empty-note">No employees available</p>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="cancel-btn" (click)="closeEmployeeModal()">Cancel</button>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <div class="footer-actions">
+    <button class="cancel-btn" (click)="goBack()">Cancel</button>
+    <button class="delete-user-btn" (click)="deleteUser()" [disabled]="Tasks.length"><i class="pi pi-user-minus"></i> Delete User</button>
+  </div>
+</div>
+}
+@if(loadManager){
+   
+ <div class="delete-user-container">
+  <a class="back-btn" (click)="goBack()"><i class="pi pi-arrow-left" ></i> Back</a>
+
+  <div class="user-header">
+    <div class="avatar">{{user?.Name?.charAt(0)}}</div>
+    <div>
+      <h3><i class="pi pi-user"></i> Delete User: {{user?.Name}}</h3>
+      <p>{{user?.Email?.replace('USER#','')}}• <span class="role-badge">manager</span></p>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <i class="pi pi-exclamation-triangle"></i>
+   This manager has assigned projects. You must reassign or delete each project before removing this user.
+  </div>
+
+  <div class="assigned-section">
+    <h3><i class="pi pi-list"></i> Assigned Projects </h3>
+    <p class="hint">Reassign these Projects to another manager or delete them</p>
+
+    <!-- Task Loop -->
+     @if(Projects.length===0){
+      <p class="no-projects-note">No projects assigned to this manager.</p>
+      }
+    <div class="task-card" *ngFor="let project of Projects">
+      <h4>{{ project.ProjectName }}</h4>
+      <p class="task-desc">{{project.ProjectDes }}</p>
+
+      <div class="task-meta">
+       
+       
+        <span class="due">Due: {{ project.Deadline }}</span>
+      </div>
+
+      <div class="task-actions">
+        <label>Reassign to:</label>
+
+        <button class="reassign-btn" (click)="toggleProjectList(project)">
+          <i class="pi pi-user-edit"></i> Reassign
+        </button>
+
+      
+      </div>
+    </div>
+
+        <!-- Centered Modal for Reassigning -->
+        <div class="modal-overlay" *ngIf="openEmployeeListFor">
+          <div class="modal">
+            <div class="modal-header">
+              <h3>Reassign Manager</h3>
+              <button class="modal-close" (click)="closeEmployeeModal()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+              <p class="modal-task-title">Select Mamager</p>
+
+              <div class="employee-list-modal">
+                
+                <button class="employee-item"
+                *ngFor="let emp of AllUsers"
+  (click)="reassignProject(selectedProject?.ProjectId, emp.Id)"
+>
+  {{ emp.Name }}
+</button>
+                <p *ngIf="AllUsers.length === 0" class="empty-note">No manager available</p>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="cancel-btn" (click)="closeEmployeeModal()">Cancel</button>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <div class="footer-actions">
+    <button class="cancel-btn">Cancel</button>
+    <button class="delete-user-btn" (click)="deleteUser()" [disabled]="Projects.length"><i class="pi pi-user-minus"></i> Delete User</button>
+  </div>
+</div>
+<!-- 
+
+-->
+}

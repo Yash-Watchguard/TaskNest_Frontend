@@ -31,7 +31,7 @@ export class UserComponent {
   }
   deleteuser(event: Event) {
     event.stopPropagation();
-    this.DeleteUserSignal.emit(this.user?.Id);
+    this.DeleteUserSignal.emit();
   }
   openTask(){
     this.opentask.emit(this.user);

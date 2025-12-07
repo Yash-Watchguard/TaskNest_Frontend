@@ -19,6 +19,7 @@ import { MessageService } from 'primeng/api';
 export class EditTaskComponent implements OnInit {
   @Input({ required: true }) task!: Task;
   @Output() closeSignal = new EventEmitter();
+  @Output() editSuccess= new EventEmitter();
   empList: person[] = [];
   titel = '';
   description = '';
@@ -89,12 +90,13 @@ export class EditTaskComponent implements OnInit {
       empId: this.empId,
     };
     this.taskservice
-      .EditTask(`task/update/${this.task.TaskId}`, updatedDetails)
+      .EditTask(`projects/${this.task.ProjectId}/tasks/${this.task.TaskId}/manager/${this.task.CreatedBy}/update`, updatedDetails)
       .subscribe({
         next: () => {
+          this.editSuccess.emit();
           this.taskservice
             .GetAllManagerProjectTask(
-              `project/${this.task.CreatedBy}/tasks/manager`
+              `projects/managers/${this.task.CreatedBy}/tasks`
             )
             .subscribe({
               next: (response) => {},
@@ -102,7 +104,7 @@ export class EditTaskComponent implements OnInit {
             });
 
           this.taskservice
-            .GetAllTaskOfProject(`projects/${this.task.ProjectId}/tasks`)
+            .GetAllTaskOfProject(`creator/${this.task.CreatedBy}/projects/${this.task.ProjectId}`)
             .subscribe({
               next: (response) => {},
               error: () => {},

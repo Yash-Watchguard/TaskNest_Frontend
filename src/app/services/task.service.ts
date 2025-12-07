@@ -28,7 +28,7 @@ export class TaskService {
   // Task of a particular project
 
    baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
-  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v5/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v6/'
   AprojectTask = new BehaviorSubject<Task[]>([]);
   public ProjectTasks$ = this.AprojectTask.asObservable();
   private gettaskurl = '';
@@ -199,6 +199,28 @@ export class TaskService {
      return this.httpClient.get<TaskApiResponse>(this.baseUrl2+url).pipe(
       map((response) => {
         console.log('GetEmpTask response:', response);
+        return response.data.map(
+          (t) =>
+            ({
+              TaskId: t.task_id,
+              Title: t.title,
+              Description: t.description,
+              AcceptanceCriteria: t.acceptance_criteria,
+              Deadline: new Date(t.deadline),
+              TaskPriority: t.taskpriority as priority,
+              TaskStatus: t.taskstatus as TaskStatus,
+              AssignedTo: t.assigned_to,
+              ProjectId: t.project_id,
+              CreatedBy: t.created_by,
+            } as Task)
+        );
+      })
+    );
+  }
+  GetSingleTask(url:string){
+     return this.httpClient.get<TaskApiResponse>(this.baseUrl2+url).pipe(
+      map((response) => {
+        console.log('GetsingleTask response:', response);
         return response.data.map(
           (t) =>
             ({

@@ -82,5 +82,5 @@
   </div>
 </div>
 @if(isOpenEditTask){
-<app-edit-task [task]="task" (closeSignal)="closeEditbox()"></app-edit-task>
+<app-edit-task [task]="task" (closeSignal)="closeEditbox()" (editSuccess)="onSuccessfulledit()"></app-edit-task>
 }

@@ -14,7 +14,10 @@
         <button class="close-btn" (click)="close()">&times;</button>
       </div>
       <div class="task-body">
-        @if(tasks.length>0){
+        @if(taskloader){
+          <app-loader></app-loader>
+        }@else{
+             @if(tasks.length>0){
         <div class="all-tasks">
           @for(task of tasks;track task.TaskId){
           <div class="task-item-card" (click)="onopencomment(task)">
@@ -37,6 +40,8 @@
           <p>No tasks assigned yet</p>
         </div>
         }
+        }
+        
       </div>
     </div>
   </div>

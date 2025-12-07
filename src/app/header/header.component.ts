@@ -1,21 +1,28 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { user } from '../models/user.model';
+import { ProfileComponent } from "../profile/profile.component";
+import { ConfirmDialog } from "primeng/confirmdialog";
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [ProfileComponent, ConfirmDialog],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
+  providers:[ConfirmationService,MessageService]
 })
 export class HeaderComponent implements OnInit {
   private router = inject(Router);
+  private confirmationService = inject(ConfirmationService)
 
   user!: user | null;
 
   openProfile = false;
   visible = false;
+
+  @Output() loading = new EventEmitter<boolean>();
 
   constructor(private authservice: AuthService, private route: Router) {}
 
@@ -24,18 +31,29 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    alert('are you sure!');
-    localStorage.clear();
+    this.confirmationService.confirm({
+    header: 'Confirm Logout',
+message: 'Do you really want to log out from your account?',
+      accept: () => {
+        
+            localStorage.clear();
     sessionStorage.clear();
     this.authservice.newUser.set(null);
     this.user = null;
     this.router.navigate(['/login']);
+      }
+    });
+    
   }
 
   onclick(): void {
-    this.route.navigate(['profile']);
+    this.loading.emit(true);
+    setTimeout(() => {
+      this.loading.emit(false);
+      this.route.navigate(['profile']);
+    }, 1000);
   }
-  
+
   onclose(): void {
     this.visible = false;
   }
