@@ -78,6 +78,7 @@ export class AdminDashboardComponent implements OnInit {
   SelectedUser!: person | null;
 
   projectId: string = '';
+  projectName: string='';
 
   @ViewChild('secondDiv') secondDiv!: ElementRef;
 
@@ -181,15 +182,15 @@ export class AdminDashboardComponent implements OnInit {
   taskLoader:boolean=false
   loadTask(project:Project): void {
     this.taskLoader=true;
-    setTimeout(() => {
-      this.taskLoader=false
-    }, 3000);
+    
 
     if (this.projectId != project.ProjectId) {
       this.taskservice.AprojectTask.next([]);
       this.projectId = project.ProjectId;
+      this.projectName=project.ProjectName;
     } else {
       this.projectId = project.ProjectId;
+      this.projectName=project.ProjectName;
     }
 
     this.shouldLoad = true;
@@ -201,10 +202,11 @@ export class AdminDashboardComponent implements OnInit {
       .GetAllTaskOfProject(`creator/${project.AssignedManagerId}/projects/${project.ProjectId}`)
       .subscribe({
         next: () => {
-          console.log('success');
+          this.taskLoader=false;
         },
         error: (err: HttpErrorResponse) => {
-          console.log(err);
+         this.taskLoader=false;
+
         },
       });
     this.TaskOfSingleProect$.subscribe({

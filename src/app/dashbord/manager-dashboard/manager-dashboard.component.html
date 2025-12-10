@@ -86,6 +86,7 @@
         @for(task of SingleProjectTask;track task.TaskId){
         <app-taskbox
           [task]="task"
+          [projectName]="projectName"
           (openComments)="onopencomment($event)"
           (deleteTask)="taskdelete($event)"
         ></app-taskbox>

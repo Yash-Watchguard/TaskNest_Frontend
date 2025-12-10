@@ -59,7 +59,7 @@ export class UserProjectTaskComponent implements OnInit {
 
     this.userService.GetAllEmployee().subscribe({
           next: (response: getAllUsersApiRes) => {
-            this.empList = response.data;
+            this.empList = response.data.filter(emp=> emp.Id!==this.user?.Id);
           },
           error: (err: HttpErrorResponse) => {
             console.log(err);

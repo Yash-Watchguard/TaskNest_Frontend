@@ -40,15 +40,14 @@ export class EmployeedashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.showLoader=true;
-    setTimeout(() => {
-      this.showLoader=false;
-    }, 1000);
+    
     const userstring = localStorage.getItem('user');
     const user = userstring ? JSON.parse(userstring) : null;
     this.tasks$ = this.taskservice.tasks$;
     const userId = localStorage.getItem('userId');
     this.taskservice.GetTasks(`employees/${userId}/tasksy`).subscribe({
       next: (response) => {
+        this.showLoader=false;
         console.log(response);
       },
       error: (err: HttpErrorResponse) => {

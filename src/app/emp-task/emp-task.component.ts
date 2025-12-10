@@ -49,14 +49,14 @@ export class EmpTaskComponent implements OnInit, OnChanges {
   taskloader:boolean=false;
   loadUserTasks(): void {
     this.taskloader=true;
-    setTimeout(() => {
-      this.taskloader=false;
-    }, 2000);
+   
     this.taskService.GetEmpTask(`employees/${this.user?.Id}/tasksy`).subscribe({
       next: (allTasks: Task[]) => {
         this.tasks = allTasks;
+        this.taskloader=false;
       },
       error: (err: any) => {
+        this.taskloader=false;
         console.error('Error loading tasks:', err);
         this.tasks = [];
       },

@@ -52,6 +52,8 @@ export class ManagerDashboardComponent implements OnInit {
 
   isaddtask = signal(false);
 
+  projectName:string='';
+
   projectLoader:boolean=false;
   taskLoader:boolean=false;
 
@@ -68,13 +70,14 @@ export class ManagerDashboardComponent implements OnInit {
     this.tasks$ = this.taskservce.allTaskOfManager$;
     this.userId = localStorage.getItem('userId');
     this.projectLoader=true;
-    setTimeout(() => {
-      this.projectLoader=false;
-    }, 2000);
+
+
+    
     this.projectservice.GetAssignedProject(`projects/assigned/${this.userId}`).subscribe({
 
       next: (response) => {
         console.log(response);
+        this.projectLoader=false;
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
@@ -108,13 +111,13 @@ export class ManagerDashboardComponent implements OnInit {
   }
 
   loadTask(project:Project): void {
+    
     this.taskLoader=true;
-    setTimeout(() => {
-      this.taskLoader=false;
-    }, 1000);
+    
     if (this.projectId != project.ProjectId) {
       this.taskservce.AprojectTask.next([]);
       this.projectId = project.ProjectId;
+      this.projectName=project.ProjectName;
     } else {
       this.projectId = project.ProjectId;
     }
@@ -128,10 +131,12 @@ export class ManagerDashboardComponent implements OnInit {
       .GetAllTaskOfProject(`creator/${project.AssignedManagerId}/projects/${project.ProjectId}`)
       .subscribe({
         next: () => {
+          this.taskLoader=false;
           console.log('success');
         },
         error: (err: HttpErrorResponse) => {
           console.log(err);
+          this.taskLoader=false;
         },
       });
     this.TaskOfSingleProect$.subscribe({
@@ -154,6 +159,7 @@ export class ManagerDashboardComponent implements OnInit {
     emdId: string;}): void {
     this.taskservce.deleteTask(event.taskId, event.projectId,event.managerId,event.emdId).subscribe({
       next: () => {
+              this.shouldLoad=false;
               this.messageService.add({
           severity: 'success',
           summary: 'Success',

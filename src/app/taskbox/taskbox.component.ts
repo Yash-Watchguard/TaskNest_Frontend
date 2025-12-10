@@ -18,6 +18,7 @@ export class TaskboxComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   @Input() task!: Task;
+  @Input() projectName!:string;
   TaskStatus = TaskStatus;
 
   @Output() statusChange = new EventEmitter<{ taskId: string;projectId:string;managerId:string; taskStatus: TaskStatus }>();

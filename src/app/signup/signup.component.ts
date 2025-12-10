@@ -82,13 +82,9 @@ export class SignupComponent {
       .subscribe((response) => {
         const user = this.authservice.newUser();
 
-        if (user?.Role === Role.ADMIN) {
-          this.authservice.router.navigate(['adminDashboard']);
-        } else if (user?.Role === Role.MANAGER) {
-          this.authservice.router.navigate(['managerDashboard']);
-        } else {
-          this.authservice.router.navigate(['employeeDashboard']);
-        }
+       this.authservice.router.navigate(['dashboard'], {
+            replaceUrl: true,
+          });
       });
     this.authservice.destroref.onDestroy(() => {
       loginsub.unsubscribe();
