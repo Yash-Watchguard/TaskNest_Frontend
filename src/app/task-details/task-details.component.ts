@@ -99,6 +99,10 @@ export class TaskDetailsComponent implements OnInit, OnDestroy{
     this.isOpenEditTask=false;
   }
 
+  goBack():void{
+    window.history.back()
+  }
+
   onSuccessfulledit():void{
       this.taskService.GetSingleTask(`creator/${this.task.CreatedBy}/projects/${this.task.ProjectId}/tasks/${this.task.TaskId}`).subscribe({
         next:(Response:Task[])=>{

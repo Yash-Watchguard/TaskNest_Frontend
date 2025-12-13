@@ -28,7 +28,7 @@ export class TaskService {
   // Task of a particular project
 
    baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
-  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v6/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v7/'
   AprojectTask = new BehaviorSubject<Task[]>([]);
   public ProjectTasks$ = this.AprojectTask.asObservable();
   private gettaskurl = '';

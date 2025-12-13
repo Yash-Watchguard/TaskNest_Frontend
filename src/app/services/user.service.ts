@@ -8,7 +8,7 @@ import {
   UpdateProfileDetails,
   user,
 } from '../models/user.model';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -25,7 +25,7 @@ export class UserService {
   });
 
   baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
-  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v6/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v7/'
 
   GetAllUsers() {
     return this.httpClient.get<getAllUsersApiRes>(this.baseUrl+`users`).pipe(
@@ -56,9 +56,20 @@ export class UserService {
   }
 
   GetProfile(userId: string) {
-    return this.httpClient.get<getUsersApiRes>(this.baseUrl+`users/${userId}`).pipe(
+    return this.httpClient.get<getUsersApiRes>(this.baseUrl2+`user/viewprofile/${userId}`).pipe(
       tap((res) => {
         this.userProfile.set(res.data);
+      })
+      ,
+      map((res)=>{
+        return ({
+          Id: res.data.Id,
+              Name: res.data.Name,
+              Email: res.data.Email,
+              PhoneNumber: res.data.PhoneNumber,
+              Role: res.data.Role as string,
+
+        }as person)
       })
     );
   }

@@ -1,86 +1,73 @@
-<header class="project-header">
-  <div class="center-section">
-    <h1>{{ task.Title }}</h1>
-    <div class="tags">
-      <span
-        class="tag"
-        [class.completed]="task.TaskStatus == taskstatus.Done"
-        [class.pending]="task.TaskStatus === taskstatus.Pending"
-        [class.inprogress]="task.TaskStatus === taskstatus.InProgress"
-        >{{ task.TaskStatus }}</span
-      >
-      <span class="project-name">Project: Fodd delievery app</span>
-    </div>
-  </div>
-  <div class="action">
-    @if(user?.Role!=2){
-    <button (click)="OpenEditTaskBox()" class="edit-task">
-      <i class="pi pi-pen-to-square"></i>
-    </button>
-    }
-  </div>
+
+<header class="header">
+<button class="back-btn" (click)="goBack()"><i class="pi pi-arrow-left"></i> Back to tasks</button>
+<div class="task-title-box">
+<button class="add-btn"><i class="pi pi-plus"></i></button>
+<h1 class="task-title">{{task.Title}}</h1>
+<button (click)="OpenEditTaskBox()"><i></i>edit</button>
+<span class="badge feature-badge">feature</span>
+<span class="badge completed-badge">{{task.TaskStatus}}</span>
+
+<span class="task-date"><i class="pi pi-calendar"></i> {{task.Deadline |date }}</span>
+</div>
 </header>
-<div class="task-details">
-  <div class="detail-title">
-    <span class="description-label">Description</span>
+
+
+<main class="content-area">
+<section class="description-section">
+  <div class="description-heading">
+<h2 ><i class="pi pi-file"></i> Description</h2>
+
   </div>
-  <div class="content">
-    {{ task.Description }}
-  </div>
-</div>
-<div class="task-details">
-  <div class="detail-title">
-    <span class="description-label">Acceptance Criteria</span>
-  </div>
-  <div class="content">
-    {{ task.AcceptanceCriteria }}
-  </div>
-</div>
-<div class="task-details">
-  <div class="detail-title">
-    <span class="description-label">Deadline</span>
-  </div>
-  <div class="content">
-    {{ task.Deadline | date : "dd/MM/yyyy" }}
-  </div>
+<p>{{task.Description}}</p>
+</section>
+
+
+<section class="criteria-section">
+<h2><i class="pi pi-check-circle"></i> Acceptance Criteria</h2>
+<ul>
+<li><i class="pi pi-check"></i>{{task.AcceptanceCriteria}}</li>
+
+</ul>
+</section>
+
+
+<section class="discussion-section">
+<h2><i class="pi pi-comments"></i> Discussion</h2>
+
+@for (comment of allcomments; track comment.comment_id) {
+  @if(comment.created_by==user?.Name){
+     <div class="message message-right">
+  <div class="avatar self-avatar">{{comment.created_by.at(0)?.toUpperCase()}}</div>
+<div class="bubble self">
+<span class="name self-name">You</span>
+<p>{{comment.content}}</p>
+
 </div>
 
-<div class="task-details">
-  <i class="material-icons">mode <span>Activity</span></i>
-  <div class="comment-form">
-    <label for="newComment">Write your comment</label>
-    <textarea
-      id="newComment"
-      [(ngModel)]="newComment"
-      placeholder="Enter your comment here..."
-      maxlength="150"
-      rows="3"
-      (keyup.enter)="addComment()"
-    ></textarea>
-    <div class="form-actions">
-      <button class="clear-button" (click)="clearComment()" type="button">
-        Clear
-      </button>
-      <button
-        class="post-button"
-        (click)="addComment()"
-        [disabled]="!newComment.trim()"
-      >
-        Post Comment
-      </button>
-    </div>
-  </div>
-
-  <div class="comments-list">
-    <div *ngFor="let comment of allcomments" class="comment-item">
-      <div class="comment-header">
-        <span class="comment-user">{{ comment.created_by }}</span>
-      </div>
-      <p class="comment-content">{{ comment.content }}</p>
-    </div>
-    <div *ngIf="allcomments.length === 0" class="no-comments">No comments</div>
-  </div>
 </div>
-@if(isOpenEditTask){
-<app-edit-task [task]="task" (closeSignal)="closeEditbox()" (editSuccess)="onSuccessfulledit()"></app-edit-task>
+  }@else {
+    <div class="message message-left">
+<div class="avatar">{{comment.created_by.at(0)?.toUpperCase()}}</div>
+<div class="bubble">
+<span class="name">{{comment.created_by}} </span>
+<p>{{comment.content}}</p>
+
+</div>
+</div>
+  }
+
 }
+
+
+
+<div class="message-input">
+<input type="text" placeholder="Type your message here..." [(ngModel)]="newComment"/>
+<button class="send-btn" (click)="addComment()"><i class="pi pi-send"></i></button>
+</div>
+
+@if(isOpenEditTask){
+  <app-edit-task [task]="task" (closeSignal)="closeEditbox()" (editSuccess)="onSuccessfulledit()"></app-edit-task>
+}
+
+

@@ -48,10 +48,10 @@ message: 'Do you really want to log out from your account?',
 
   onclick(): void {
     this.loading.emit(true);
-    setTimeout(() => {
+    
       this.loading.emit(false);
       this.route.navigate(['profile']);
-    }, 1000);
+    
   }
 
   onclose(): void {

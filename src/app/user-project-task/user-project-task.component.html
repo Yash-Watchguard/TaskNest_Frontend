@@ -9,7 +9,7 @@
     <div class="avatar">{{user?.Name?.charAt(0)}}</div>
     <div>
       <h3><i class="pi pi-user"></i> Delete User: {{user?.Name}}</h3>
-      <p>{{user?.Email?.replace('USER#','')}}• <span class="role-badge">employee</span></p>
+      <p>{{user?.Email?.replace('USER#','')}} <span class="role-badge">employee</span></p>
     </div>
   </div>
 
@@ -23,6 +23,7 @@
     <p class="hint">Reassign these tasks to another employee or delete them</p>
 
     <!-- Task Loop -->
+     @if(!isLoad){
       @if(Tasks.length===0){
         <p class="no-projects-note">No tasks assigned to this employee.</p>
         }
@@ -48,7 +49,9 @@
         </button>
       </div>
     </div>
-
+  }@else {
+    <app-loader></app-loader>
+  }
         <!-- Centered Modal for Reassigning -->
         <div class="modal-overlay" *ngIf="openEmployeeListFor">
           <div class="modal">
@@ -90,7 +93,7 @@
     <div class="avatar">{{user?.Name?.charAt(0)}}</div>
     <div>
       <h3><i class="pi pi-user"></i> Delete User: {{user?.Name}}</h3>
-      <p>{{user?.Email?.replace('USER#','')}}• <span class="role-badge">manager</span></p>
+      <p>{{user?.Email?.replace('USER#','')}} <span class="role-badge">manager</span></p>
     </div>
   </div>
 
@@ -103,7 +106,10 @@
     <h3><i class="pi pi-list"></i> Assigned Projects </h3>
     <p class="hint">Reassign these Projects to another manager or delete them</p>
 
-    <!-- Task Loop -->
+    <!-- project Loop -->
+ @if(!isLoad){
+
+ 
      @if(Projects.length===0){
       <p class="no-projects-note">No projects assigned to this manager.</p>
       }
@@ -127,6 +133,9 @@
       
       </div>
     </div>
+  }@else {
+    <app-loader></app-loader>
+  }
 
         <!-- Centered Modal for Reassigning -->
         <div class="modal-overlay" *ngIf="openEmployeeListFor">
@@ -159,7 +168,7 @@
   </div>
 
   <div class="footer-actions">
-    <button class="cancel-btn">Cancel</button>
+    <button class="cancel-btn" (click)="goBack()">Cancel</button>
     <button class="delete-user-btn" (click)="deleteUser()" [disabled]="Projects.length"><i class="pi pi-user-minus"></i> Delete User</button>
   </div>
 </div>

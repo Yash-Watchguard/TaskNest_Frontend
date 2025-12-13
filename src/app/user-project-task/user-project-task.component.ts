@@ -10,10 +10,11 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
 import { Toast } from "primeng/toast";
 import { MessageService } from 'primeng/api';
+import { LoaderComponent } from "../loader/loader.component";
 
 @Component({
   selector: 'app-user-project-task',
-  imports: [CommonModule, Toast],
+  imports: [CommonModule, Toast, LoaderComponent],
   templateUrl: './user-project-task.component.html',
   styleUrl: './user-project-task.component.scss',
   providers:[MessageService]
@@ -42,10 +43,12 @@ export class UserProjectTaskComponent implements OnInit {
   task:Task|null=null;
   project:Project|null=null;
 
+  isLoad:boolean=false;
+
   constructor(private messageService:MessageService,private router: Router,private projectService:ProjectService,private taskService:TaskService,private userService:UserService) {}
 
   ngOnInit(): void {
-
+  this.isLoad=true;
   this.user = history.state['user'] ?? null;
   console.log("User from state:", this.user);
     console.log(this.user)
@@ -81,11 +84,13 @@ export class UserProjectTaskComponent implements OnInit {
   loadTask():void{
      this.taskService.GetTasks(`employees/${this.user?.Id}/tasksy`).subscribe({
       next: (response) => {
+        this.isLoad=false;
         console.log(response);
         this.Tasks=response
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
+        this.isLoad=false;
       },
     });
   }
@@ -94,9 +99,11 @@ export class UserProjectTaskComponent implements OnInit {
       next: (response) => {
         console.log(response);
         this.Projects=response
+        this.isLoad=false;
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
+        this.isLoad=false;
       },
     });
   }
@@ -198,13 +205,6 @@ export class UserProjectTaskComponent implements OnInit {
       });
   }
 
-  onUpdateProject(projectId:string): void{
-       
-  }
-
-  onDeleteProject(projectId:string): void{
-    
-  }
   toggleEmployeeList(task: Task) {
     this.task=task;
     const taskId = task?.TaskId;

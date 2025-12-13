@@ -12,7 +12,7 @@ export class ProjectService{
     projects$ =this.ProjectObject.asObservable();
 
      baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
-  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v6/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v7/'
 
     private getprojecturl='';
 

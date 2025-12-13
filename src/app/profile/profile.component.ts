@@ -34,13 +34,15 @@ export class ProfileComponent implements OnInit {
 
   profileForm!: FormGroup;
 
+  userId:string|null=localStorage.getItem('userId')
+
   constructor() {
     effect(() => {
       const profile = this.userProfile();
       if (profile.Name) {
         this.profileForm.patchValue({
           name: profile.Name,
-          email: profile.Email,
+          email: profile.Email.replace('USER#',''),
           phoneNumber: profile.PhoneNumber,
         });
       }
@@ -48,8 +50,10 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
 
+    this.currentUser = this.authService.getCurrentUser();
+    console.log(this.userProfile())
+    
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -62,9 +66,9 @@ export class ProfileComponent implements OnInit {
   }
 
   loadProfile(): void {
-    if (!this.currentUser?.Email) return;
+    
     this.isLoading.set(true);
-    this.userservice.GetProfile(this.currentUser.Email).subscribe({
+    this.userservice.GetProfile(this.userId as string).subscribe({
       next: () => {
         this.isLoading.set(false);
       },

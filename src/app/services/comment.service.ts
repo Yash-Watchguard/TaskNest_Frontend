@@ -11,7 +11,7 @@ export class CommentService{
   private getcommenturl=''
 
    baseUrl= 'https://j7hf8pxvdk.execute-api.ap-south-1.amazonaws.com/v5/'
-  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v6/'
+  baseUrl2= 'https://vv2zl4jl7h.execute-api.ap-south-1.amazonaws.com/v7/'
 
   GetComments(url:string){
     this.getcommenturl=url;

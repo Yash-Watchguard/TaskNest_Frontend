@@ -169,7 +169,7 @@
   width: 100%;
   padding: 15px;
   border-radius: 8px;
-  background-color:var(--p-purple-800);
+  background-color:var(--p-purple-300);
   color: #fff;
   font-size: 16px;
   font-weight: bold;
@@ -292,10 +292,13 @@ body {
         width: 50%;
 
         &:first-child {
-            background-color: $primary-color;
+            background-color: var(--p-purple-400);
             color: #fff;
             &:hover {
-                background-color: var(--mdark-purple-text);
+                background-color: var(--p-purple-500);
+            }
+            &:disabled{
+              cursor: not-allowed;
             }
         }
 
@@ -304,7 +307,7 @@ body {
             color: $text-color;
             border: 1px solid $border-color;
             &:hover {
-                background-color: var(--dark-purple-text);
+                background-color: var(--p-purple-400);
             }
         }
     }
